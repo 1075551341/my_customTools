@@ -90,7 +90,8 @@
       "Bash(cmd /c \"taskkill /PID 26584 /F\")",
       "Bash(kill:*)",
       "Bash(cmd /c \"taskkill /IM node.exe /F\")",
-      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyXzE3NzM5OTI3MzE3NjJfZG1sYmlibSIsImlhdCI6MTc3NDAxODQwMCwiZXhwIjoxNzc0MTA0ODAwfQ.test\")"
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyXzE3NzM5OTI3MzE3NjJfZG1sYmlibSIsImlhdCI6MTc3NDAxODQwMCwiZXhwIjoxNzc0MTA0ODAwfQ.test\")",
+      "Bash(findstr :3000)"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,

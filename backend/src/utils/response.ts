@@ -119,12 +119,10 @@ export function paginated<T>(
   const totalPages = Math.ceil(total / pageSize)
   return success(res, {
     list,
-    pagination: {
-      total,
-      page,
-      pageSize,
-      totalPages
-    }
+    total,
+    page,
+    pageSize,
+    totalPages
   } as PaginatedData<T>, msg)
 }
 
