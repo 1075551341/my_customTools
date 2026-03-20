@@ -40,12 +40,10 @@ export interface ApiResponse<T = unknown> {
  */
 export interface PaginatedData<T> {
   list: T[]
-  pagination: {
-    total: number
-    page: number
-    pageSize: number
-    totalPages: number
-  }
+  total: number
+  page: number
+  pageSize: number
+  totalPages: number
 }
 
 /**

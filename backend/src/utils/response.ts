@@ -20,8 +20,8 @@
  * @module utils/response
  */
 
-import { Response } from 'express'
-import { ApiResponse, PaginatedData } from '../types'
+import { Response } from "express";
+import { ApiResponse, PaginatedData } from "../types";
 
 /**
  * 成功响应
@@ -44,14 +44,14 @@ import { ApiResponse, PaginatedData } from '../types'
 export function success<T>(
   res: Response,
   data: T,
-  msg: string = 'ok',
-  statusCode: number = 200
+  msg: string = "ok",
+  statusCode: number = 200,
 ): Response {
   return res.status(statusCode).json({
     code: 0,
     msg,
-    data
-  } as ApiResponse<T>)
+    data,
+  } as ApiResponse<T>);
 }
 
 /**
@@ -74,15 +74,15 @@ export function success<T>(
  */
 export function error(
   res: Response,
-  msg: string = '请求失败',
+  msg: string = "请求失败",
   code: number = 400,
-  statusCode: number = 400
+  statusCode: number = 400,
 ): Response {
   return res.status(statusCode).json({
     code,
     msg,
-    data: null
-  } as ApiResponse<null>)
+    data: null,
+  } as ApiResponse<null>);
 }
 
 /**
@@ -114,16 +114,20 @@ export function paginated<T>(
   total: number,
   page: number,
   pageSize: number,
-  msg: string = 'ok'
+  msg: string = "ok",
 ): Response {
-  const totalPages = Math.ceil(total / pageSize)
-  return success(res, {
-    list,
-    total,
-    page,
-    pageSize,
-    totalPages
-  } as PaginatedData<T>, msg)
+  const totalPages = Math.ceil(total / pageSize);
+  return success(
+    res,
+    {
+      list,
+      total,
+      page,
+      pageSize,
+      totalPages,
+    } as PaginatedData<T>,
+    msg,
+  );
 }
 
 /**
@@ -133,43 +137,45 @@ export const errors = {
   /**
    * 参数错误
    */
-  badRequest: (res: Response, msg: string = '参数错误'): Response =>
+  badRequest: (res: Response, msg: string = "参数错误"): Response =>
     error(res, msg, 400, 400),
 
   /**
    * 未授权
    */
-  unauthorized: (res: Response, msg: string = '未授权访问'): Response =>
+  unauthorized: (res: Response, msg: string = "未授权访问"): Response =>
     error(res, msg, 401, 401),
 
   /**
    * 禁止访问
    */
-  forbidden: (res: Response, msg: string = '禁止访问'): Response =>
+  forbidden: (res: Response, msg: string = "禁止访问"): Response =>
     error(res, msg, 403, 403),
 
   /**
    * 资源未找到
    */
-  notFound: (res: Response, msg: string = '资源未找到'): Response =>
+  notFound: (res: Response, msg: string = "资源未找到"): Response =>
     error(res, msg, 404, 404),
 
   /**
    * 服务器内部错误
    */
-  internal: (res: Response, msg: string = '服务器内部错误'): Response =>
+  internal: (res: Response, msg: string = "服务器内部错误"): Response =>
     error(res, msg, 500, 500),
 
   /**
    * 服务不可用
    */
-  serviceUnavailable: (res: Response, msg: string = '服务暂时不可用'): Response =>
-    error(res, msg, 503, 503)
-}
+  serviceUnavailable: (
+    res: Response,
+    msg: string = "服务暂时不可用",
+  ): Response => error(res, msg, 503, 503),
+};
 
 export default {
   success,
   error,
   paginated,
-  errors
-}
+  errors,
+};
