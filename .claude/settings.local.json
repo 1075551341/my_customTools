@@ -1,0 +1,134 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(pnpm config:*)",
+      "Bash(pnpm rebuild:*)",
+      "Bash(timeout 10 pnpm dev)",
+      "Bash(curl -s http://localhost:3001/api/system/health)",
+      "Bash(curl:*)",
+      "Bash(pnpm create:*)",
+      "Bash(cd:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)",
+      "Bash(npm i:*)",
+      "Bash(timeout 30 pnpm dev:antd)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm check:type:*)",
+      "Bash(pnpm test:unit:*)",
+      "Bash(pnpm vitest run:*)",
+      "WebSearch",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_type",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_drag",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_run_code",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(pnpm run:*)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//d/apdms/coding_AI/my_customTools/**)",
+      "Bash(done)",
+      "Bash(redis-cli ping:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3001)",
+      "Bash(taskkill:*)",
+      "Bash(powershell -Command \"Stop-Process -Id 45804 -Force\" 2>&1)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm dev:antd)",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(cmd //c \"taskkill /PID 41436 /F\")",
+      "Bash(pandoc \"D:/apdms/coding_AI/my_customTools/sqlite-redis-guide.docx\" -o /tmp/sqlite-redis-guide.md)",
+      "Read(//tmp/**)",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "Bash(powershell -Command \"Get-Service -Name '*redis*' 2>$null; redis-cli ping 2>$null\")",
+      "Bash(findstr \"6379\")",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXJfMTc3Mzk5NTI3NDA3OV9lYzVzMHZpIiwidXNlcm5hbWUiOiJ0ZXN0dXNlcjIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc3Mzk5NTI3OCwiZXhwIjoxNzc0MDAyNDc4fQ.nDfGbjwCNxQQon_ew_Ro_9XIRWfZDQZjajCxoSq81kQ\")",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXJfMTc3Mzk5NTI3NDA3OV9lYzVzMHZpIiwidXNlcm5hbWUiOiJ0ZXN0dXNlcjIiLCJyb2xlIjoidXNlciIsImlhdCI6MTc3Mzk5NTc2NywiZXhwIjoxNzc0MDAyOTY3fQ.Z_96RYIRiurpJ04Y3NnI0Gs0M7usRf60O6jSKQYSOXo\")",
+      "Bash(findstr \":5668\")",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__navigate_page",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_snapshot",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__fill",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__click",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script",
+      "Bash(findstr \":3001 :5668\")",
+      "Bash(Get-Process -Name node -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Id, ProcessName, StartTime)",
+      "Bash(findstr \":3000 :5173 :5174\")",
+      "Bash(findstr \":3000\")",
+      "Bash(findstr ':3000 :3001')",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "Bash(sqlite3 D:/apdms/coding_AI/my_customTools/backend/data/app.db \".tables\")",
+      "Bash(sqlite3 D:/apdms/coding_AI/my_customTools/backend/data/app.db \"SELECT * FROM users;\")",
+      "Bash(Get-Process node:*)",
+      "mcp__plugin_playwright_playwright__browser_file_upload",
+      "Bash(Select-Object -First 20)",
+      "Bash(Select-Object Name, Status)",
+      "Bash(wmic process:*)",
+      "mcp__plugin_playwright_playwright__browser_network_requests",
+      "Bash(findstr :6001)",
+      "Bash(Select-Object -First 30)"
+    ],
+    "initialPermissionMode": "acceptEdits",
+    "cleanupPeriodDays": 30,
+    "autoUpdaterStatus": "enabled"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == *.env && \"$FILE_PATH\" != *.env.example ]]; then echo \"⚠️ 检测到 .env 文件修改请求: $FILE_PATH\"; echo \"敏感配置文件需要手动确认，请输入 y 确认\"; read -t 30 confirm; if [[ \"$confirm\" != \"y\" ]]; then echo \"已取消操作\"; exit 1; fi; fi'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == *pnpm-lock.yaml || \"$FILE_PATH\" == *package-lock.json ]]; then echo \"⚠️ 检测到 lock 文件修改请求: $FILE_PATH\"; echo \"Lock 文件应由包管理器自动生成，请输入 y 确认\"; read -t 30 confirm; if [[ \"$confirm\" != \"y\" ]]; then exit 1; fi; fi'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == backend/src/*.ts || \"$FILE_PATH\" == backend/src/**/*.ts ]]; then echo \"🔍 TypeScript 类型检查...\"; cd backend && pnpm exec tsc --noEmit 2>&1 | head -20 || true; fi'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.ts || \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.vue ]]; then echo \"🔍 oxlint 检查...\"; cd frontend && pnpm exec oxlint \"$FILE_PATH\" 2>&1 | head -20 || true; fi'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == *.test.ts || \"$FILE_PATH\" == *.spec.ts ]]; then echo \"🧪 运行相关测试...\"; cd frontend && pnpm vitest run \"$FILE_PATH\" 2>&1 | tail -30 || true; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}

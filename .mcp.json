@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "redis": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-redis",
+        "redis://localhost:6379"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    },
+    "sqlite": {
+      "_description": "SQLite 数据库操作，支持 SQL 查询和数据管理",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite",
+        "--db-path",
+        "D:\\apdms\\coding_AI\\my_customTools\\database\\database.db"
+      ]
+    }
+  }
+}

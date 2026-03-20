@@ -1,0 +1,2199 @@
+openapi: 3.0.3
+info:
+  title: my_customTools API
+  description: |
+    媒体转码工具集后端 API 文档。
+
+    包含视频转码、图片处理、动图转换、文档转换等功能。
+
+    ## 认证方式
+    使用 JWT Bearer Token 认证，在请求头中添加：
+    ```
+    Authorization: Bearer <token>
+    ```
+
+    ## 响应格式
+    所有接口统一返回格式：
+    ```json
+    {
+      "code": 0,
+      "msg": "ok",
+      "data": {}
+    }
+    ```
+  version: 1.0.0
+  contact:
+    name: API Support
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3000/api
+    description: 开发环境
+  - url: http://production-server/api
+    description: 生产环境
+
+tags:
+  - name: System
+    description: 系统状态与健康检查
+  - name: Auth
+    description: 用户认证（注册、登录、令牌刷新）
+  - name: Upload
+    description: 文件分片上传
+  - name: Tasks
+    description: 转码任务管理
+  - name: Queue
+    description: 任务队列管理
+  - name: Download
+    description: 文件下载
+  - name: Config
+    description: 系统配置管理
+  - name: Clean
+    description: 清理服务
+  - name: Export
+    description: 任务报告导出
+  - name: User
+    description: 用户信息（兼容 Vben Admin）
+  - name: Menu
+    description: 菜单配置（兼容 Vben Admin）
+  - name: Document
+    description: 文档格式转换
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Token 认证
+
+  schemas:
+    # ========== 通用响应 ==========
+    ApiResponse:
+      type: object
+      required:
+        - code
+        - msg
+        - data
+      properties:
+        code:
+          type: integer
+          description: 业务状态码，0 表示成功
+          example: 0
+        msg:
+          type: string
+          description: 响应消息
+          example: "ok"
+        data:
+          type: object
+          description: 响应数据
+
+    PaginatedData:
+      type: object
+      properties:
+        list:
+          type: array
+          items: {}
+        pagination:
+          type: object
+          properties:
+            total:
+              type: integer
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            totalPages:
+              type: integer
+
+    # ========== 用户相关 ==========
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        role:
+          type: string
+          enum: [admin, user]
+        createdAt:
+          type: string
+          format: date-time
+        lastLoginAt:
+          type: string
+          format: date-time
+
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+
+    LoginResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+
+    RegisterRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+        password:
+          type: string
+          format: password
+          minLength: 6
+
+    ChangePasswordRequest:
+      type: object
+      required:
+        - oldPassword
+        - newPassword
+      properties:
+        oldPassword:
+          type: string
+          format: password
+        newPassword:
+          type: string
+          format: password
+          minLength: 6
+
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+
+    # ========== 任务相关 ==========
+    TaskStatus:
+      type: string
+      enum: [waiting, uploading, processing, completed, failed, cancelled]
+
+    TaskType:
+      type: string
+      enum: [video, img, anim, document]
+
+    BaseTask:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/TaskType'
+        userId:
+          type: string
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+        inputPath:
+          type: string
+        outputPath:
+          type: string
+        inputFormat:
+          type: string
+        outputFormat:
+          type: string
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        config:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        startedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        errorMsg:
+          type: string
+
+    CreateTaskRequest:
+      type: object
+      required:
+        - type
+        - fileName
+        - inputPath
+        - outputFormat
+      properties:
+        type:
+          $ref: '#/components/schemas/TaskType'
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+        inputPath:
+          type: string
+        inputFormat:
+          type: string
+        outputFormat:
+          type: string
+        config:
+          oneOf:
+            - $ref: '#/components/schemas/VideoTranscodeConfig'
+            - $ref: '#/components/schemas/ImgTranscodeConfig'
+            - $ref: '#/components/schemas/AnimTranscodeConfig'
+
+    # ========== 转码配置 ==========
+    VideoTranscodeConfig:
+      type: object
+      properties:
+        videoCodec:
+          type: string
+          enum: [h264, h265, vp9, av1, copy]
+        resolution:
+          type: string
+          example: "1920x1080"
+        bitrate:
+          type: string
+          example: "4M"
+        crf:
+          type: integer
+          minimum: 0
+          maximum: 51
+        fps:
+          type: integer
+        audioCodec:
+          type: string
+          enum: [aac, mp3, opus, copy]
+        audioBitrate:
+          type: string
+          example: "128k"
+        startTime:
+          type: number
+        endTime:
+          type: number
+        rotate:
+          type: integer
+          enum: [90, -90, 180]
+        hwAccel:
+          type: string
+          enum: [nvidia, vaapi, videotoolbox]
+
+    ImgTranscodeConfig:
+      type: object
+      properties:
+        outputFormat:
+          type: string
+          enum: [jpg, jpeg, png, webp, avif, bmp, tiff, ico, heic]
+        quality:
+          type: integer
+          minimum: 1
+          maximum: 100
+        lossless:
+          type: boolean
+        resizeMode:
+          type: string
+          enum: [none, width, height, scale, fixed, crop]
+        width:
+          type: integer
+        height:
+          type: integer
+        keepAspect:
+          type: boolean
+        colorSpace:
+          type: string
+          enum: [original, srgb, rgb, cmyk, grayscale]
+        stripMeta:
+          type: boolean
+        stripICC:
+          type: boolean
+        rotate:
+          type: integer
+          enum: [0, 90, 180, 270]
+        flipH:
+          type: boolean
+        flipV:
+          type: boolean
+        background:
+          type: string
+        compression:
+          $ref: '#/components/schemas/ImageCompressionConfig'
+
+    AnimTranscodeConfig:
+      type: object
+      properties:
+        outputFormat:
+          type: string
+          enum: [gif, webp, apng]
+        fps:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        colors:
+          type: integer
+        quality:
+          type: integer
+        loop:
+          type: integer
+        dither:
+          type: string
+          enum: [bayer, floyd, none]
+        optimize:
+          type: boolean
+        delay:
+          type: integer
+        startTime:
+          type: number
+        duration:
+          type: number
+        imagePaths:
+          type: array
+          items:
+            type: string
+
+    ImageCompressionConfig:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum: [quality, size, percent]
+        targetSize:
+          type: integer
+          description: 目标大小（字节）
+        targetPercent:
+          type: integer
+          minimum: 1
+          maximum: 100
+        minQuality:
+          type: integer
+          minimum: 1
+          maximum: 100
+
+    # ========== 文档转换 ==========
+    DocumentTaskSubtype:
+      type: string
+      enum: [word-to-pdf, excel-to-csv, excel-to-word, pdf-merge, pdf-split]
+
+    DocumentTranscodeConfig:
+      type: object
+      properties:
+        subtype:
+          $ref: '#/components/schemas/DocumentTaskSubtype'
+        wordToPdf:
+          type: object
+          properties:
+            format:
+              type: string
+              enum: [pdf, pdfa]
+            quality:
+              type: string
+              enum: [screen, print, high]
+        excelToCsv:
+          type: object
+          properties:
+            sheet:
+              oneOf:
+                - type: string
+                - type: integer
+            delimiter:
+              type: string
+              enum: [',', ';', '\t']
+            encoding:
+              type: string
+              enum: [utf-8, gbk]
+        excelToWord:
+          type: object
+          properties:
+            sheet:
+              oneOf:
+                - type: string
+                - type: integer
+            template:
+              type: string
+        pdfMerge:
+          type: object
+          properties:
+            inputPaths:
+              type: array
+              items:
+                type: string
+            outputName:
+              type: string
+        pdfSplit:
+          type: object
+          properties:
+            mode:
+              type: string
+              enum: [page, range, all]
+            pages:
+              type: array
+              items:
+                type: integer
+            ranges:
+              type: array
+              items:
+                type: string
+
+    # ========== 上传相关 ==========
+    UploadSession:
+      type: object
+      properties:
+        uploadId:
+          type: string
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+        totalChunks:
+          type: integer
+        uploadedChunks:
+          type: array
+          items:
+            type: integer
+        type:
+          $ref: '#/components/schemas/TaskType'
+        userId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateUploadSessionRequest:
+      type: object
+      required:
+        - fileName
+        - fileSize
+        - type
+      properties:
+        fileName:
+          type: string
+        fileSize:
+          type: integer
+          minimum: 1
+        type:
+          type: string
+          enum: [video, img, anim]
+
+    UploadProgress:
+      type: object
+      properties:
+        uploadId:
+          type: string
+        uploadedChunks:
+          type: integer
+        totalChunks:
+          type: integer
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    # ========== 队列相关 ==========
+    QueueStatus:
+      type: object
+      properties:
+        waiting:
+          type: integer
+        active:
+          type: integer
+        completed:
+          type: integer
+        failed:
+          type: integer
+
+    QueueStats:
+      type: object
+      properties:
+        video:
+          $ref: '#/components/schemas/QueueStatus'
+        image:
+          $ref: '#/components/schemas/QueueStatus'
+        anim:
+          $ref: '#/components/schemas/QueueStatus'
+
+    # ========== 系统相关 ==========
+    SystemStatus:
+      type: object
+      properties:
+        cpu:
+          type: object
+          properties:
+            usage:
+              type: string
+            cores:
+              type: integer
+        memory:
+          type: object
+          properties:
+            total:
+              type: string
+            used:
+              type: string
+            free:
+              type: string
+            usage:
+              type: string
+        disk:
+          oneOf:
+            - type: string
+            - type: object
+              properties:
+                fs:
+                  type: string
+                total:
+                  type: string
+                used:
+                  type: string
+                usage:
+                  type: string
+        queue:
+          $ref: '#/components/schemas/QueueStats'
+        timestamp:
+          type: string
+          format: date-time
+
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ok, error]
+        timestamp:
+          type: string
+          format: date-time
+        uptime:
+          type: number
+          description: 运行时间（秒）
+
+    # ========== 配置相关 ==========
+    SystemConfig:
+      type: object
+      properties:
+        video:
+          type: object
+          properties:
+            parallelLimit:
+              type: integer
+            maxFileSize:
+              type: integer
+            allowedInputFormats:
+              type: array
+              items:
+                type: string
+        img:
+          type: object
+          properties:
+            parallelLimit:
+              type: integer
+            maxFileSize:
+              type: integer
+            allowedInputFormats:
+              type: array
+              items:
+                type: string
+        upload:
+          type: object
+          properties:
+            chunkSize:
+              type: integer
+            maxParallelUploads:
+              type: integer
+        storage:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [local, s3]
+            uploadDir:
+              type: string
+            outputDir:
+              type: string
+            autoClean:
+              type: boolean
+            cleanDays:
+              type: integer
+        updatedAt:
+          type: string
+          format: date-time
+
+    # ========== 菜单相关 ==========
+    MenuItem:
+      type: object
+      properties:
+        path:
+          type: string
+        name:
+          type: string
+        component:
+          type: string
+        meta:
+          type: object
+          properties:
+            title:
+              type: string
+            icon:
+              type: string
+
+paths:
+  # ==================== System ====================
+  /system/health:
+    get:
+      tags: [System]
+      summary: 健康检查
+      description: 用于负载均衡器或监控系统检测服务存活状态，无需认证
+      security: []
+      responses:
+        '200':
+          description: 服务正常
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/HealthStatus'
+
+  /system/status:
+    get:
+      tags: [System]
+      summary: 获取系统状态
+      description: 返回 CPU、内存、磁盘、队列使用情况
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/SystemStatus'
+
+  # ==================== Auth ====================
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: 用户注册
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: 注册成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: 参数错误或用户已存在
+        '403':
+          description: 系统已关闭注册功能
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: 用户登录
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: 用户名或密码错误
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: 刷新访问令牌
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: 刷新成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          accessToken:
+                            type: string
+                          refreshToken:
+                            type: string
+        '401':
+          description: 刷新令牌无效
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: 获取当前用户信息
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/User'
+        '404':
+          description: 用户不存在
+
+  /auth/password:
+    put:
+      tags: [Auth]
+      summary: 修改密码
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        '200':
+          description: 密码修改成功
+        '400':
+          description: 旧密码错误或参数无效
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: 用户登出
+      description: JWT 无状态，客户端清除 Token 即可
+      responses:
+        '200':
+          description: 登出成功
+
+  /auth/status:
+    get:
+      tags: [Auth]
+      summary: 获取认证系统状态
+      security: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          allowRegister:
+                            type: boolean
+
+  /auth/codes:
+    get:
+      tags: [Auth]
+      summary: 获取用户权限码
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: string
+
+  # ==================== Upload ====================
+  /upload/session:
+    post:
+      tags: [Upload]
+      summary: 创建上传会话
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUploadSessionRequest'
+      responses:
+        '200':
+          description: 会话创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          uploadId:
+                            type: string
+                          totalChunks:
+                            type: integer
+                          chunkSize:
+                            type: integer
+        '400':
+          description: 参数错误
+
+  /upload/chunk:
+    post:
+      tags: [Upload]
+      summary: 上传分片
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - uploadId
+                - chunkIndex
+                - file
+              properties:
+                uploadId:
+                  type: string
+                chunkIndex:
+                  type: integer
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: 上传成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/UploadProgress'
+        '400':
+          description: 参数错误或上传失败
+
+  /upload/complete:
+    post:
+      tags: [Upload]
+      summary: 完成上传
+      description: 合并所有分片，返回文件路径
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - uploadId
+              properties:
+                uploadId:
+                  type: string
+      responses:
+        '200':
+          description: 上传完成
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          filePath:
+                            type: string
+                          fileName:
+                            type: string
+        '400':
+          description: 参数错误或合并失败
+
+  /upload/progress/{uploadId}:
+    get:
+      tags: [Upload]
+      summary: 获取上传进度
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/UploadProgress'
+        '404':
+          description: 上传会话不存在
+
+  /upload/cancel/{uploadId}:
+    delete:
+      tags: [Upload]
+      summary: 取消上传
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 取消成功
+        '400':
+          description: 取消失败
+
+  /upload/list:
+    get:
+      tags: [Upload]
+      summary: 获取上传列表
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/UploadProgress'
+
+  /upload/config:
+    get:
+      tags: [Upload]
+      summary: 获取上传配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          chunkSize:
+                            type: integer
+                          maxParallelUploads:
+                            type: integer
+                          video:
+                            type: object
+                            properties:
+                              maxFileSize:
+                                type: integer
+                              allowedFormats:
+                                type: array
+                                items:
+                                  type: string
+                          img:
+                            type: object
+                            properties:
+                              maxFileSize:
+                                type: integer
+                              allowedFormats:
+                                type: array
+                                items:
+                                  type: string
+
+  # ==================== Tasks ====================
+  /tasks:
+    post:
+      tags: [Tasks]
+      summary: 创建任务
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+    get:
+      tags: [Tasks]
+      summary: 查询任务列表
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/TaskStatus'
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TaskType'
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/PaginatedData'
+
+  /tasks/stats:
+    get:
+      tags: [Tasks]
+      summary: 获取任务统计
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        additionalProperties:
+                          type: integer
+
+  /tasks/compose-gif:
+    post:
+      tags: [Tasks]
+      summary: 创建 GIF 合成任务
+      description: 将图片序列合成为 GIF/WebP/APNG
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - imagePaths
+                - outputFormat
+              properties:
+                imagePaths:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 1
+                outputFormat:
+                  type: string
+                  enum: [gif, webp, apng]
+                config:
+                  $ref: '#/components/schemas/AnimTranscodeConfig'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /tasks/{taskId}:
+    get:
+      tags: [Tasks]
+      summary: 获取任务详情
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '404':
+          description: 任务不存在
+
+    delete:
+      tags: [Tasks]
+      summary: 删除任务
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 删除成功
+        '400':
+          description: 删除失败
+
+  /tasks/{taskId}/status:
+    put:
+      tags: [Tasks]
+      summary: 更新任务状态
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - status
+              properties:
+                status:
+                  $ref: '#/components/schemas/TaskStatus'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /tasks/{taskId}/cancel:
+    post:
+      tags: [Tasks]
+      summary: 取消任务
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 取消失败
+
+  /tasks/{taskId}/retry:
+    post:
+      tags: [Tasks]
+      summary: 重试任务
+      description: 重新排队失败的任务
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 重试成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 重试失败
+
+  /tasks/{taskId}/submit:
+    post:
+      tags: [Tasks]
+      summary: 提交任务到队列
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 提交成功
+        '400':
+          description: 提交失败
+
+  # ==================== Queue ====================
+  /queue/stats:
+    get:
+      tags: [Queue]
+      summary: 获取队列统计
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/QueueStats'
+
+  /queue/pause/{type}:
+    post:
+      tags: [Queue]
+      summary: 暂停队列
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [video, img, anim]
+      responses:
+        '200':
+          description: 暂停成功
+        '400':
+          description: 参数错误
+
+  /queue/resume/{type}:
+    post:
+      tags: [Queue]
+      summary: 恢复队列
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [video, img, anim]
+      responses:
+        '200':
+          description: 恢复成功
+        '400':
+          description: 参数错误
+
+  /queue/clear/{type}:
+    delete:
+      tags: [Queue]
+      summary: 清空队列
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [video, img, anim]
+      responses:
+        '200':
+          description: 清空成功
+        '400':
+          description: 参数错误
+
+  # ==================== Download ====================
+  /download/list:
+    get:
+      tags: [Download]
+      summary: 获取可下载任务列表
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          list:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                fileName:
+                                  type: string
+                                outputFormat:
+                                  type: string
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                completedAt:
+                                  type: string
+                                  format: date-time
+                          total:
+                            type: integer
+
+  /download/size:
+    get:
+      tags: [Download]
+      summary: 获取下载空间占用
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          size:
+                            type: integer
+                            description: 字节数
+                          sizeMB:
+                            type: number
+
+  /download/batch:
+    post:
+      tags: [Download]
+      summary: 批量打包下载
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - taskIds
+              properties:
+                taskIds:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 1
+                  maxItems: 50
+      responses:
+        '200':
+          description: 下载文件流
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: 参数错误
+
+  /download/{taskId}:
+    get:
+      tags: [Download]
+      summary: 单文件下载
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 下载文件流
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: 任务未完成
+        '404':
+          description: 任务不存在或无权限
+
+  # ==================== Config ====================
+  /config:
+    get:
+      tags: [Config]
+      summary: 获取系统配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/SystemConfig'
+
+    put:
+      tags: [Config]
+      summary: 更新系统配置
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 部分配置更新
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/SystemConfig'
+        '400':
+          description: 参数错误
+
+  /config/reset:
+    post:
+      tags: [Config]
+      summary: 重置为默认配置
+      responses:
+        '200':
+          description: 重置成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/SystemConfig'
+
+  /config/diff:
+    get:
+      tags: [Config]
+      summary: 获取配置对比
+      description: 比较当前配置与默认配置的差异
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        description: 配置差异
+
+  /config/video:
+    get:
+      tags: [Config]
+      summary: 获取视频配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          parallelLimit:
+                            type: integer
+                          maxFileSize:
+                            type: integer
+                          allowedInputFormats:
+                            type: array
+                            items:
+                              type: string
+
+  /config/img:
+    get:
+      tags: [Config]
+      summary: 获取图片配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          parallelLimit:
+                            type: integer
+                          maxFileSize:
+                            type: integer
+                          allowedInputFormats:
+                            type: array
+                            items:
+                              type: string
+
+  /config/upload:
+    get:
+      tags: [Config]
+      summary: 获取上传配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          chunkSize:
+                            type: integer
+                          maxParallelUploads:
+                            type: integer
+
+  /config/storage:
+    get:
+      tags: [Config]
+      summary: 获取存储配置
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum: [local, s3]
+                          uploadDir:
+                            type: string
+                          outputDir:
+                            type: string
+                          autoClean:
+                            type: boolean
+                          cleanDays:
+                            type: integer
+
+  # ==================== Clean ====================
+  /clean/run:
+    post:
+      tags: [Clean]
+      summary: 执行手动清理
+      description: 需要管理员权限
+      responses:
+        '200':
+          description: 清理完成
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        description: 清理统计
+        '403':
+          description: 权限不足
+
+  /clean/stats:
+    get:
+      tags: [Clean]
+      summary: 获取清理统计
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        description: 清理统计信息
+
+  /clean/storage:
+    get:
+      tags: [Clean]
+      summary: 获取存储使用情况
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        description: 存储使用情况
+
+  /clean/tasks:
+    post:
+      tags: [Clean]
+      summary: 清理旧任务
+      description: 需要管理员权限
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                maxAgeDays:
+                  type: integer
+                  default: 7
+                  description: 清理多少天前的任务
+      responses:
+        '200':
+          description: 清理成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          tasksRemoved:
+                            type: integer
+        '403':
+          description: 权限不足
+
+  /clean/temp:
+    post:
+      tags: [Clean]
+      summary: 清理临时文件
+      description: 需要管理员权限
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                maxAgeHours:
+                  type: integer
+                  default: 24
+                  description: 清理多少小时前的临时文件
+      responses:
+        '200':
+          description: 清理成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          filesRemoved:
+                            type: integer
+        '403':
+          description: 权限不足
+
+  # ==================== Export ====================
+  /export/tasks:
+    get:
+      tags: [Export]
+      summary: 导出任务报告
+      parameters:
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, csv]
+            default: json
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/TaskStatus'
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TaskType'
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 导出文件
+          content:
+            application/json:
+              schema:
+                type: string
+            text/csv:
+              schema:
+                type: string
+        '400':
+          description: 参数错误
+
+  /export/stats:
+    get:
+      tags: [Export]
+      summary: 获取导出统计
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        description: 导出统计信息
+
+  # ==================== User ====================
+  /user/info:
+    get:
+      tags: [User]
+      summary: 获取用户信息
+      description: 兼容 Vben Admin 的用户信息接口
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          userId:
+                            type: string
+                          username:
+                            type: string
+                          realName:
+                            type: string
+                          avatar:
+                            type: string
+                          desc:
+                            type: string
+                          homePath:
+                            type: string
+                          roles:
+                            type: array
+                            items:
+                              type: string
+        '401':
+          description: 未授权
+        '404':
+          description: 用户不存在
+
+  # ==================== Menu ====================
+  /menu/all:
+    get:
+      tags: [Menu]
+      summary: 获取用户菜单
+      description: 根据用户角色返回不同菜单配置，兼容 Vben Admin
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/MenuItem'
+
+  # ==================== Document ====================
+  /document/encoders:
+    get:
+      tags: [Document]
+      summary: 获取支持的文档转换类型
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          encoders:
+                            type: array
+                            items:
+                              type: object
+                          supportedFormats:
+                            type: object
+
+  /document/create:
+    post:
+      tags: [Document]
+      summary: 创建文档转换任务
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - subtype
+              properties:
+                subtype:
+                  $ref: '#/components/schemas/DocumentTaskSubtype'
+                fileName:
+                  type: string
+                inputPath:
+                  type: string
+                inputPaths:
+                  type: array
+                  items:
+                    type: string
+                inputFormat:
+                  type: string
+                config:
+                  $ref: '#/components/schemas/DocumentTranscodeConfig'
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /document/merge-pdf:
+    post:
+      tags: [Document]
+      summary: 合并 PDF
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputPaths
+              properties:
+                inputPaths:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 2
+                outputName:
+                  type: string
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /document/split-pdf:
+    post:
+      tags: [Document]
+      summary: 拆分 PDF
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputPath
+                - mode
+              properties:
+                inputPath:
+                  type: string
+                mode:
+                  type: string
+                  enum: [page, range, all]
+                pages:
+                  type: array
+                  items:
+                    type: integer
+                ranges:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /document/word-to-pdf:
+    post:
+      tags: [Document]
+      summary: Word 转 PDF
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputPath
+              properties:
+                inputPath:
+                  type: string
+                format:
+                  type: string
+                  enum: [pdf, pdfa]
+                  default: pdf
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /document/excel-to-csv:
+    post:
+      tags: [Document]
+      summary: Excel 转 CSV
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputPath
+              properties:
+                inputPath:
+                  type: string
+                sheet:
+                  oneOf:
+                    - type: string
+                    - type: integer
+                delimiter:
+                  type: string
+                  enum: [',', ';', '\t']
+                  default: ','
+                encoding:
+                  type: string
+                  enum: [utf-8, gbk]
+                  default: utf-8
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误
+
+  /document/excel-to-word:
+    post:
+      tags: [Document]
+      summary: Excel 转 Word
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - inputPath
+              properties:
+                inputPath:
+                  type: string
+                sheet:
+                  oneOf:
+                    - type: string
+                    - type: integer
+      responses:
+        '200':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/BaseTask'
+        '400':
+          description: 参数错误

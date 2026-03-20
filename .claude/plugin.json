@@ -1,0 +1,7 @@
+{
+  "name": "my-customtools-agents",
+  "version": "1.0.0",
+  "description": "自定义工具集的专用 Agents 和 Skills",
+  "agents": "./agents",
+  "skills": "./skills"
+}

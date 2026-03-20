@@ -1,0 +1,19 @@
+[    1051ms] [WARNING] [Vue warn]: Failed to resolve component: a-button
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <ProfilePage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/profile" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=false onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5668/@vite/client:509
