@@ -22,37 +22,55 @@ const DEFAULT_MENUS = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: 'views/dashboard/index',
+    component: '/dashboard/index',
     meta: {
-      title: '仪表盘',
-      icon: 'mdi:view-dashboard'
+      title: '项目看板',
+      icon: 'lucide:layout-dashboard'
+    }
+  },
+  {
+    path: '/video',
+    name: 'Video',
+    component: '/video/index',
+    meta: {
+      title: '视频转码',
+      icon: 'lucide:video'
+    }
+  },
+  {
+    path: '/image',
+    name: 'Image',
+    component: '/image/index',
+    meta: {
+      title: '图片转码',
+      icon: 'lucide:image'
+    }
+  },
+  {
+    path: '/document',
+    name: 'Document',
+    component: '/document/index',
+    meta: {
+      title: '文档转换',
+      icon: 'lucide:file-text'
     }
   },
   {
     path: '/tasks',
     name: 'Tasks',
-    component: 'views/tasks/index',
+    component: '/tasks/index',
     meta: {
       title: '任务管理',
-      icon: 'mdi:format-list-bulleted'
+      icon: 'lucide:list-todo'
     }
   },
   {
-    path: '/upload',
-    name: 'Upload',
-    component: 'views/upload/index',
-    meta: {
-      title: '文件上传',
-      icon: 'mdi:cloud-upload'
-    }
-  },
-  {
-    path: '/config',
-    name: 'Config',
-    component: 'views/config/index',
+    path: '/settings',
+    name: 'Settings',
+    component: '/settings/index',
     meta: {
       title: '系统配置',
-      icon: 'mdi:cog'
+      icon: 'lucide:settings'
     }
   }
 ]
