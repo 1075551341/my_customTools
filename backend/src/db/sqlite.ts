@@ -7,6 +7,7 @@
  */
 
 import Database from 'better-sqlite3'
+import type { Database as DatabaseType } from 'better-sqlite3'
 import path from 'path'
 import fs from 'fs'
 import config from '../config'
@@ -21,7 +22,7 @@ if (!fs.existsSync(dataDir)) {
 }
 
 // 创建数据库连接（单例）
-const db = new Database(DB_PATH)
+const db: DatabaseType = new Database(DB_PATH)
 
 // 启用 WAL 模式，提升并发性能
 db.pragma('journal_mode = WAL')
