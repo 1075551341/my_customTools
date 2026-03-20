@@ -1,0 +1,2 @@
+[    1790ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[   71133ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://localhost:5667/api/download/task_1774020827966_qp3ex2t:0
