@@ -15,6 +15,7 @@ import type {
   QueueStatsData,
   SystemNoticeData
 } from './events'
+import type { Message } from '../types'
 
 /**
  * Socket.io 服务器实例
