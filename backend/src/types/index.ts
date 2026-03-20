@@ -345,3 +345,23 @@ export interface DocumentTranscodeResult {
   /** PDF 拆分时的多个输出文件 */
   outputPaths?: string[];
 }
+
+/**
+ * 消息类型
+ */
+export type MessageType = "normal" | "todo";
+
+/**
+ * 消息推送
+ */
+export interface Message {
+  id: string;
+  userId: string;
+  type: MessageType;
+  title: string;
+  content: string;
+  isRead: boolean;
+  link?: string;
+  createdAt: string;
+  readAt?: string;
+}

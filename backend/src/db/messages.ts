@@ -6,31 +6,31 @@
  * @module db/messages
  */
 
-import fs from 'fs'
-import path from 'path'
-import config from '../config'
-import type { Message } from '../types'
+import fs from "fs";
+import path from "path";
+import config from "../config";
+import type { Message } from "../types";
 
 /**
  * 消息数据文件路径
  */
-const MESSAGES_FILE = path.join(config.storage.dataDir, 'messages.json')
+const MESSAGES_FILE = path.join(config.storage.dataDir, "messages.json");
 
 /**
  * 消息数据结构
  */
 interface MessagesData {
-  messages: Message[]
-  lastUpdated: string
+  messages: Message[];
+  lastUpdated: string;
 }
 
 /**
  * 确保数据目录存在
  */
 function ensureDataDir(): void {
-  const dataDir = config.storage.dataDir
+  const dataDir = config.storage.dataDir;
   if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true })
+    fs.mkdirSync(dataDir, { recursive: true });
   }
 }
 
@@ -40,25 +40,29 @@ function ensureDataDir(): void {
  * @returns 消息数据对象
  */
 function readMessagesData(): MessagesData {
-  ensureDataDir()
+  ensureDataDir();
 
   if (!fs.existsSync(MESSAGES_FILE)) {
     const initialData: MessagesData = {
       messages: [],
-      lastUpdated: new Date().toISOString()
-    }
-    fs.writeFileSync(MESSAGES_FILE, JSON.stringify(initialData, null, 2), 'utf-8')
-    return initialData
+      lastUpdated: new Date().toISOString(),
+    };
+    fs.writeFileSync(
+      MESSAGES_FILE,
+      JSON.stringify(initialData, null, 2),
+      "utf-8",
+    );
+    return initialData;
   }
 
   try {
-    const content = fs.readFileSync(MESSAGES_FILE, 'utf-8')
-    return JSON.parse(content)
+    const content = fs.readFileSync(MESSAGES_FILE, "utf-8");
+    return JSON.parse(content);
   } catch {
     return {
       messages: [],
-      lastUpdated: new Date().toISOString()
-    }
+      lastUpdated: new Date().toISOString(),
+    };
   }
 }
 
@@ -68,9 +72,9 @@ function readMessagesData(): MessagesData {
  * @param data - 消息数据对象
  */
 function writeMessagesData(data: MessagesData): void {
-  ensureDataDir()
-  data.lastUpdated = new Date().toISOString()
-  fs.writeFileSync(MESSAGES_FILE, JSON.stringify(data, null, 2), 'utf-8')
+  ensureDataDir();
+  data.lastUpdated = new Date().toISOString();
+  fs.writeFileSync(MESSAGES_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
 /**
@@ -79,7 +83,7 @@ function writeMessagesData(data: MessagesData): void {
  * @returns 唯一消息 ID
  */
 function generateMessageId(): string {
-  return `msg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
+  return `msg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 }
 
 /**
@@ -88,19 +92,21 @@ function generateMessageId(): string {
  * @param data - 消息数据（不含 ID 和 createdAt）
  * @returns 创建的消息
  */
-export function createMessage(data: Omit<Message, 'id' | 'createdAt'>): Message {
-  const messagesData = readMessagesData()
+export function createMessage(
+  data: Omit<Message, "id" | "createdAt">,
+): Message {
+  const messagesData = readMessagesData();
 
   const message: Message = {
     ...data,
     id: generateMessageId(),
-    createdAt: new Date().toISOString()
-  }
+    createdAt: new Date().toISOString(),
+  };
 
-  messagesData.messages.push(message)
-  writeMessagesData(messagesData)
+  messagesData.messages.push(message);
+  writeMessagesData(messagesData);
 
-  return message
+  return message;
 }
 
 /**
@@ -109,7 +115,7 @@ export function createMessage(data: Omit<Message, 'id' | 'createdAt'>): Message 
  * @returns 消息列表
  */
 export function findAll(): Message[] {
-  return readMessagesData().messages
+  return readMessagesData().messages;
 }
 
 /**
@@ -119,7 +125,7 @@ export function findAll(): Message[] {
  * @returns 消息对象或 undefined
  */
 export function findById(id: string): Message | undefined {
-  return findAll().find(msg => msg.id === id)
+  return findAll().find((msg) => msg.id === id);
 }
 
 /**
@@ -129,7 +135,7 @@ export function findById(id: string): Message | undefined {
  * @returns 消息列表
  */
 export function findByUserId(userId: string): Message[] {
-  return findAll().filter(msg => msg.userId === userId)
+  return findAll().filter((msg) => msg.userId === userId);
 }
 
 /**
@@ -139,30 +145,32 @@ export function findByUserId(userId: string): Message[] {
  * @returns 分页结果
  */
 export function findPaginated(params: {
-  userId: string
-  type?: 'normal' | 'todo'
-  isRead?: boolean
-  page: number
-  pageSize: number
+  userId: string;
+  type?: "normal" | "todo";
+  isRead?: boolean;
+  page: number;
+  pageSize: number;
 }): { list: Message[]; total: number } {
-  let messages = findByUserId(params.userId)
+  let messages = findByUserId(params.userId);
 
   // 过滤
   if (params.type !== undefined) {
-    messages = messages.filter(m => m.type === params.type)
+    messages = messages.filter((m) => m.type === params.type);
   }
   if (params.isRead !== undefined) {
-    messages = messages.filter(m => m.isRead === params.isRead)
+    messages = messages.filter((m) => m.isRead === params.isRead);
   }
 
   // 按创建时间倒序
-  messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  messages.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
 
-  const total = messages.length
-  const start = (params.page - 1) * params.pageSize
-  const list = messages.slice(start, start + params.pageSize)
+  const total = messages.length;
+  const start = (params.page - 1) * params.pageSize;
+  const list = messages.slice(start, start + params.pageSize);
 
-  return { list, total }
+  return { list, total };
 }
 
 /**
@@ -172,7 +180,7 @@ export function findPaginated(params: {
  * @returns 未读消息数量
  */
 export function getUnreadCount(userId: string): number {
-  return findByUserId(userId).filter(m => !m.isRead).length
+  return findByUserId(userId).filter((m) => !m.isRead).length;
 }
 
 /**
@@ -182,10 +190,15 @@ export function getUnreadCount(userId: string): number {
  * @param limit - 数量限制
  * @returns 最新消息列表
  */
-export function getLatestMessages(userId: string, limit: number = 5): Message[] {
-  const messages = findByUserId(userId)
-  messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-  return messages.slice(0, limit)
+export function getLatestMessages(
+  userId: string,
+  limit: number = 5,
+): Message[] {
+  const messages = findByUserId(userId);
+  messages.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+  return messages.slice(0, limit);
 }
 
 /**
@@ -196,19 +209,19 @@ export function getLatestMessages(userId: string, limit: number = 5): Message[] 
  * @returns 是否成功
  */
 export function markAsRead(messageId: string, userId: string): boolean {
-  const messagesData = readMessagesData()
+  const messagesData = readMessagesData();
   const index = messagesData.messages.findIndex(
-    m => m.id === messageId && m.userId === userId
-  )
+    (m) => m.id === messageId && m.userId === userId,
+  );
 
   if (index === -1) {
-    return false
+    return false;
   }
 
-  messagesData.messages[index].isRead = true
-  messagesData.messages[index].readAt = new Date().toISOString()
-  writeMessagesData(messagesData)
-  return true
+  messagesData.messages[index].isRead = true;
+  messagesData.messages[index].readAt = new Date().toISOString();
+  writeMessagesData(messagesData);
+  return true;
 }
 
 /**
@@ -218,22 +231,22 @@ export function markAsRead(messageId: string, userId: string): boolean {
  * @returns 标记为已读的消息数量
  */
 export function markAllAsRead(userId: string): number {
-  const messagesData = readMessagesData()
-  let count = 0
+  const messagesData = readMessagesData();
+  let count = 0;
 
-  messagesData.messages.forEach(msg => {
+  messagesData.messages.forEach((msg) => {
     if (msg.userId === userId && !msg.isRead) {
-      msg.isRead = true
-      msg.readAt = new Date().toISOString()
-      count++
+      msg.isRead = true;
+      msg.readAt = new Date().toISOString();
+      count++;
     }
-  })
+  });
 
   if (count > 0) {
-    writeMessagesData(messagesData)
+    writeMessagesData(messagesData);
   }
 
-  return count
+  return count;
 }
 
 /**
@@ -244,19 +257,19 @@ export function markAllAsRead(userId: string): number {
  * @returns 是否成功
  */
 export function deleteMessage(messageId: string, userId: string): boolean {
-  const messagesData = readMessagesData()
-  const originalLength = messagesData.messages.length
+  const messagesData = readMessagesData();
+  const originalLength = messagesData.messages.length;
 
   messagesData.messages = messagesData.messages.filter(
-    m => !(m.id === messageId && m.userId === userId)
-  )
+    (m) => !(m.id === messageId && m.userId === userId),
+  );
 
   if (messagesData.messages.length !== originalLength) {
-    writeMessagesData(messagesData)
-    return true
+    writeMessagesData(messagesData);
+    return true;
   }
 
-  return false
+  return false;
 }
 
 /**
@@ -266,19 +279,19 @@ export function deleteMessage(messageId: string, userId: string): boolean {
  * @returns 删除的消息数量
  */
 export function clearAll(userId: string): number {
-  const messagesData = readMessagesData()
-  const originalLength = messagesData.messages.length
+  const messagesData = readMessagesData();
+  const originalLength = messagesData.messages.length;
 
   messagesData.messages = messagesData.messages.filter(
-    m => m.userId !== userId
-  )
+    (m) => m.userId !== userId,
+  );
 
-  const deleted = originalLength - messagesData.messages.length
+  const deleted = originalLength - messagesData.messages.length;
   if (deleted > 0) {
-    writeMessagesData(messagesData)
+    writeMessagesData(messagesData);
   }
 
-  return deleted
+  return deleted;
 }
 
 /**
@@ -288,19 +301,19 @@ export function clearAll(userId: string): number {
  * @returns 清理的消息数量
  */
 export function cleanOldMessages(maxAgeDays: number = 30): number {
-  const messagesData = readMessagesData()
-  const now = Date.now()
-  const maxAgeMs = maxAgeDays * 24 * 60 * 60 * 1000
+  const messagesData = readMessagesData();
+  const now = Date.now();
+  const maxAgeMs = maxAgeDays * 24 * 60 * 60 * 1000;
 
-  const originalLength = messagesData.messages.length
-  messagesData.messages = messagesData.messages.filter(msg => {
-    const age = now - new Date(msg.createdAt).getTime()
-    return age < maxAgeMs
-  })
+  const originalLength = messagesData.messages.length;
+  messagesData.messages = messagesData.messages.filter((msg) => {
+    const age = now - new Date(msg.createdAt).getTime();
+    return age < maxAgeMs;
+  });
 
   if (messagesData.messages.length !== originalLength) {
-    writeMessagesData(messagesData)
+    writeMessagesData(messagesData);
   }
 
-  return originalLength - messagesData.messages.length
+  return originalLength - messagesData.messages.length;
 }
