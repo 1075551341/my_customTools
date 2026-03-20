@@ -142,7 +142,7 @@ const defaults: DefaultConfig = {
    * CORS 默认配置
    */
   cors: {
-    origins: 'http://localhost:5173,http://localhost:5174,http://localhost:5999,http://localhost:6000,http://localhost:6001'
+    origins: 'http://localhost:5173,http://localhost:5174,http://localhost:5999,http://localhost:6000,http://localhost:6001,http://localhost:5666,http://localhost:5667'
   }
 }
 
