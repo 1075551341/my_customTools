@@ -21,6 +21,7 @@ import exportRoutes from './export'
 import userRoutes from './user'
 import menuRoutes from './menu'
 import documentRoutes from './document'
+import messageRoutes from './messages'
 
 /**
  * 创建路由实例

@@ -10,7 +10,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import * as messagesDb from "../db/messages";
 import { success, error, errors } from "../utils/response";
 import { authMiddleware } from "../middlewares/auth";
-import { socketService } from "../socket";
+import { socketEmitter } from "../socket";
 import type { Message, MessageType } from "../types";
 
 /**
@@ -119,7 +119,7 @@ router.put(
         return errors.unauthorized(res);
       }
 
-      const messageId = req.params.id;
+      const messageId = req.params.id as string;
       const success_flag = messagesDb.markAsRead(messageId, userId);
 
       if (!success_flag) {
@@ -171,7 +171,7 @@ router.delete(
         return errors.unauthorized(res);
       }
 
-      const messageId = req.params.id;
+      const messageId = req.params.id as string;
       const deleted = messagesDb.deleteMessage(messageId, userId);
 
       if (!deleted) {
@@ -244,7 +244,7 @@ router.post(
       });
 
       // 通过 WebSocket 推送新消息通知
-      socketService.emitMessagePush(targetUserId, message);
+      socketEmitter.emitMessagePush(targetUserId, message);
 
       return success(res, message);
     } catch (err) {
