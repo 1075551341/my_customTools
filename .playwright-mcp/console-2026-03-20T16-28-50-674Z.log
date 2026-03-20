@@ -1,0 +1,6 @@
+[  307632ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[  358288ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[  499438ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5667/api/user/info:0
+[  499472ms] [WARNING] [Vue Router warn]: uncaught error during route navigation: @ http://localhost:5667/@vite/client:509
+[  499473ms] [ERROR]  @ http://localhost:5667/@vite/client:509
+[  499473ms] [WARNING] [Vue Router warn]: Unexpected error when starting the router:  @ http://localhost:5667/@vite/client:509
