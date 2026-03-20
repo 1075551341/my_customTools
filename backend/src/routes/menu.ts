@@ -24,7 +24,7 @@ const DEFAULT_MENUS = [
     name: "Dashboard",
     component: "/dashboard/index",
     meta: {
-      title: "项目看板",
+      title: "中心看板",
       icon: "lucide:layout-dashboard",
     },
   },
@@ -71,6 +71,15 @@ const DEFAULT_MENUS = [
     meta: {
       title: "系统配置",
       icon: "lucide:settings",
+    },
+  },
+  {
+    path: "/upload",
+    name: "Upload",
+    component: "/upload/index",
+    meta: {
+      title: "文件上传",
+      icon: "lucide:upload",
     },
   },
 ];
@@ -84,7 +93,7 @@ const ADMIN_MENUS = [
     name: "Dashboard",
     component: "/dashboard/index",
     meta: {
-      title: "项目看板",
+      title: "中心看板",
       icon: "lucide:layout-dashboard",
     },
   },
@@ -131,6 +140,15 @@ const ADMIN_MENUS = [
     meta: {
       title: "系统配置",
       icon: "lucide:settings",
+    },
+  },
+  {
+    path: "/upload",
+    name: "Upload",
+    component: "/upload/index",
+    meta: {
+      title: "文件上传",
+      icon: "lucide:upload",
     },
   },
 ];

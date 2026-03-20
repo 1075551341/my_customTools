@@ -1,0 +1,6 @@
+[    1874ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[   68870ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[   81274ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[   81734ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[  102674ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/download/task_1774018299635_hypruj6:0
+[  151639ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/download/task_1774020827966_qp3ex2t:0

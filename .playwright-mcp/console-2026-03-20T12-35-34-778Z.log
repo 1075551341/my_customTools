@@ -1,0 +1,9 @@
+[     536ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5667/src/views/upload/index.vue?t=1774010073664:0
+[     627ms] Failed to fetch dynamically imported module: http://localhost:5667/src/views/upload/index.vue?t=1774010073664
+[     685ms] [WARNING] [Vue Router warn]: uncaught error during route navigation: @ http://localhost:5667/@vite/client:509
+[     687ms] [ERROR] TypeError: Failed to fetch dynamically imported module: http://localhost:5667/src/views/upload/index.vue?t=1774010073664 @ :0
+[     687ms] [WARNING] [Vue Router warn]: Unexpected error when starting the router: TypeError: Failed to fetch dynamically imported module: http://localhost:5667/src/views/upload/index.vue?t=1774010073664 @ http://localhost:5667/@vite/client:509
+[ 2023734ms] The requested module '/@fs/D:/apdms/coding_AI/my_customTools/frontend/packages/icons/src/index.ts' does not provide an export named 'UploadOutlined'
+[ 2023918ms] [WARNING] [Vue Router warn]: uncaught error during route navigation: @ http://localhost:5667/@vite/client:509
+[ 2023918ms] [ERROR] SyntaxError: The requested module '/@fs/D:/apdms/coding_AI/my_customTools/frontend/packages/icons/src/index.ts' does not provide an export named 'UploadOutlined' @ :0
+[ 2023919ms] [WARNING] [Vue Router warn]: Unexpected error when starting the router: SyntaxError: The requested module '/@fs/D:/apdms/coding_AI/my_customTools/frontend/packages/icons/src/index.ts' does not provide an export named 'UploadOutlined' @ http://localhost:5667/@vite/client:509

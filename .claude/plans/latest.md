@@ -1,14 +1,14 @@
-# 任务计划：rm -rf "D:/apdms/cod
+# 任务计划：sleep 5 && curl -s h
 
-**生成时间**：2026-03-20 20:22:33
-**会话 ID**：d2709b04
-**触发命令**：`rm -rf "D:/apdms/coding_AI/my_customTools/backend/node_modules/.ts-node" "D:/apdms/coding_AI/my_cust`
+**生成时间**：2026-03-20 22:35:08
+**会话 ID**：d3b2ff75
+**触发命令**：`sleep 5 && curl -s http://localhost:3000/api/system/health`
 
 ---
 
 ## 📋 任务分析
 
-任务：rm -rf "D:/apdms/coding_AI/my_customTools/backend/node_modules/.ts-node" "D:/apdms/coding_AI/my_customTools/backend/node_modules/.ts-node-dev" 2>/dev/null; echo "cache cleared"
+任务：sleep 5 && curl -s http://localhost:3000/api/system/health
 
 请在开始前确认任务范围和预期输出。
 

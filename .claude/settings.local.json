@@ -80,7 +80,17 @@
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_console_messages",
       "mcp__plugin_playwright_playwright__browser_tabs",
       "Bash(findstr LISTENING)",
-      "Bash(findstr :5667)"
+      "Bash(findstr :5667)",
+      "Bash(Select-Object Id, ProcessName)",
+      "Bash(findstr :5555)",
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "Bash(cmd /c \"taskkill /F /PID 36012\")",
+      "Bash(findstr :5173)",
+      "Bash(sqlite3 data/app.db \"SELECT * FROM users;\")",
+      "Bash(cmd /c \"taskkill /PID 26584 /F\")",
+      "Bash(kill:*)",
+      "Bash(cmd /c \"taskkill /IM node.exe /F\")",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyXzE3NzM5OTI3MzE3NjJfZG1sYmlibSIsImlhdCI6MTc3NDAxODQwMCwiZXhwIjoxNzc0MTA0ODAwfQ.test\")"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,
