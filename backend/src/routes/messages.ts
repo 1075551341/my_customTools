@@ -25,7 +25,7 @@ const router: RouterType = Router();
  * GET /api/messages
  */
 router.get(
-  "/messages",
+  "/",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -65,7 +65,7 @@ router.get(
  * GET /api/messages/unread-count
  */
 router.get(
-  "/messages/unread-count",
+  "/unread-count",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -88,7 +88,7 @@ router.get(
  * GET /api/messages/latest
  */
 router.get(
-  "/messages/latest",
+  "/latest",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -111,7 +111,7 @@ router.get(
  * PUT /api/messages/:id/read
  */
 router.put(
-  "/messages/:id/read",
+  "/:id/read",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -140,7 +140,7 @@ router.put(
  * PUT /api/messages/read-all
  */
 router.put(
-  "/messages/read-all",
+  "/read-all",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -163,7 +163,7 @@ router.put(
  * DELETE /api/messages/:id
  */
 router.delete(
-  "/messages/:id",
+  "/:id",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -192,7 +192,7 @@ router.delete(
  * DELETE /api/messages/all
  */
 router.delete(
-  "/messages/all",
+  "/all",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -215,7 +215,7 @@ router.delete(
  * POST /api/messages
  */
 router.post(
-  "/messages",
+  "/",
   authMiddleware,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
