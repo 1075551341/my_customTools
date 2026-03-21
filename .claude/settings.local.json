@@ -102,7 +102,36 @@
       "Bash(findstr :3001 :5670)",
       "Bash(findstr \"5670\")",
       "Bash(Select-Object Name, Status, StartType)",
-      "Bash(findstr \":6379\")"
+      "Bash(findstr \":6379\")",
+      "Bash(ffprobe -version)",
+      "Bash(ffprobe:*)",
+      "Bash(ffmpeg -version)",
+      "Bash(ffmpeg:*)",
+      "Bash(sharp:*)",
+      "Bash(sqlite3:*)",
+      "Bash(redis-cli:*)",
+      "Bash(Get-Process -Name redis)",
+      "Bash(Get-Process -Name ffmpeg)",
+      "Bash(pnpm --prefix backend dev)",
+      "Bash(cd frontend/apps/web-antd && pnpm dev)",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_network_requests",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__get_network_request",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__wait_for",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__hover",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__upload_file",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__type_text",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__press_key",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__resize_page",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__emulate",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__performance_start_trace",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__performance_stop_trace",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__lighthouse_audit",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_memory_snapshot",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__handle_dialog",
+      "Bash(pnpm exec vitest:*)",
+      "Bash(pnpm exec playwright:*)",
+      "Bash(Get-Process node)"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,
@@ -144,7 +173,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.ts || \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.vue ]]; then echo \"🔍 oxlint 检查...\"; cd frontend && pnpm exec oxlint \"$FILE_PATH\" 2>&1 | head -20 || true; fi'"
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.ts || \"$FILE_PATH\" == frontend/apps/web-antd/src/**/*.vue ]]; then echo \"🔍 TypeScript 编译检查...\"; cd frontend/apps/web-antd && pnpm exec vue-tsc --noEmit 2>&1 | head -20 || true; fi'"
           }
         ]
       },
@@ -153,7 +182,25 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == *.test.ts || \"$FILE_PATH\" == *.spec.ts ]]; then echo \"🧪 运行相关测试...\"; cd frontend && pnpm vitest run \"$FILE_PATH\" 2>&1 | tail -30 || true; fi'"
+            "command": "bash -c 'FILE_PATH=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE_PATH\" == *.test.ts || \"$FILE_PATH\" == *.spec.ts ]]; then echo \"🧪 运行相关测试...\"; cd frontend/apps/web-antd && pnpm vitest run \"$FILE_PATH\" 2>&1 | tail -30 || true; fi'"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash.*ffmpeg|Bash.*ffprobe",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"⚠️ FFmpeg 操作完成，检查输出目录：backend/uploads/output\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash.*redis-cli",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"📡 Redis 操作完成\""
           }
         ]
       }

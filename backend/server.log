@@ -194,3 +194,19 @@
 [2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/tasks?limit=3","status":200,"duration":"2ms","ip":"::1"}
 [2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","status":200,"duration":"2ms","ip":"::1"}
 [2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:23] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/health","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:33] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/health","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:33] [[33MWARN[39M] [33m业务错误 未提供认证令牌[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/latest","code":401}
+[2026-03-21 23:03:33] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/latest","status":401,"duration":"5ms","ip":"::1"}
+[2026-03-21 23:03:33] [[33MWARN[39M] [33m业务错误 未提供认证令牌[39m {"service":"my-customtools-backend","method":"GET","url":"/api/tasks?limit=3","code":401}
+[2026-03-21 23:03:33] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"GET","url":"/api/tasks?limit=3","status":401,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:34] [[33MWARN[39M] [33m业务错误 未提供认证令牌[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","code":401}
+[2026-03-21 23:03:34] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","status":401,"duration":"3ms","ip":"::1"}
+[2026-03-21 23:03:34] [[33MWARN[39M] [33m业务错误 未提供认证令牌[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","code":401}
+[2026-03-21 23:03:34] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","status":401,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:38] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"POST","url":"/api/auth/login","status":200,"duration":"73ms","ip":"::1"}
+[2026-03-21 23:03:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/latest","status":200,"duration":"2ms","ip":"::1"}
+[2026-03-21 23:03:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/tasks?limit=3","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:52] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:52] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:03:53] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/unread-count","status":200,"duration":"1ms","ip":"::1"}

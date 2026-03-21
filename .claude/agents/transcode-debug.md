@@ -116,12 +116,12 @@ Get-Process ffmpeg -ErrorAction SilentlyContinue
 
 ## 常见错误码
 
-| 错误 | 原因 | 解决方案 |
-|------|------|----------|
-| `ENOENT` | 文件不存在 | 检查输入路径是否正确 |
-| `EPERM` | 权限不足 | 以管理员身份运行 |
-| `EAGAIN` | 资源暂时不可用 | 等待队列空闲 |
-| `ERR_STREAM_WRITE_AFTER_END` | 流已关闭 | 重启服务 |
+| 错误                         | 原因           | 解决方案             |
+| ---------------------------- | -------------- | -------------------- |
+| `ENOENT`                     | 文件不存在     | 检查输入路径是否正确 |
+| `EPERM`                      | 权限不足       | 以管理员身份运行     |
+| `EAGAIN`                     | 资源暂时不可用 | 等待队列空闲         |
+| `ERR_STREAM_WRITE_AFTER_END` | 流已关闭       | 重启服务             |
 
 ## 输出格式
 
@@ -129,21 +129,25 @@ Get-Process ffmpeg -ErrorAction SilentlyContinue
 ## 转码诊断报告
 
 ### 任务信息
+
 - 任务 ID: {taskId}
 - 类型：{video/image/document/anim}
 - 状态：{failed/completed}
 
 ### 系统状态
+
 - FFmpeg: {版本}
 - Sharp: {版本}
 - Redis: {连接状态}
 - 磁盘空间：{可用空间}
 
 ### 问题分析
+
 1. {问题 1}
 2. {问题 2}
 
 ### 建议操作
+
 1. {操作 1}
 2. {操作 2}
 ```
