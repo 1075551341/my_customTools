@@ -94,7 +94,13 @@
       "Bash(findstr :3000)",
       "Bash(pnpm exec:*)",
       "Bash(Select-Object -Last 30)",
-      "Bash(Select-Object -First 20 FullName)"
+      "Bash(Select-Object -First 20 FullName)",
+      "Bash(BashOutput b44o49iso:*)",
+      "Bash(findstr :5669)",
+      "Bash(findstr :5173 :5669)",
+      "Bash(xargs cat:*)",
+      "Bash(findstr :3001 :5670)",
+      "Bash(findstr \"5670\")"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,

@@ -57,6 +57,7 @@ const image_1 = __importDefault(require("../encoders/image"));
 const anim_1 = __importStar(require("../encoders/anim"));
 const documentEncoders = __importStar(require("../encoders/document"));
 const tasksService = __importStar(require("../services/tasks"));
+const messagesDb = __importStar(require("../db/messages"));
 const socket_1 = require("../socket");
 const logger_1 = __importDefault(require("../utils/logger"));
 const config_1 = __importDefault(require("../config"));
@@ -75,7 +76,7 @@ const queueProcessors = new Map();
  */
 function initWorkers(app) {
     // 获取 Socket.io 实例
-    io = app.get('io');
+    io = app.get("io");
     // 初始化 Socket 发射器
     (0, socket_1.initSocketEmitter)(io);
     // 初始化队列事件监听
@@ -85,7 +86,7 @@ function initWorkers(app) {
     startImageWorker();
     startAnimWorker();
     startDocumentWorker();
-    logger_1.default.info('转码工作进程已启动');
+    logger_1.default.info("转码工作进程已启动");
 }
 /**
  * 启动视频转码工作进程
@@ -93,20 +94,20 @@ function initWorkers(app) {
 function startVideoWorker() {
     const concurrency = config_1.default.video.parallelLimit || 3;
     queue_1.videoQueue.process(concurrency, async (job) => {
-        const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
-        logger_1.default.info('开始视频转码任务', { taskId, jobId: job.id });
+        const { taskId, type, inputPath, outputPath, config: transcodeConfig, } = job.data;
+        logger_1.default.info("开始视频转码任务", { taskId, jobId: job.id });
         try {
             // 检查任务状态，避免重试时状态冲突
             const task = tasksService.getTask(taskId);
-            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
-                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+            if (["completed", "failed", "cancelled"].includes(task.status)) {
+                logger_1.default.warn("任务已是终态，跳过处理", { taskId, status: task.status });
                 return { skipped: true, reason: `任务状态为 ${task.status}` };
             }
             // 更新任务状态为处理中
-            tasksService.updateTaskStatus(taskId, 'processing');
+            tasksService.updateTaskStatus(taskId, "processing");
             // 获取编码器
             const encoderConfig = transcodeConfig;
-            const encoderName = encoderConfig.videoCodec || 'h264';
+            const encoderName = encoderConfig.videoCodec || "h264";
             const encoder = videoEncoders.getEncoder(encoderName);
             if (!encoder) {
                 throw new Error(`不支持的视频编码器: ${encoderName}`);
@@ -119,8 +120,8 @@ function startVideoWorker() {
                 pushProgress(job.data.userId, {
                     taskId,
                     percent: progress.percent,
-                    stage: '转码中',
-                    timestamp: Date.now()
+                    stage: "转码中",
+                    timestamp: Date.now(),
                 });
                 // 更新 Bull 任务进度
                 job.progress(progress.percent);
@@ -131,13 +132,13 @@ function startVideoWorker() {
             pushCompleted(job.data.userId, {
                 taskId,
                 outputSize: result.outputSize,
-                format: 'mp4',
-                duration: result.duration
+                format: "mp4",
+                duration: result.duration,
             });
-            logger_1.default.info('视频转码任务完成', {
+            logger_1.default.info("视频转码任务完成", {
                 taskId,
                 outputSize: result.outputSize,
-                duration: result.duration
+                duration: result.duration,
             });
             return result;
         }
@@ -147,7 +148,7 @@ function startVideoWorker() {
             tasksService.markTaskFailed(taskId, errorMsg);
             // 推送失败通知
             pushFailed(job.data.userId, { taskId, errorMsg });
-            logger_1.default.error('视频转码任务失败', { taskId, error: errorMsg });
+            logger_1.default.error("视频转码任务失败", { taskId, error: errorMsg });
             throw error;
         }
     });
@@ -159,21 +160,22 @@ function startVideoWorker() {
 function startImageWorker() {
     const concurrency = config_1.default.img.parallelLimit || 5;
     queue_1.imageQueue.process(concurrency, async (job) => {
-        const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
-        logger_1.default.info('开始图片转码任务', { taskId, jobId: job.id });
+        const { taskId, type, inputPath, outputPath, config: transcodeConfig, } = job.data;
+        logger_1.default.info("开始图片转码任务", { taskId, jobId: job.id });
         try {
             // 检查任务状态，避免重试时状态冲突
             const task = tasksService.getTask(taskId);
-            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
-                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+            if (["completed", "failed", "cancelled"].includes(task.status)) {
+                logger_1.default.warn("任务已是终态，跳过处理", { taskId, status: task.status });
                 return { skipped: true, reason: `任务状态为 ${task.status}` };
             }
             // 更新任务状态为处理中
-            tasksService.updateTaskStatus(taskId, 'processing');
+            tasksService.updateTaskStatus(taskId, "processing");
             // 获取转码配置，确保 outputFormat 存在
             const encoderConfig = {
-                outputFormat: (task.outputFormat || 'jpg'),
-                ...transcodeConfig
+                outputFormat: (task.outputFormat ||
+                    "jpg"),
+                ...transcodeConfig,
             };
             // 执行转码
             const result = await image_1.default.transcode(inputPath, outputPath, encoderConfig, (progress) => {
@@ -184,7 +186,7 @@ function startImageWorker() {
                     taskId,
                     percent: progress.percent,
                     stage: progress.stage,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
                 });
                 // 更新 Bull 任务进度
                 job.progress(progress.percent);
@@ -195,12 +197,12 @@ function startImageWorker() {
             pushCompleted(job.data.userId, {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
-            logger_1.default.info('图片转码任务完成', {
+            logger_1.default.info("图片转码任务完成", {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
             return result;
         }
@@ -210,7 +212,7 @@ function startImageWorker() {
             tasksService.markTaskFailed(taskId, errorMsg);
             // 推送失败通知
             pushFailed(job.data.userId, { taskId, errorMsg });
-            logger_1.default.error('图片转码任务失败', { taskId, error: errorMsg });
+            logger_1.default.error("图片转码任务失败", { taskId, error: errorMsg });
             throw error;
         }
     });
@@ -222,17 +224,17 @@ function startImageWorker() {
 function startAnimWorker() {
     const concurrency = 2; // 动图转码较慢，限制并发
     queue_1.animQueue.process(concurrency, async (job) => {
-        const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
-        logger_1.default.info('开始动图转码任务', { taskId, jobId: job.id });
+        const { taskId, type, inputPath, outputPath, config: transcodeConfig, } = job.data;
+        logger_1.default.info("开始动图转码任务", { taskId, jobId: job.id });
         try {
             // 检查任务状态，避免重试时状态冲突
             const task = tasksService.getTask(taskId);
-            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
-                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+            if (["completed", "failed", "cancelled"].includes(task.status)) {
+                logger_1.default.warn("任务已是终态，跳过处理", { taskId, status: task.status });
                 return { skipped: true, reason: `任务状态为 ${task.status}` };
             }
             // 更新任务状态为处理中
-            tasksService.updateTaskStatus(taskId, 'processing');
+            tasksService.updateTaskStatus(taskId, "processing");
             // 获取转码配置
             const encoderConfig = transcodeConfig;
             // 检查是否是图片序列合成任务
@@ -248,7 +250,7 @@ function startAnimWorker() {
                         taskId,
                         percent: progress.percent,
                         stage: progress.stage,
-                        timestamp: Date.now()
+                        timestamp: Date.now(),
                     });
                     // 更新 Bull 任务进度
                     job.progress(progress.percent);
@@ -264,7 +266,7 @@ function startAnimWorker() {
                         taskId,
                         percent: progress.percent,
                         stage: progress.stage,
-                        timestamp: Date.now()
+                        timestamp: Date.now(),
                     });
                     // 更新 Bull 任务进度
                     job.progress(progress.percent);
@@ -276,12 +278,12 @@ function startAnimWorker() {
             pushCompleted(job.data.userId, {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
-            logger_1.default.info('动图转码任务完成', {
+            logger_1.default.info("动图转码任务完成", {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
             return result;
         }
@@ -291,7 +293,7 @@ function startAnimWorker() {
             tasksService.markTaskFailed(taskId, errorMsg);
             // 推送失败通知
             pushFailed(job.data.userId, { taskId, errorMsg });
-            logger_1.default.error('动图转码任务失败', { taskId, error: errorMsg });
+            logger_1.default.error("动图转码任务失败", { taskId, error: errorMsg });
             throw error;
         }
     });
@@ -303,17 +305,20 @@ function startAnimWorker() {
 function startDocumentWorker() {
     const concurrency = 3;
     queue_1.documentQueue.process(concurrency, async (job) => {
-        const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
-        logger_1.default.info('开始文档转换任务', { taskId, jobId: job.id });
+        const { taskId, type, inputPath, outputPath, config: transcodeConfig, } = job.data;
+        logger_1.default.info("开始文档转换任务", { taskId, jobId: job.id });
         try {
             // 检查任务状态，避免重试时状态冲突
             const task = tasksService.getTask(taskId);
-            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
-                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+            if (["completed", "failed", "cancelled"].includes(task.status)) {
+                logger_1.default.warn("任务已是终态，跳过处理", {
+                    taskId,
+                    status: task.status,
+                });
                 return { skipped: true, reason: `任务状态为 ${task.status}` };
             }
             // 更新任务状态为处理中
-            tasksService.updateTaskStatus(taskId, 'processing');
+            tasksService.updateTaskStatus(taskId, "processing");
             // 获取转码配置
             const encoderConfig = transcodeConfig;
             const subtype = encoderConfig.subtype;
@@ -323,8 +328,8 @@ function startDocumentWorker() {
                 throw new Error(`不支持的文档转换类型: ${subtype}`);
             }
             // 处理多文件输入（如 PDF 合并）
-            const inputPaths = inputPath.includes(',')
-                ? inputPath.split(',')
+            const inputPaths = inputPath.includes(",")
+                ? inputPath.split(",")
                 : inputPath;
             // 执行转换
             const result = await encoder.transcode(inputPaths, outputPath, encoderConfig, (progress) => {
@@ -335,7 +340,7 @@ function startDocumentWorker() {
                     taskId,
                     percent: progress.percent,
                     stage: progress.stage,
-                    timestamp: Date.now()
+                    timestamp: Date.now(),
                 });
                 // 更新 Bull 任务进度
                 job.progress(progress.percent);
@@ -346,12 +351,12 @@ function startDocumentWorker() {
             pushCompleted(job.data.userId, {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
-            logger_1.default.info('文档转换任务完成', {
+            logger_1.default.info("文档转换任务完成", {
                 taskId,
                 outputSize: result.outputSize,
-                format: result.format
+                format: result.format,
             });
             return result;
         }
@@ -361,7 +366,7 @@ function startDocumentWorker() {
             tasksService.markTaskFailed(taskId, errorMsg);
             // 推送失败通知
             pushFailed(job.data.userId, { taskId, errorMsg });
-            logger_1.default.error('文档转换任务失败', { taskId, error: errorMsg });
+            logger_1.default.error("文档转换任务失败", { taskId, error: errorMsg });
             throw error;
         }
     });
@@ -387,14 +392,29 @@ function pushCompleted(userId, data) {
         taskId: data.taskId,
         outputSize: data.outputSize,
         format: data.format,
-        duration: data.duration || 0
+        duration: data.duration || 0,
     });
     // 同时推送状态变更
     socket_1.socketEmitter.emitTaskStatus(userId, {
         taskId: data.taskId,
-        status: 'completed',
-        outputSize: data.outputSize
+        status: "completed",
+        outputSize: data.outputSize,
     });
+    // 创建消息通知
+    try {
+        const task = tasksService.getTask(data.taskId);
+        messagesDb.createMessage({
+            userId,
+            type: "normal",
+            title: "任务完成",
+            content: `您的${task.type}转码任务 "${task.fileName}" 已完成，输出格式：${data.format}`,
+            link: `/tasks`,
+            isRead: false,
+        });
+    }
+    catch (error) {
+        logger_1.default.error("创建完成消息失败", { error });
+    }
 }
 /**
  * 推送任务失败通知
@@ -405,14 +425,29 @@ function pushCompleted(userId, data) {
 function pushFailed(userId, data) {
     socket_1.socketEmitter.emitTaskFailed(userId, {
         taskId: data.taskId,
-        errorMsg: data.errorMsg
+        errorMsg: data.errorMsg,
     });
     // 同时推送状态变更
     socket_1.socketEmitter.emitTaskStatus(userId, {
         taskId: data.taskId,
-        status: 'failed',
-        errorMsg: data.errorMsg
+        status: "failed",
+        errorMsg: data.errorMsg,
     });
+    // 创建消息通知
+    try {
+        const task = tasksService.getTask(data.taskId);
+        messagesDb.createMessage({
+            userId,
+            type: "todo",
+            title: "任务失败",
+            content: `您的${task.type}转码任务 "${task.fileName}" 失败：${data.errorMsg}`,
+            link: `/tasks`,
+            isRead: false,
+        });
+    }
+    catch (error) {
+        logger_1.default.error("创建失败消息失败", { error });
+    }
 }
 /**
  * 停止所有工作进程
@@ -422,8 +457,8 @@ async function stopWorkers() {
         queue_1.videoQueue.close(),
         queue_1.imageQueue.close(),
         queue_1.animQueue.close(),
-        queue_1.documentQueue.close()
+        queue_1.documentQueue.close(),
     ]);
-    logger_1.default.info('转码工作进程已停止');
+    logger_1.default.info("转码工作进程已停止");
 }
 //# sourceMappingURL=transcode.js.map

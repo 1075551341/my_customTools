@@ -11,7 +11,7 @@
  *
  * @module workers/transcode
  */
-import type { Application } from 'express';
+import type { Application } from "express";
 /**
  * 初始化转码工作进程
  *

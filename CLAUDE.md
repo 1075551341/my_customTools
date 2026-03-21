@@ -21,6 +21,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **图片转码**：支持 JPEG、PNG、WebP、AVIF 等格式，可调整质量、尺寸
 - **文档转换**：支持 Word/Excel 转 PDF、PDF 合并拆分、Excel 转 CSV
 - **动图处理**：支持 GIF、WebP、APNG 等格式转换
+- **消息推送**：实时消息通知中心
+  - 支持普通消息和待办消息两种类型
+  - WebSocket 实时推送新消息
+  - 消息列表分页查询、标记已读、删除
+  - 未读消息红点提示
 
 ## 技术栈
 
@@ -112,7 +117,12 @@ waiting → uploading → processing → completed/failed/cancelled
 所有页面统一使用 `#/utils` 中的格式化函数：
 
 ```typescript
-import { formatFileSize, formatTime, formatPercent, formatUsageRate } from '#/utils';
+import {
+  formatFileSize,
+  formatTime,
+  formatPercent,
+  formatUsageRate,
+} from "#/utils";
 ```
 
 - `formatFileSize(bytes)` - 文件大小格式化（如：1.23 MB）
@@ -129,10 +139,11 @@ POST /api/user/preferences/reset → 重置用户偏好
 ```
 
 用户偏好结构：
+
 ```typescript
 interface UserPreferences {
-  theme: 'light' | 'dark' | 'auto';
-  language: 'zh-CN' | 'en-US';
+  theme: "light" | "dark" | "auto";
+  language: "zh-CN" | "en-US";
   notifications: {
     taskCompleted: boolean;
     taskFailed: boolean;
@@ -141,14 +152,58 @@ interface UserPreferences {
 }
 ```
 
+### 消息推送 API
+
+```
+GET    /api/messages              → 获取消息列表（分页）
+GET    /api/messages/unread-count → 获取未读消息数量
+GET    /api/messages/latest       → 获取最新 5 条消息
+PUT    /api/messages/:id/read     → 标记消息为已读
+PUT    /api/messages/read-all     → 标记全部为已读
+DELETE /api/messages/:id          → 删除单条消息
+DELETE /api/messages/all          → 清空所有消息
+POST   /api/messages              → 创建消息（管理员专用）
+```
+
+WebSocket 事件：
+
+```typescript
+// 客户端 -> 服务端
+socket.emit("subscribe:task", taskId); // 订阅任务进度
+socket.emit("unsubscribe:task", taskId); // 取消订阅
+
+// 服务端 -> 客户端
+socket.on("message:push", (message) => {}); // 新消息推送
+socket.on("task:progress", (data) => {}); // 任务进度更新
+socket.on("task:completed", (data) => {}); // 任务完成
+```
+
+消息类型：
+
+```typescript
+type MessageType = "normal" | "todo";
+
+interface Message {
+  id: string;
+  userId: string;
+  type: MessageType;
+  title: string;
+  content: string;
+  isRead: boolean;
+  link?: string;
+  createdAt: string;
+  readAt?: string;
+}
+```
+
 ## 环境依赖
 
-| 依赖    | 版本要求 | 说明                       |
-| ------- | -------- | -------------------------- |
-| Node.js | 22.x     | 运行时                     |
-| pnpm    | 最新版   | 包管理器（优先使用）       |
-| FFmpeg  | 4.0+     | 视频/动图转码（系统安装）  |
-| Redis   | 6.0+     | 任务队列                   |
+| 依赖    | 版本要求 | 说明                      |
+| ------- | -------- | ------------------------- |
+| Node.js | 22.x     | 运行时                    |
+| pnpm    | 最新版   | 包管理器（优先使用）      |
+| FFmpeg  | 4.0+     | 视频/动图转码（系统安装） |
+| Redis   | 6.0+     | 任务队列                  |
 
 ## 开发命令
 
