@@ -210,3 +210,38 @@
 [2026-03-21 23:03:52] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","status":200,"duration":"1ms","ip":"::1"}
 [2026-03-21 23:03:52] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","status":200,"duration":"1ms","ip":"::1"}
 [2026-03-21 23:03:53] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/unread-count","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:19:12] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/health","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 23:19:15] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/health","status":200,"duration":"0ms","ip":"::1"}
+[2026-03-21 23:19:19] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"POST","url":"/api/auth/login","status":400,"duration":"61ms","ip":"::1"}
+[2026-03-21 23:19:24] [[33MWARN[39M] [33m业务错误 未提供认证令牌[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages?limit=5","code":401}
+[2026-03-21 23:19:24] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages?limit=5","status":401,"duration":"2ms","ip":"::1"}
+[INFO] 23:19:41 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\index.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:43] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[ERROR] 23:19:43 Error: listen EADDRINUSE: address already in use :::3001
+[2026-03-21 23:19:43] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[INFO] 23:19:44 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\index.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 23:19:46] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[ERROR] 23:19:46 Error: listen EADDRINUSE: address already in use :::3001
+[2026-03-21 23:19:46] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}

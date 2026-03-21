@@ -85,6 +85,8 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
   CREATE INDEX IF NOT EXISTS idx_tasks_created_at ON tasks(created_at);
   CREATE INDEX IF NOT EXISTS idx_upload_sessions_status ON upload_sessions(status);
+  CREATE INDEX IF NOT EXISTS idx_presets_type ON presets(type);
+  CREATE INDEX IF NOT EXISTS idx_presets_user ON presets(userId);
 `);
 
 console.log(`[SQLite] 数据库已连接: ${DB_PATH}`);
