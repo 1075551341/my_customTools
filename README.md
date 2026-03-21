@@ -81,7 +81,7 @@ docs: 文档更新
 - backend/src/routes/menu.ts
 - backend/src/routes/upload.ts
 - frontend
-- .claude/plans/20260320_223508_sleep_5____curl_-s_h.md
+- .claude/plans/20260320*223508_sleep_5\_\_\_\_curl*-s_h.md
 - .claude/readme_backups/
 - .playwright-mcp/console-2026-03-20T12-29-25-564Z.log
 - .playwright-mcp/console-2026-03-20T12-32-45-841Z.log
