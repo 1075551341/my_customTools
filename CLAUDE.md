@@ -124,6 +124,7 @@ queue/         → Bull 队列管理
 ```
 
 错误响应：
+
 ```json
 { "code": -1, "msg": "错误描述", "data": null }
 ```
@@ -154,74 +155,74 @@ import {
 } from "#/utils";
 ```
 
-| 函数 | 说明 | 示例 |
-|------|------|------|
-| `formatFileSize(bytes)` | 文件大小格式化 | `1.23 MB` |
-| `formatTime(dateStr)` | 时间格式化 | `2024-01-01 12:00:00` |
-| `formatPercent(value, decimals)` | 百分比格式化 | `95%` |
-| `formatUsageRate(value)` | 使用率格式化 | `45.3%` |
+| 函数                             | 说明           | 示例                  |
+| -------------------------------- | -------------- | --------------------- |
+| `formatFileSize(bytes)`          | 文件大小格式化 | `1.23 MB`             |
+| `formatTime(dateStr)`            | 时间格式化     | `2024-01-01 12:00:00` |
+| `formatPercent(value, decimals)` | 百分比格式化   | `95%`                 |
+| `formatUsageRate(value)`         | 使用率格式化   | `45.3%`               |
 
 ## API 文档
 
 ### 认证 API
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/api/auth/register` | 用户注册 |
-| POST | `/api/auth/login` | 用户登录 |
-| POST | `/api/auth/logout` | 用户登出 |
-| GET | `/api/auth/me` | 获取当前用户信息 |
+| 方法 | 路径                 | 说明             |
+| ---- | -------------------- | ---------------- |
+| POST | `/api/auth/register` | 用户注册         |
+| POST | `/api/auth/login`    | 用户登录         |
+| POST | `/api/auth/logout`   | 用户登出         |
+| GET  | `/api/auth/me`       | 获取当前用户信息 |
 
 ### 转码任务 API
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/tasks` | 获取任务列表（分页） |
-| GET | `/api/tasks/:id` | 获取任务详情 |
-| POST | `/api/tasks/:id/cancel` | 取消任务 |
-| POST | `/api/tasks/:id/retry` | 重试任务 |
-| DELETE | `/api/tasks/:id` | 删除任务 |
+| 方法   | 路径                    | 说明                 |
+| ------ | ----------------------- | -------------------- |
+| GET    | `/api/tasks`            | 获取任务列表（分页） |
+| GET    | `/api/tasks/:id`        | 获取任务详情         |
+| POST   | `/api/tasks/:id/cancel` | 取消任务             |
+| POST   | `/api/tasks/:id/retry`  | 重试任务             |
+| DELETE | `/api/tasks/:id`        | 删除任务             |
 
 ### 上传 API
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/api/upload` | 上传文件并创建转码任务 |
-| POST | `/api/upload/chunk` | 分片上传 |
+| 方法 | 路径                | 说明                   |
+| ---- | ------------------- | ---------------------- |
+| POST | `/api/upload`       | 上传文件并创建转码任务 |
+| POST | `/api/upload/chunk` | 分片上传               |
 
 ### 消息推送 API
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| GET | `/api/messages` | 获取消息列表（分页） |
-| GET | `/api/messages/unread-count` | 获取未读消息数量 |
-| GET | `/api/messages/latest` | 获取最新 5 条消息 |
-| PUT | `/api/messages/:id/read` | 标记消息为已读 |
-| PUT | `/api/messages/read-all` | 标记全部为已读 |
-| DELETE | `/api/messages/:id` | 删除单条消息 |
-| DELETE | `/api/messages/all` | 清空所有消息 |
-| POST | `/api/messages` | 创建消息（管理员专用） |
+| 方法   | 路径                         | 说明                   |
+| ------ | ---------------------------- | ---------------------- |
+| GET    | `/api/messages`              | 获取消息列表（分页）   |
+| GET    | `/api/messages/unread-count` | 获取未读消息数量       |
+| GET    | `/api/messages/latest`       | 获取最新 5 条消息      |
+| PUT    | `/api/messages/:id/read`     | 标记消息为已读         |
+| PUT    | `/api/messages/read-all`     | 标记全部为已读         |
+| DELETE | `/api/messages/:id`          | 删除单条消息           |
+| DELETE | `/api/messages/all`          | 清空所有消息           |
+| POST   | `/api/messages`              | 创建消息（管理员专用） |
 
 ### WebSocket 事件
 
 **客户端 → 服务端：**
 
 ```typescript
-socket.emit("subscribe:task", taskId);  // 订阅任务进度
+socket.emit("subscribe:task", taskId); // 订阅任务进度
 socket.emit("unsubscribe:task", taskId); // 取消订阅
-socket.emit("subscribe:queue");         // 订阅队列状态
-socket.emit("subscribe:message");       // 订阅消息推送
+socket.emit("subscribe:queue"); // 订阅队列状态
+socket.emit("subscribe:message"); // 订阅消息推送
 ```
 
 **服务端 → 客户端：**
 
 ```typescript
-socket.on("message:push", (message) => {});    // 新消息推送
-socket.on("task:progress", (data) => {});      // 任务进度更新
-socket.on("task:completed", (data) => {});     // 任务完成
-socket.on("task:failed", (data) => {});        // 任务失败
-socket.on("queue:update", (data) => {});       // 队列状态更新
-socket.on("system:notice", (data) => {});      // 系统通知
+socket.on("message:push", (message) => {}); // 新消息推送
+socket.on("task:progress", (data) => {}); // 任务进度更新
+socket.on("task:completed", (data) => {}); // 任务完成
+socket.on("task:failed", (data) => {}); // 任务失败
+socket.on("queue:update", (data) => {}); // 队列状态更新
+socket.on("system:notice", (data) => {}); // 系统通知
 ```
 
 ### 消息数据结构
@@ -230,15 +231,15 @@ socket.on("system:notice", (data) => {});      // 系统通知
 type MessageType = "normal" | "todo";
 
 interface Message {
-  id: string;         // 消息 ID
-  userId: string;     // 接收用户 ID
-  type: MessageType;  // 消息类型
-  title: string;      // 消息标题
-  content: string;    // 消息内容
-  isRead: boolean;    // 是否已读
-  link?: string;      // 相关链接
-  createdAt: string;  // 创建时间
-  readAt?: string;    // 阅读时间
+  id: string; // 消息 ID
+  userId: string; // 接收用户 ID
+  type: MessageType; // 消息类型
+  title: string; // 消息标题
+  content: string; // 消息内容
+  isRead: boolean; // 是否已读
+  link?: string; // 相关链接
+  createdAt: string; // 创建时间
+  readAt?: string; // 阅读时间
 }
 ```
 
@@ -260,26 +261,26 @@ interface Message {
 
 ## 常用技能
 
-| 技能 | 说明 |
-|------|------|
-| `/new-encoder` | 创建新的转码编码器插件 |
-| `/api-route` | 创建新的 API 路由模块 |
-| `/vue-component` | 创建 Vue 3 组件 |
-| `/api-client` | 创建前端 API 调用封装 |
-| `/test-gen` | 生成单元测试文件 |
-| `/send-message` | 发送系统通知或待办消息 |
-| `/transcode-task` | 管理转码任务 |
-| `/ws-debug` | 调试 WebSocket 连接 |
+| 技能              | 说明                   |
+| ----------------- | ---------------------- |
+| `/new-encoder`    | 创建新的转码编码器插件 |
+| `/api-route`      | 创建新的 API 路由模块  |
+| `/vue-component`  | 创建 Vue 3 组件        |
+| `/api-client`     | 创建前端 API 调用封装  |
+| `/test-gen`       | 生成单元测试文件       |
+| `/send-message`   | 发送系统通知或待办消息 |
+| `/transcode-task` | 管理转码任务           |
+| `/ws-debug`       | 调试 WebSocket 连接    |
 
 ## 常用 Agents
 
-| Agent | 说明 |
-|-------|------|
-| `api-tester` | 测试后端 API 接口 |
-| `api-documenter` | 生成 OpenAPI 文档 |
-| `vue-reviewer` | 审查 Vue 组件代码质量 |
-| `message-center` | 管理消息推送 |
-| `transcode-debug` | 调试转码任务问题 |
+| Agent             | 说明                  |
+| ----------------- | --------------------- |
+| `api-tester`      | 测试后端 API 接口     |
+| `api-documenter`  | 生成 OpenAPI 文档     |
+| `vue-reviewer`    | 审查 Vue 组件代码质量 |
+| `message-center`  | 管理消息推送          |
+| `transcode-debug` | 调试转码任务问题      |
 
 ## 能力边界
 
