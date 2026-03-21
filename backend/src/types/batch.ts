@@ -4,7 +4,10 @@
  * @module types/batch
  */
 
-import type { Task } from './index';
+import type { BaseTask } from "./index";
+
+// 重新导出 Task 类型
+export type Task = BaseTask;
 
 /**
  * 批量任务创建请求参数
