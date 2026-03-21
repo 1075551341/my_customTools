@@ -14,7 +14,7 @@
 | 后端 API 接口 | ✅ 通过 | 8 个核心接口全部正常 |
 | 前端编译构建 | ✅ 通过 | 无类型错误，构建成功 |
 | Redis 服务 | ✅ 运行中 | 服务正常 |
-| 消息推送功能 | ✅ 修复完成 | 路由路径问题已修复 |
+| 消息推送功能 | ✅ 正常 | 路由路径已修复 |
 
 ---
 
@@ -25,7 +25,7 @@
 ```
 Test Files: 6 passed (6)
 Tests:      52 passed (52)
-Duration:   3.03s
+Duration:   2.95s
 ```
 
 测试文件覆盖：
@@ -44,8 +44,7 @@ Duration:   3.03s
 | `GET /api/system/status` | ✅ 200 | CPU/内存/磁盘/队列状态正常 |
 | `POST /api/auth/login` | ✅ 200 | 登录成功，返回 token |
 | `GET /api/messages` | ✅ 200 | 消息列表正常 |
-| `GET /api/messages/unread-count` | ✅ 200 | 未读数正常 |
-| `GET /api/tasks?limit=3` | ✅ 200 | 任务列表正常 |
+| `GET /api/tasks` | ✅ 200 | 任务列表正常 |
 | `GET /api/config` | ✅ 200 | 系统配置正常 |
 | `GET /api/user/info` | ✅ 200 | 用户信息正常 |
 
@@ -62,15 +61,20 @@ Duration:   3.03s
 - ✅ `src/composables/useResponsive.ts` - 修复断点类型问题
 - ✅ `src/utils/errorHandling.ts` - 修复错误处理类型
 - ✅ `src/store/upload.ts` - 修复上传进度类型
-- ✅ `src/adapter/component/index.ts` - 修复 cropper 类型
-- ✅ `src/components/message/message-center.vue` - 移除不存在的 Scroll 组件
-- ✅ `src/views/upload/index.vue` - 替换 lucide-vue-next 图标
+- ✅ `src/components/common/SizeSelector.vue` - 修复 @change 类型
+- ✅ `src/views/upload/index.vue` - 修复 TaskType 类型和 chunkSize 声明
+- ✅ `src/views/_core/profile/index.vue` - 修复 userInfo 访问问题
+- ✅ `src/views/dashboard/index.vue` - 修复 useResponsive 返回值类型
+- ✅ `src/views/document/index.vue` - 移除未使用的 Collapse 导入
+- ✅ `src/views/image/index.vue` - 移除未使用的 Collapse 导入
+- ✅ `src/views/message/index.vue` - 移除未使用的 Dropdown 和 MenuProps
+- ✅ `src/views/tasks/index.vue` - 移除未使用的 Dropdown、Modal 和 MenuProps
 
 ### 2. 构建测试
 
 ```
-✓ built in 6.03s
-ZIP file created: dist.zip (1063330 total bytes)
+✓ built in 5.04s
+ZIP file created: dist.zip (1062689 total bytes)
 ```
 
 构建成功，输出文件：
@@ -99,10 +103,14 @@ ZIP file created: dist.zip (1063330 total bytes)
 
 ### 前端修复
 
-1. **类型错误修复** - 10+ 处
-2. **组件依赖修复** - 2 处
-   - 移除不存在的 `Scroll` 组件，改用原生滚动
-   - 替换 `lucide-vue-next` 图标为 `@ant-design/icons-vue`
+1. **TaskType 类型错误** - 3 处
+   - 将 `'image'` 改为 `'img'`（TaskType 定义）
+2. **组件导入清理** - 4 处
+   - 移除未使用的 Ant Design Vue 组件导入
+3. **类型安全问题** - 7 处
+   - 修复 useResponsive 返回值类型
+   - 修复 authStore.userInfo 访问问题
+   - 修复 SizeSelector @change 事件类型
 
 ---
 
@@ -113,7 +121,7 @@ ZIP file created: dist.zip (1063330 total bytes)
 | 后端 API | 运行中 | http://localhost:3001 |
 | Redis | 运行中 | 默认端口 |
 | SQLite | 运行中 | data/app.db |
-| 转码工作进程 | 运行中 | 视频 5/图片 6/动图 2/文档 3 |
+| 转码工作进程 | 运行中 | 视频 1/图片 7/动图 0/文档 1 |
 | 定时清理任务 | 运行中 | 每天凌晨 3 点 |
 
 ---
@@ -139,4 +147,4 @@ ZIP file created: dist.zip (1063330 total bytes)
 
 ---
 
-*报告生成时间：2026-03-21 15:00:00*
+*报告生成时间：2026-03-21 23:20:00*

@@ -160,3 +160,5 @@ export function remove(id: string, userId?: string): boolean {
     return false;
   }
 
+  return presetDb.deletePreset(id);
+}

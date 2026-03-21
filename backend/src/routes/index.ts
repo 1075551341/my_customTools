@@ -22,6 +22,7 @@ import userRoutes from "./user";
 import menuRoutes from "./menu";
 import documentRoutes from "./document";
 import messageRoutes from "./messages";
+import presetRoutes from "./presets";
 
 /**
  * 创建路由实例
@@ -72,5 +73,8 @@ router.use("/document", documentRoutes);
 
 // 消息路由（消息推送）
 router.use("/messages", messageRoutes);
+
+// 预设路由（转码预设管理）
+router.use("/presets", presetRoutes);
 
 export default router;
