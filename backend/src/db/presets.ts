@@ -6,40 +6,40 @@
  * @module db/presets
  */
 
-import db from './sqlite'
-import logger from '../utils/logger'
+import db from "./sqlite";
+import logger from "../utils/logger";
 
 /**
  * 预设配置接口
  */
 export interface PresetConfig {
   // 视频预设配置
-  codec?: string
-  resolution?: string
-  bitrate?: string
-  fps?: number
+  codec?: string;
+  resolution?: string;
+  bitrate?: string;
+  fps?: number;
   // 图片预设配置
-  format?: string
-  quality?: number
-  width?: number
-  height?: number
+  format?: string;
+  quality?: number;
+  width?: number;
+  height?: number;
   // 文档预设配置
-  targetFormat?: string
-  merge?: boolean
+  targetFormat?: string;
+  merge?: boolean;
 }
 
 /**
  * 预设数据接口
  */
 export interface Preset {
-  id: string
-  name: string
-  type: 'video' | 'image' | 'document'
-  config: PresetConfig
-  isSystem: boolean
-  userId?: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  name: string;
+  type: "video" | "image" | "document";
+  config: PresetConfig;
+  isSystem: boolean;
+  userId?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
@@ -58,18 +58,18 @@ export function initPresetsTable() {
       updatedAt TEXT NOT NULL,
       UNIQUE(name, type, userId)
     )
-  `)
+  `);
 
   // 创建索引
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_presets_type ON presets(type)
-  `)
+  `);
 
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_presets_user ON presets(userId)
-  `)
+  `);
 
-  logger.info('预设表初始化完成')
+  logger.info("预设表初始化完成");
 }
 
 /**
@@ -79,22 +79,22 @@ export function initPresetsTable() {
  * @returns 预设列表
  */
 export function getAllPresets(type?: string): Preset[] {
-  let sql = 'SELECT * FROM presets'
-  const params: any[] = []
+  let sql = "SELECT * FROM presets";
+  const params: any[] = [];
 
   if (type) {
-    sql += ' WHERE type = ?'
-    params.push(type)
+    sql += " WHERE type = ?";
+    params.push(type);
   }
 
-  sql += ' ORDER BY isSystem DESC, name ASC'
+  sql += " ORDER BY isSystem DESC, name ASC";
 
-  const rows = db.prepare(sql).all(...params) as any[]
-  return rows.map(row => ({
+  const rows = db.prepare(sql).all(...params) as any[];
+  return rows.map((row) => ({
     ...row,
     config: JSON.parse(row.config) as PresetConfig,
     isSystem: row.isSystem === 1,
-  }))
+  }));
 }
 
 /**
@@ -104,14 +104,14 @@ export function getAllPresets(type?: string): Preset[] {
  * @returns 预设对象或 undefined
  */
 export function getPresetById(id: string): Preset | undefined {
-  const row = db.prepare('SELECT * FROM presets WHERE id = ?').get(id) as any
-  if (!row) return undefined
+  const row = db.prepare("SELECT * FROM presets WHERE id = ?").get(id) as any;
+  if (!row) return undefined;
 
   return {
     ...row,
     config: JSON.parse(row.config) as PresetConfig,
     isSystem: row.isSystem === 1,
-  }
+  };
 }
 
 /**
@@ -121,15 +121,17 @@ export function getPresetById(id: string): Preset | undefined {
  * @returns 创建的预设
  */
 export function createPreset(
-  preset: Omit<Preset, 'id' | 'createdAt' | 'updatedAt'>
+  preset: Omit<Preset, "id" | "createdAt" | "updatedAt">,
 ): Preset {
-  const id = `preset_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-  const now = new Date().toISOString()
+  const id = `preset_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const now = new Date().toISOString();
 
-  db.prepare(`
+  db.prepare(
+    `
     INSERT INTO presets (id, name, type, config, isSystem, userId, createdAt, updatedAt)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(
+  `,
+  ).run(
     id,
     preset.name,
     preset.type,
@@ -137,17 +139,17 @@ export function createPreset(
     preset.isSystem ? 1 : 0,
     preset.userId,
     now,
-    now
-  )
+    now,
+  );
 
-  logger.info('创建预设', { id, name: preset.name, type: preset.type })
+  logger.info("创建预设", { id, name: preset.name, type: preset.type });
 
   return {
     ...preset,
     id,
     createdAt: now,
     updatedAt: now,
-  }
+  };
 }
 
 /**
@@ -159,44 +161,46 @@ export function createPreset(
  */
 export function updatePreset(
   id: string,
-  updates: Partial<Preset>
+  updates: Partial<Preset>,
 ): Preset | undefined {
-  const preset = getPresetById(id)
+  const preset = getPresetById(id);
   if (!preset) {
-    logger.warn('更新预设失败：预设不存在', { id })
-    return undefined
+    logger.warn("更新预设失败：预设不存在", { id });
+    return undefined;
   }
 
-  const now = new Date().toISOString()
-  const fields: string[] = []
-  const values: any[] = []
+  const now = new Date().toISOString();
+  const fields: string[] = [];
+  const values: any[] = [];
 
   if (updates.name !== undefined) {
-    fields.push('name = ?')
-    values.push(updates.name)
+    fields.push("name = ?");
+    values.push(updates.name);
   }
   if (updates.config !== undefined) {
-    fields.push('config = ?')
-    values.push(JSON.stringify(updates.config))
+    fields.push("config = ?");
+    values.push(JSON.stringify(updates.config));
   }
   if (updates.isSystem !== undefined) {
-    fields.push('isSystem = ?')
-    values.push(updates.isSystem ? 1 : 0)
+    fields.push("isSystem = ?");
+    values.push(updates.isSystem ? 1 : 0);
   }
 
-  fields.push('updatedAt = ?')
-  values.push(now)
-  values.push(id)
+  fields.push("updatedAt = ?");
+  values.push(now);
+  values.push(id);
 
-  db.prepare(`UPDATE presets SET ${fields.join(', ')} WHERE id = ?`).run(...values)
+  db.prepare(`UPDATE presets SET ${fields.join(", ")} WHERE id = ?`).run(
+    ...values,
+  );
 
-  logger.info('更新预设', { id, updates })
+  logger.info("更新预设", { id, updates });
 
   return {
     ...preset,
     ...updates,
     updatedAt: now,
-  }
+  };
 }
 
 /**
@@ -206,21 +210,21 @@ export function updatePreset(
  * @returns 是否删除成功
  */
 export function deletePreset(id: string): boolean {
-  const preset = getPresetById(id)
+  const preset = getPresetById(id);
   if (!preset) {
-    logger.warn('删除预设失败：预设不存在', { id })
-    return false
+    logger.warn("删除预设失败：预设不存在", { id });
+    return false;
   }
 
   if (preset.isSystem) {
-    logger.warn('删除预设失败：系统预设不可删除', { id })
-    return false
+    logger.warn("删除预设失败：系统预设不可删除", { id });
+    return false;
   }
 
-  db.prepare('DELETE FROM presets WHERE id = ?').run(id)
-  logger.info('删除预设', { id })
+  db.prepare("DELETE FROM presets WHERE id = ?").run(id);
+  logger.info("删除预设", { id });
 
-  return true
+  return true;
 }
 
 /**
@@ -231,64 +235,66 @@ export function deletePreset(id: string): boolean {
 export function initSystemPresets() {
   const systemPresets = [
     {
-      name: '视频 - 通用 H.264',
-      type: 'video' as const,
-      config: { codec: 'h264', resolution: '1080p', bitrate: '5000k', fps: 30 },
+      name: "视频 - 通用 H.264",
+      type: "video" as const,
+      config: { codec: "h264", resolution: "1080p", bitrate: "5000k", fps: 30 },
       isSystem: true,
     },
     {
-      name: '视频 - 高清 H.265',
-      type: 'video' as const,
-      config: { codec: 'h265', resolution: '1080p', bitrate: '3000k', fps: 30 },
+      name: "视频 - 高清 H.265",
+      type: "video" as const,
+      config: { codec: "h265", resolution: "1080p", bitrate: "3000k", fps: 30 },
       isSystem: true,
     },
     {
-      name: '视频 - 标清 H.264',
-      type: 'video' as const,
-      config: { codec: 'h264', resolution: '480p', bitrate: '1500k', fps: 24 },
+      name: "视频 - 标清 H.264",
+      type: "video" as const,
+      config: { codec: "h264", resolution: "480p", bitrate: "1500k", fps: 24 },
       isSystem: true,
     },
     {
-      name: '图片 - WebP 高质量',
-      type: 'image' as const,
-      config: { format: 'webp', quality: 90 },
+      name: "图片 - WebP 高质量",
+      type: "image" as const,
+      config: { format: "webp", quality: 90 },
       isSystem: true,
     },
     {
-      name: '图片 - JPEG 压缩',
-      type: 'image' as const,
-      config: { format: 'jpeg', quality: 80 },
+      name: "图片 - JPEG 压缩",
+      type: "image" as const,
+      config: { format: "jpeg", quality: 80 },
       isSystem: true,
     },
     {
-      name: '图片 - PNG 无损',
-      type: 'image' as const,
-      config: { format: 'png', quality: 100 },
+      name: "图片 - PNG 无损",
+      type: "image" as const,
+      config: { format: "png", quality: 100 },
       isSystem: true,
     },
     {
-      name: '文档 - Word 转 PDF',
-      type: 'document' as const,
-      config: { targetFormat: 'pdf' },
+      name: "文档 - Word 转 PDF",
+      type: "document" as const,
+      config: { targetFormat: "pdf" },
       isSystem: true,
     },
     {
-      name: '文档 - Excel 转 CSV',
-      type: 'document' as const,
-      config: { targetFormat: 'csv' },
+      name: "文档 - Excel 转 CSV",
+      type: "document" as const,
+      config: { targetFormat: "csv" },
       isSystem: true,
     },
-  ]
+  ];
 
-  let created = 0
+  let created = 0;
   for (const preset of systemPresets) {
     try {
-      createPreset({ ...preset, config: preset.config, userId: undefined })
-      created++
+      createPreset({ ...preset, config: preset.config, userId: undefined });
+      created++;
     } catch (e) {
       // 已存在则跳过
     }
   }
 
-  logger.info(`系统预设初始化完成，新增 ${created}/${systemPresets.length} 个预设`)
+  logger.info(
+    `系统预设初始化完成，新增 ${created}/${systemPresets.length} 个预设`,
+  );
 }
