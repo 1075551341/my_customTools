@@ -1,0 +1,196 @@
+
+> my-customtools-backend@1.0.0 dev D:\apdms\coding_AI\my_customTools\backend
+> ts-node-dev --respawn --transpile-only src/server.ts
+
+[INFO] 22:25:10 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:25:14] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:25:14] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[ERROR] 22:25:14 Error: listen EADDRINUSE: address already in use :::3001
+[INFO] 22:27:07 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:09] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:27:09] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[ERROR] 22:27:09 Error: listen EADDRINUSE: address already in use :::3001
+[INFO] 22:27:24 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:26] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[ERROR] 22:27:26 Error: listen EADDRINUSE: address already in use :::3001
+[2026-03-21 22:27:26] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[INFO] 22:27:28 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:30] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[INFO] 22:27:32 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:35] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[INFO] 22:27:37 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:39] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[INFO] 22:27:41 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:27:43] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:27:43] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[ERROR] 22:27:43 Error: listen EADDRINUSE: address already in use :::3001
+[INFO] 22:28:01 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:03] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[ERROR] 22:28:03 Error: listen EADDRINUSE: address already in use :::3001
+[2026-03-21 22:28:03] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[INFO] 22:28:31 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\messages.ts has been modified
+[SQLite] 数据库已连接: data\app.db
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-21 22:28:33] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[2026-03-21 22:35:33] [[31MERROR[39M] [31m队列错误 [anim][39m {"service":"my-customtools-backend","error":"ERR Error running script (call to f_a4a736ae46aac1a806e0285ae7a256d67406dca9): @user_script:83: @user_script: 83: -MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.   "}
+[2026-03-21 22:35:33] [[31MERROR[39M] [31m队列错误 [document][39m {"service":"my-customtools-backend","error":"ERR Error running script (call to f_a4a736ae46aac1a806e0285ae7a256d67406dca9): @user_script:83: @user_script: 83: -MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.   "}
+[2026-03-21 22:35:33] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"ERR Error running script (call to f_a4a736ae46aac1a806e0285ae7a256d67406dca9): @user_script:83: @user_script: 83: -MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.   "}
+[2026-03-21 22:35:33] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"ERR Error running script (call to f_a4a736ae46aac1a806e0285ae7a256d67406dca9): @user_script:83: @user_script: 83: -MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error.   "}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [anim][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [anim][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [document][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [document][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [document][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [video][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:35:36] [[31MERROR[39M] [31m队列错误 [image][39m {"service":"my-customtools-backend","error":"MISCONF Redis is configured to save RDB snapshots, but it is currently not able to persist on disk. Commands that may modify the data set are disabled, because this instance is configured to report errors during writes if RDB snapshotting fails (stop-writes-on-bgsave-error option). Please check the Redis logs for details about the RDB error."}
+[2026-03-21 22:58:34] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages","status":200,"duration":"7ms","ip":"::1"}
+[2026-03-21 22:58:48] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/health","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/system/status","status":200,"duration":"2961ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"POST","url":"/api/auth/login","status":200,"duration":"79ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/messages/unread-count","status":200,"duration":"1ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/tasks?limit=3","status":200,"duration":"2ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/config","status":200,"duration":"2ms","ip":"::1"}
+[2026-03-21 22:58:51] [[32MINFO[39M] [32m请求完成[39m {"service":"my-customtools-backend","method":"GET","url":"/api/user/info","status":200,"duration":"1ms","ip":"::1"}

@@ -100,7 +100,9 @@
       "Bash(findstr :5173 :5669)",
       "Bash(xargs cat:*)",
       "Bash(findstr :3001 :5670)",
-      "Bash(findstr \"5670\")"
+      "Bash(findstr \"5670\")",
+      "Bash(Select-Object Name, Status, StartType)",
+      "Bash(findstr \":6379\")"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,
