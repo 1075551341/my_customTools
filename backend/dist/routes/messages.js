@@ -54,7 +54,7 @@ const router = (0, express_1.Router)();
  *
  * GET /api/messages
  */
-router.get("/messages", auth_1.authMiddleware, async (req, res, next) => {
+router.get("/", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -86,7 +86,7 @@ router.get("/messages", auth_1.authMiddleware, async (req, res, next) => {
  *
  * GET /api/messages/unread-count
  */
-router.get("/messages/unread-count", auth_1.authMiddleware, async (req, res, next) => {
+router.get("/unread-count", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -104,7 +104,7 @@ router.get("/messages/unread-count", auth_1.authMiddleware, async (req, res, nex
  *
  * GET /api/messages/latest
  */
-router.get("/messages/latest", auth_1.authMiddleware, async (req, res, next) => {
+router.get("/latest", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -122,7 +122,7 @@ router.get("/messages/latest", auth_1.authMiddleware, async (req, res, next) => 
  *
  * PUT /api/messages/:id/read
  */
-router.put("/messages/:id/read", auth_1.authMiddleware, async (req, res, next) => {
+router.put("/:id/read", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -144,7 +144,7 @@ router.put("/messages/:id/read", auth_1.authMiddleware, async (req, res, next) =
  *
  * PUT /api/messages/read-all
  */
-router.put("/messages/read-all", auth_1.authMiddleware, async (req, res, next) => {
+router.put("/read-all", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -162,7 +162,7 @@ router.put("/messages/read-all", auth_1.authMiddleware, async (req, res, next) =
  *
  * DELETE /api/messages/:id
  */
-router.delete("/messages/:id", auth_1.authMiddleware, async (req, res, next) => {
+router.delete("/:id", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -184,7 +184,7 @@ router.delete("/messages/:id", auth_1.authMiddleware, async (req, res, next) => 
  *
  * DELETE /api/messages/all
  */
-router.delete("/messages/all", auth_1.authMiddleware, async (req, res, next) => {
+router.delete("/all", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {
@@ -202,7 +202,7 @@ router.delete("/messages/all", auth_1.authMiddleware, async (req, res, next) => 
  *
  * POST /api/messages
  */
-router.post("/messages", auth_1.authMiddleware, async (req, res, next) => {
+router.post("/", auth_1.authMiddleware, async (req, res, next) => {
     try {
         const userId = req.user?.id;
         if (!userId) {

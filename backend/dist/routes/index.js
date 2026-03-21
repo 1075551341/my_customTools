@@ -25,6 +25,7 @@ const user_1 = __importDefault(require("./user"));
 const menu_1 = __importDefault(require("./menu"));
 const document_1 = __importDefault(require("./document"));
 const messages_1 = __importDefault(require("./messages"));
+const presets_1 = __importDefault(require("./presets"));
 /**
  * 创建路由实例
  */
@@ -60,5 +61,7 @@ router.use("/menu", menu_1.default);
 router.use("/document", document_1.default);
 // 消息路由（消息推送）
 router.use("/messages", messages_1.default);
+// 预设路由（转码预设管理）
+router.use("/presets", presets_1.default);
 exports.default = router;
 //# sourceMappingURL=index.js.map
