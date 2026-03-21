@@ -24,39 +24,39 @@
 
 ### 后端 (backend/)
 
-| 技术 | 用途 |
-|------|------|
-| Node.js 22.x | 运行时环境 |
-| Express | Web 框架 |
-| Socket.io | WebSocket 实时通信 |
-| Bull + Redis | 任务队列 |
-| Better-SQLite3 | 数据持久化 |
-| FFmpeg | 视频/动图转码 |
-| Sharp | 图片处理 |
-| JWT | 认证授权 |
+| 技术           | 用途               |
+| -------------- | ------------------ |
+| Node.js 22.x   | 运行时环境         |
+| Express        | Web 框架           |
+| Socket.io      | WebSocket 实时通信 |
+| Bull + Redis   | 任务队列           |
+| Better-SQLite3 | 数据持久化         |
+| FFmpeg         | 视频/动图转码      |
+| Sharp          | 图片处理           |
+| JWT            | 认证授权           |
 
 ### 前端 (frontend/)
 
-| 技术 | 用途 |
-|------|------|
-| Vue 3 + TypeScript | 前端框架 |
-| Vite | 构建工具 |
-| Vben Admin 5.x | 管理后台框架 |
-| Ant Design Vue 4.x | UI 组件库 |
-| Pinia | 状态管理 |
-| Vue Router 4 | 路由管理 |
-| Socket.io-client | WebSocket 客户端 |
+| 技术               | 用途             |
+| ------------------ | ---------------- |
+| Vue 3 + TypeScript | 前端框架         |
+| Vite               | 构建工具         |
+| Vben Admin 5.x     | 管理后台框架     |
+| Ant Design Vue 4.x | UI 组件库        |
+| Pinia              | 状态管理         |
+| Vue Router 4       | 路由管理         |
+| Socket.io-client   | WebSocket 客户端 |
 
 ## 🚀 快速开始
 
 ### 环境要求
 
-| 依赖 | 版本 | 说明 |
-|------|------|------|
-| Node.js | 22.x | 运行时 |
-| pnpm | 最新版 | 包管理器 |
-| FFmpeg | 4.0+ | 视频转码（系统安装） |
-| Redis | 6.0+ | 任务队列 |
+| 依赖    | 版本   | 说明                 |
+| ------- | ------ | -------------------- |
+| Node.js | 22.x   | 运行时               |
+| pnpm    | 最新版 | 包管理器             |
+| FFmpeg  | 4.0+   | 视频转码（系统安装） |
+| Redis   | 6.0+   | 任务队列             |
 
 ### 安装依赖
 
@@ -124,53 +124,53 @@ my_customTools/
 
 ### 消息推送 API
 
-| 方法 | 路径 | 描述 |
-|------|------|------|
-| GET | `/api/messages` | 获取消息列表（分页） |
-| GET | `/api/messages/unread-count` | 获取未读消息数量 |
-| GET | `/api/messages/latest` | 获取最新 5 条消息 |
-| PUT | `/api/messages/:id/read` | 标记消息为已读 |
-| PUT | `/api/messages/read-all` | 标记全部为已读 |
-| DELETE | `/api/messages/:id` | 删除单条消息 |
-| DELETE | `/api/messages/all` | 清空所有消息 |
-| POST | `/api/messages` | 创建消息（管理员专用） |
+| 方法   | 路径                         | 描述                   |
+| ------ | ---------------------------- | ---------------------- |
+| GET    | `/api/messages`              | 获取消息列表（分页）   |
+| GET    | `/api/messages/unread-count` | 获取未读消息数量       |
+| GET    | `/api/messages/latest`       | 获取最新 5 条消息      |
+| PUT    | `/api/messages/:id/read`     | 标记消息为已读         |
+| PUT    | `/api/messages/read-all`     | 标记全部为已读         |
+| DELETE | `/api/messages/:id`          | 删除单条消息           |
+| DELETE | `/api/messages/all`          | 清空所有消息           |
+| POST   | `/api/messages`              | 创建消息（管理员专用） |
 
 ### WebSocket 事件
 
 **客户端 → 服务端：**
 
 ```javascript
-socket.emit('subscribe:task', taskId)      // 订阅任务进度
-socket.emit('unsubscribe:task', taskId)    // 取消订阅
-socket.emit('subscribe:queue')             // 订阅队列状态
+socket.emit("subscribe:task", taskId); // 订阅任务进度
+socket.emit("unsubscribe:task", taskId); // 取消订阅
+socket.emit("subscribe:queue"); // 订阅队列状态
 ```
 
 **服务端 → 客户端：**
 
 ```javascript
-socket.on('message:push', (message) => {})    // 新消息推送
-socket.on('task:progress', (data) => {})      // 任务进度更新
-socket.on('task:completed', (data) => {})     // 任务完成
-socket.on('task:failed', (data) => {})        // 任务失败
-socket.on('queue:update', (data) => {})       // 队列状态更新
-socket.on('system:notice', (data) => {})      // 系统通知
+socket.on("message:push", (message) => {}); // 新消息推送
+socket.on("task:progress", (data) => {}); // 任务进度更新
+socket.on("task:completed", (data) => {}); // 任务完成
+socket.on("task:failed", (data) => {}); // 任务失败
+socket.on("queue:update", (data) => {}); // 队列状态更新
+socket.on("system:notice", (data) => {}); // 系统通知
 ```
 
 ### 消息数据结构
 
 ```typescript
-type MessageType = 'normal' | 'todo';
+type MessageType = "normal" | "todo";
 
 interface Message {
-  id: string;          // 消息 ID
-  userId: string;      // 接收用户 ID
-  type: MessageType;   // 消息类型
-  title: string;       // 消息标题
-  content: string;     // 消息内容
-  isRead: boolean;     // 是否已读
-  link?: string;       // 相关链接
-  createdAt: string;   // 创建时间
-  readAt?: string;     // 阅读时间
+  id: string; // 消息 ID
+  userId: string; // 接收用户 ID
+  type: MessageType; // 消息类型
+  title: string; // 消息标题
+  content: string; // 消息内容
+  isRead: boolean; // 是否已读
+  link?: string; // 相关链接
+  createdAt: string; // 创建时间
+  readAt?: string; // 阅读时间
 }
 ```
 
