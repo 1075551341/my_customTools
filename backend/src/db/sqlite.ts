@@ -6,26 +6,26 @@
  * @module db/sqlite
  */
 
-import Database from 'better-sqlite3'
-import type { Database as DatabaseType } from 'better-sqlite3'
-import path from 'path'
-import fs from 'fs'
-import config from '../config'
+import Database from "better-sqlite3";
+import type { Database as DatabaseType } from "better-sqlite3";
+import path from "path";
+import fs from "fs";
+import config from "../config";
 
 // 数据库文件路径
-const DB_PATH = path.join(config.storage.dataDir, 'app.db')
+const DB_PATH = path.join(config.storage.dataDir, "app.db");
 
 // 确保数据目录存在
-const dataDir = path.dirname(DB_PATH)
+const dataDir = path.dirname(DB_PATH);
 if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true })
+  fs.mkdirSync(dataDir, { recursive: true });
 }
 
 // 创建数据库连接（单例）
-const db: DatabaseType = new Database(DB_PATH)
+const db: DatabaseType = new Database(DB_PATH);
 
 // 启用 WAL 模式，提升并发性能
-db.pragma('journal_mode = WAL')
+db.pragma("journal_mode = WAL");
 
 // 初始化表结构
 db.exec(`
@@ -85,8 +85,8 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
   CREATE INDEX IF NOT EXISTS idx_tasks_created_at ON tasks(created_at);
   CREATE INDEX IF NOT EXISTS idx_upload_sessions_status ON upload_sessions(status);
-`)
+`);
 
-console.log(`[SQLite] 数据库已连接: ${DB_PATH}`)
+console.log(`[SQLite] 数据库已连接: ${DB_PATH}`);
 
-export default db
+export default db;

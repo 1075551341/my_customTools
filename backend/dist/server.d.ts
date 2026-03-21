@@ -11,5 +11,6 @@
  *
  * @module server
  */
-export {};
+import './db/sqlite';
+import './db/redis';
 //# sourceMappingURL=server.d.ts.map

@@ -27,6 +27,10 @@ const logger_1 = __importDefault(require("./utils/logger"));
 const workers_1 = require("./workers");
 const queue_1 = require("./queue");
 const clean_1 = require("./services/clean");
+// 初始化数据库（必须在其他模块之前）
+require("./db/sqlite");
+require("./db/redis");
+const migrate_1 = require("./db/migrate");
 /**
  * 创建必要的目录结构
  *
@@ -145,6 +149,8 @@ function initSocketIO(server) {
 function main() {
     // 创建必要的目录
     ensureDirectories();
+    // 运行数据迁移（JSON -> SQLite）
+    (0, migrate_1.runMigrations)();
     // 创建 Express 应用
     const app = (0, app_1.default)();
     // 创建 HTTP 服务器

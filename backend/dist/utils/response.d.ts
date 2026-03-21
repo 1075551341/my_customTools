@@ -19,7 +19,7 @@
  *
  * @module utils/response
  */
-import { Response } from 'express';
+import { Response } from "express";
 /**
  * 成功响应
  *

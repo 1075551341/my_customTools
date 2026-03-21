@@ -13,7 +13,7 @@ declare global {
         interface User {
             id: string;
             username: string;
-            role: 'admin' | 'user';
+            role: "super" | "admin" | "user";
         }
         interface Request {
             user?: User;
@@ -34,12 +34,10 @@ export interface ApiResponse<T = unknown> {
  */
 export interface PaginatedData<T> {
     list: T[];
-    pagination: {
-        total: number;
-        page: number;
-        pageSize: number;
-        totalPages: number;
-    };
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
 }
 /**
  * 用户信息
@@ -48,32 +46,32 @@ export interface User {
     id: string;
     username: string;
     passwordHash: string;
-    role: 'admin' | 'user';
+    role: "super" | "admin" | "user";
     createdAt: string;
     lastLoginAt?: string;
 }
 /**
  * 任务状态枚举
  */
-export type TaskStatus = 'waiting' | 'uploading' | 'processing' | 'completed' | 'failed' | 'cancelled';
+export type TaskStatus = "waiting" | "uploading" | "processing" | "completed" | "failed" | "cancelled";
 /**
  * 任务类型枚举
  */
-export type TaskType = 'video' | 'img' | 'anim' | 'document';
+export type TaskType = "video" | "img" | "anim" | "document";
 /**
  * 文档任务子类型
  */
-export type DocumentTaskSubtype = 'word-to-pdf' | 'excel-to-csv' | 'excel-to-word' | 'pdf-merge' | 'pdf-split';
+export type DocumentTaskSubtype = "word-to-pdf" | "excel-to-csv" | "excel-to-word" | "pdf-merge" | "pdf-split";
 /**
  * GIF 合成任务类型（图片序列合成）
  */
 export type GifComposeTask = {
     id: string;
-    type: 'gif-compose';
+    type: "gif-compose";
     userId: string;
     imagePaths: string[];
     outputPath: string;
-    outputFormat: 'gif' | 'webp' | 'apng';
+    outputFormat: "gif" | "webp" | "apng";
     config: AnimTranscodeConfig;
     status: TaskStatus;
     progress: number;
@@ -106,33 +104,33 @@ export interface BaseTask {
  * 视频转码配置
  */
 export interface VideoTranscodeConfig {
-    videoCodec?: 'h264' | 'h265' | 'vp9' | 'av1' | 'copy';
+    videoCodec?: "h264" | "h265" | "vp9" | "av1" | "copy";
     resolution?: string;
     bitrate?: string;
     crf?: number;
     fps?: number;
-    audioCodec?: 'aac' | 'mp3' | 'opus' | 'copy';
+    audioCodec?: "aac" | "mp3" | "opus" | "copy";
     audioBitrate?: string;
     startTime?: number | string;
     endTime?: number | string;
     rotate?: 90 | -90 | 180;
-    hwAccel?: 'nvidia' | 'vaapi' | 'videotoolbox';
+    hwAccel?: "nvidia" | "vaapi" | "videotoolbox";
 }
 /**
  * 图片转码配置
  */
 export interface ImgTranscodeConfig {
-    outputFormat: 'jpg' | 'jpeg' | 'png' | 'webp' | 'avif' | 'bmp' | 'tiff' | 'ico' | 'heic';
+    outputFormat: "jpg" | "jpeg" | "png" | "webp" | "avif" | "bmp" | "tiff" | "ico" | "heic";
     quality?: number;
     lossless?: boolean;
-    resizeMode?: 'none' | 'width' | 'height' | 'scale' | 'fixed' | 'crop';
+    resizeMode?: "none" | "width" | "height" | "scale" | "fixed" | "crop";
     width?: number;
     height?: number;
     keepAspect?: boolean;
-    colorSpace?: 'original' | 'srgb' | 'rgb' | 'cmyk' | 'grayscale';
+    colorSpace?: "original" | "srgb" | "rgb" | "cmyk" | "grayscale";
     stripMeta?: boolean;
     stripICC?: boolean;
-    rotate?: 0 | 90 | 180 | 270 | 'auto';
+    rotate?: 0 | 90 | 180 | 270 | "auto";
     flipH?: boolean;
     flipV?: boolean;
     background?: string;
@@ -143,14 +141,14 @@ export interface ImgTranscodeConfig {
  * 动图转码配置
  */
 export interface AnimTranscodeConfig {
-    outputFormat: 'gif' | 'webp' | 'apng';
+    outputFormat: "gif" | "webp" | "apng";
     fps?: number;
     width?: number;
     height?: number;
     colors?: number;
     quality?: number;
     loop?: number;
-    dither?: 'bayer' | 'floyd' | 'none';
+    dither?: "bayer" | "floyd" | "none";
     optimize?: boolean;
     delay?: number;
     /** 视频截取开始时间（秒），用于视频转GIF */
@@ -215,7 +213,7 @@ export interface SystemConfig {
         maxParallelUploads: number;
     };
     storage: {
-        type: 'local' | 's3';
+        type: "local" | "s3";
         uploadDir: string;
         outputDir: string;
         autoClean: boolean;
@@ -242,7 +240,7 @@ export interface UploadSession {
 export interface JwtPayload {
     id: string;
     username: string;
-    role: 'admin' | 'user';
+    role: "super" | "admin" | "user";
     iat?: number;
     exp?: number;
 }
@@ -253,14 +251,14 @@ export interface DocumentTranscodeConfig {
     subtype: DocumentTaskSubtype;
     /** Word → PDF 配置 */
     wordToPdf?: {
-        format?: 'pdf' | 'pdfa';
-        quality?: 'screen' | 'print' | 'high';
+        format?: "pdf" | "pdfa";
+        quality?: "screen" | "print" | "high";
     };
     /** Excel → CSV 配置 */
     excelToCsv?: {
         sheet?: string | number;
-        delimiter?: ',' | ';' | '\t';
-        encoding?: 'utf-8' | 'gbk';
+        delimiter?: "," | ";" | "\t";
+        encoding?: "utf-8" | "gbk";
     };
     /** Excel → Word 配置 */
     excelToWord?: {
@@ -274,7 +272,7 @@ export interface DocumentTranscodeConfig {
     };
     /** PDF 拆分配置 */
     pdfSplit?: {
-        mode: 'page' | 'range' | 'all';
+        mode: "page" | "range" | "all";
         pages?: number[];
         ranges?: string[];
     };
@@ -283,7 +281,7 @@ export interface DocumentTranscodeConfig {
  * 图片压缩配置
  */
 export interface ImageCompressionConfig {
-    mode: 'quality' | 'size' | 'percent';
+    mode: "quality" | "size" | "percent";
     /** 目标大小（字节） */
     targetSize?: number;
     /** 压缩百分比 (1-100) */
@@ -301,5 +299,23 @@ export interface DocumentTranscodeResult {
     format: string;
     /** PDF 拆分时的多个输出文件 */
     outputPaths?: string[];
+}
+/**
+ * 消息类型
+ */
+export type MessageType = "normal" | "todo";
+/**
+ * 消息推送
+ */
+export interface Message {
+    id: string;
+    userId: string;
+    type: MessageType;
+    title: string;
+    content: string;
+    isRead: boolean;
+    link?: string;
+    createdAt: string;
+    readAt?: string;
 }
 //# sourceMappingURL=index.d.ts.map

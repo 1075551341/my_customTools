@@ -16,55 +16,55 @@ const defaults = {
      */
     server: {
         port: 3001,
-        nodeEnv: 'development',
-        baseUrl: 'http://localhost:3001'
+        nodeEnv: "development",
+        baseUrl: "http://localhost:3001",
     },
     /**
      * JWT 默认配置
      */
     jwt: {
-        secret: 'default-jwt-secret-change-in-production',
-        refreshSecret: 'default-refresh-secret-change-in-production',
-        expiresIn: '2h',
-        refreshExpiresIn: '7d'
+        secret: "default-jwt-secret-change-in-production",
+        refreshSecret: "default-refresh-secret-change-in-production",
+        expiresIn: "2h",
+        refreshExpiresIn: "7d",
     },
     /**
      * Redis 默认配置
      */
     redis: {
-        host: '127.0.0.1',
+        host: "127.0.0.1",
         port: 6379,
-        password: ''
+        password: "",
     },
     /**
      * 存储路径默认配置
      */
     storage: {
-        uploadDir: './uploads',
-        outputDir: './outputs',
-        dataDir: './data',
-        logDir: './logs'
+        uploadDir: "./uploads",
+        outputDir: "./outputs",
+        dataDir: "./data",
+        logDir: "./logs",
     },
     /**
      * 功能开关默认配置
      */
     features: {
         allowRegister: true,
-        enableRateLimit: true
+        enableRateLimit: true,
     },
     /**
      * FFmpeg 默认配置
      */
     ffmpeg: {
-        path: '', // 留空则从 PATH 中查找
-        ffprobePath: ''
+        path: "", // 留空则从 PATH 中查找
+        ffprobePath: "",
     },
     /**
      * CORS 默认配置
      */
     cors: {
-        origins: 'http://localhost:5173,http://localhost:5174'
-    }
+        origins: "http://localhost:5173,http://localhost:5174,http://localhost:5999,http://localhost:6000,http://localhost:6001,http://localhost:5666,http://localhost:5667",
+    },
 };
 exports.default = defaults;
 //# sourceMappingURL=defaults.js.map

@@ -28,46 +28,46 @@ exports.socketEmitter = {
     /**
      * 推送任务进度到用户
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 进度数据
      */
     emitTaskProgress(userId, data) {
         if (!io)
             return;
-        io.to(`user:${userId}`).emit('task:progress', data);
+        io.to(`user:${userId}`).emit("task:progress", data);
     },
     /**
      * 推送任务状态变更到用户
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 状态数据
      */
     emitTaskStatus(userId, data) {
         if (!io)
             return;
-        io.to(`user:${userId}`).emit('task:status', data);
+        io.to(`user:${userId}`).emit("task:status", data);
     },
     /**
      * 推送任务完成通知
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 完成数据
      */
     emitTaskCompleted(userId, data) {
         if (!io)
             return;
-        io.to(`user:${userId}`).emit('task:completed', data);
+        io.to(`user:${userId}`).emit("task:completed", data);
     },
     /**
      * 推送任务失败通知
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 失败数据
      */
     emitTaskFailed(userId, data) {
         if (!io)
             return;
-        io.to(`user:${userId}`).emit('task:failed', data);
+        io.to(`user:${userId}`).emit("task:failed", data);
     },
     /**
      * 推送队列状态更新（广播给所有用户）
@@ -77,7 +77,7 @@ exports.socketEmitter = {
     emitQueueUpdate(data) {
         if (!io)
             return;
-        io.emit('queue:update', data);
+        io.emit("queue:update", data);
     },
     /**
      * 推送系统通知
@@ -87,24 +87,35 @@ exports.socketEmitter = {
     emitSystemNotice(data) {
         if (!io)
             return;
-        io.emit('system:notice', data);
+        io.emit("system:notice", data);
     },
     /**
      * 向特定任务房间推送进度
      *
-     * @param taskId - 任务ID
+     * @param taskId - 任务 ID
      * @param data - 进度数据
      */
     emitToTask(taskId, data) {
         if (!io)
             return;
-        io.to(`task:${taskId}`).emit('task:progress', data);
+        io.to(`task:${taskId}`).emit("task:progress", data);
+    },
+    /**
+     * 推送新消息通知到用户
+     *
+     * @param userId - 用户 ID
+     * @param message - 消息对象
+     */
+    emitMessagePush(userId, message) {
+        if (!io)
+            return;
+        io.to(`user:${userId}`).emit("message:push", message);
     },
     /**
      * 获取 Socket.io 实例
      */
     getIO() {
         return io;
-    }
+    },
 };
 //# sourceMappingURL=emitter.js.map

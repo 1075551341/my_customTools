@@ -38,7 +38,7 @@ export declare const optionalAuthMiddleware: RequestHandler;
  * @example
  * router.delete('/users/:id', authMiddleware, requireRole('admin'), deleteUser)
  */
-export declare function requireRole(...roles: Array<'admin' | 'user'>): RequestHandler;
+export declare function requireRole(...roles: Array<'super' | 'admin' | 'user'>): RequestHandler;
 /**
  * 管理员权限中间件
  *

@@ -5,7 +5,7 @@
  *
  * @module routes/menu
  */
-import { Router } from 'express';
+import { Router } from "express";
 /**
  * 创建路由实例
  */

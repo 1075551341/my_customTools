@@ -2,7 +2,7 @@
 /**
  * 用户数据持久化模块
  *
- * 使用 JSON 文件存储用户数据
+ * 使用 SQLite 存储用户数据
  *
  * @module db/users
  */
@@ -17,67 +17,26 @@ exports.create = create;
 exports.update = update;
 exports.remove = remove;
 exports.existsByUsername = existsByUsername;
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const config_1 = __importDefault(require("../config"));
-/**
- * 用户数据文件路径
- */
-const USERS_FILE = path_1.default.join(config_1.default.storage.dataDir, 'users.json');
-/**
- * 确保数据目录存在
- */
-function ensureDataDir() {
-    const dataDir = config_1.default.storage.dataDir;
-    if (!fs_1.default.existsSync(dataDir)) {
-        fs_1.default.mkdirSync(dataDir, { recursive: true });
-    }
-}
-/**
- * 读取用户数据
- *
- * @returns 用户数据对象
- */
-function readUsersData() {
-    ensureDataDir();
-    if (!fs_1.default.existsSync(USERS_FILE)) {
-        // 初始化空数据
-        const initialData = {
-            users: [],
-            lastUpdated: new Date().toISOString()
-        };
-        fs_1.default.writeFileSync(USERS_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
-        return initialData;
-    }
-    try {
-        const content = fs_1.default.readFileSync(USERS_FILE, 'utf-8');
-        return JSON.parse(content);
-    }
-    catch {
-        // 文件损坏时返回空数据
-        return {
-            users: [],
-            lastUpdated: new Date().toISOString()
-        };
-    }
-}
-/**
- * 写入用户数据
- *
- * @param data - 用户数据对象
- */
-function writeUsersData(data) {
-    ensureDataDir();
-    data.lastUpdated = new Date().toISOString();
-    fs_1.default.writeFileSync(USERS_FILE, JSON.stringify(data, null, 2), 'utf-8');
-}
+const sqlite_1 = __importDefault(require("./sqlite"));
 /**
  * 获取所有用户
  *
  * @returns 用户列表
  */
 function findAll() {
-    return readUsersData().users;
+    const rows = sqlite_1.default.prepare(`
+    SELECT id, username, password_hash, role, created_at, last_login_at
+    FROM users
+    ORDER BY created_at DESC
+  `).all();
+    return rows.map(row => ({
+        id: row.id,
+        username: row.username,
+        passwordHash: row.password_hash,
+        role: row.role,
+        createdAt: row.created_at,
+        lastLoginAt: row.last_login_at || undefined
+    }));
 }
 /**
  * 根据ID查找用户
@@ -86,7 +45,21 @@ function findAll() {
  * @returns 用户对象或undefined
  */
 function findById(id) {
-    return findAll().find(user => user.id === id);
+    const row = sqlite_1.default.prepare(`
+    SELECT id, username, password_hash, role, created_at, last_login_at
+    FROM users
+    WHERE id = ?
+  `).get(id);
+    if (!row)
+        return undefined;
+    return {
+        id: row.id,
+        username: row.username,
+        passwordHash: row.password_hash,
+        role: row.role,
+        createdAt: row.created_at,
+        lastLoginAt: row.last_login_at || undefined
+    };
 }
 /**
  * 根据用户名查找用户
@@ -95,7 +68,21 @@ function findById(id) {
  * @returns 用户对象或undefined
  */
 function findByUsername(username) {
-    return findAll().find(user => user.username === username);
+    const row = sqlite_1.default.prepare(`
+    SELECT id, username, password_hash, role, created_at, last_login_at
+    FROM users
+    WHERE username = ?
+  `).get(username);
+    if (!row)
+        return undefined;
+    return {
+        id: row.id,
+        username: row.username,
+        passwordHash: row.password_hash,
+        role: row.role,
+        createdAt: row.created_at,
+        lastLoginAt: row.last_login_at || undefined
+    };
 }
 /**
  * 创建新用户
@@ -104,15 +91,17 @@ function findByUsername(username) {
  * @returns 创建的用户对象
  */
 function create(user) {
-    const data = readUsersData();
-    const newUser = {
+    const id = generateId();
+    const now = new Date().toISOString();
+    sqlite_1.default.prepare(`
+    INSERT INTO users (id, username, password_hash, role, created_at)
+    VALUES (?, ?, ?, ?, ?)
+  `).run(id, user.username, user.passwordHash, user.role, now);
+    return {
         ...user,
-        id: generateId(),
-        createdAt: new Date().toISOString()
+        id,
+        createdAt: now
     };
-    data.users.push(newUser);
-    writeUsersData(data);
-    return newUser;
 }
 /**
  * 更新用户信息
@@ -122,17 +111,32 @@ function create(user) {
  * @returns 更新后的用户对象或undefined
  */
 function update(id, updates) {
-    const data = readUsersData();
-    const index = data.users.findIndex(user => user.id === id);
-    if (index === -1) {
+    const existing = findById(id);
+    if (!existing)
         return undefined;
+    const fields = [];
+    const values = [];
+    if (updates.passwordHash !== undefined) {
+        fields.push('password_hash = ?');
+        values.push(updates.passwordHash);
     }
-    data.users[index] = {
-        ...data.users[index],
-        ...updates
-    };
-    writeUsersData(data);
-    return data.users[index];
+    if (updates.role !== undefined) {
+        fields.push('role = ?');
+        values.push(updates.role);
+    }
+    if (updates.lastLoginAt !== undefined) {
+        fields.push('last_login_at = ?');
+        values.push(updates.lastLoginAt);
+    }
+    if (fields.length === 0)
+        return existing;
+    values.push(id);
+    sqlite_1.default.prepare(`
+    UPDATE users
+    SET ${fields.join(', ')}
+    WHERE id = ?
+  `).run(...values);
+    return findById(id);
 }
 /**
  * 删除用户
@@ -141,14 +145,8 @@ function update(id, updates) {
  * @returns 是否删除成功
  */
 function remove(id) {
-    const data = readUsersData();
-    const index = data.users.findIndex(user => user.id === id);
-    if (index === -1) {
-        return false;
-    }
-    data.users.splice(index, 1);
-    writeUsersData(data);
-    return true;
+    const result = sqlite_1.default.prepare('DELETE FROM users WHERE id = ?').run(id);
+    return result.changes > 0;
 }
 /**
  * 检查用户名是否存在
@@ -157,7 +155,8 @@ function remove(id) {
  * @returns 是否存在
  */
 function existsByUsername(username) {
-    return findByUsername(username) !== undefined;
+    const row = sqlite_1.default.prepare('SELECT 1 FROM users WHERE username = ?').get(username);
+    return !!row;
 }
 /**
  * 生成唯一ID

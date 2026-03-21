@@ -281,6 +281,7 @@ router.get('/codes', auth_1.authMiddleware, (req, res) => {
         const role = req.user.role;
         // 根据角色返回权限码
         const roleCodes = {
+            super: ['user', 'admin', 'super', 'config', 'system', 'upload', 'download', 'tasks'],
             admin: ['user', 'admin', 'config', 'system', 'upload', 'download', 'tasks'],
             user: ['user', 'upload', 'download', 'tasks']
         };

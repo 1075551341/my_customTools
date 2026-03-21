@@ -126,6 +126,21 @@ export interface QueueStatsData {
  * 系统通知数据接口
  */
 export interface SystemNoticeData {
-  type: 'info' | 'warning' | 'error'
-  message: string
+  type: 'info' | 'warning' | 'error';
+  message: string;
+}
+
+/**
+ * 消息推送数据接口
+ */
+export interface MessagePushData {
+  id: string;
+  userId: string;
+  type: 'normal' | 'todo';
+  title: string;
+  content: string;
+  isRead: boolean;
+  link?: string;
+  createdAt: string;
+  readAt?: string;
 }

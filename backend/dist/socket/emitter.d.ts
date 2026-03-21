@@ -5,8 +5,9 @@
  *
  * @module socket/emitter
  */
-import { Server } from 'socket.io';
-import type { TaskProgressData, TaskStatusData, TaskCompletedData, TaskFailedData, QueueStatsData, SystemNoticeData } from './events';
+import { Server } from "socket.io";
+import type { TaskProgressData, TaskStatusData, TaskCompletedData, TaskFailedData, QueueStatsData, SystemNoticeData } from "./events";
+import type { Message } from "../types";
 /**
  * 初始化 Socket 发射器
  *
@@ -20,28 +21,28 @@ export declare const socketEmitter: {
     /**
      * 推送任务进度到用户
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 进度数据
      */
     emitTaskProgress(userId: string, data: TaskProgressData): void;
     /**
      * 推送任务状态变更到用户
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 状态数据
      */
     emitTaskStatus(userId: string, data: TaskStatusData): void;
     /**
      * 推送任务完成通知
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 完成数据
      */
     emitTaskCompleted(userId: string, data: TaskCompletedData): void;
     /**
      * 推送任务失败通知
      *
-     * @param userId - 用户ID
+     * @param userId - 用户 ID
      * @param data - 失败数据
      */
     emitTaskFailed(userId: string, data: TaskFailedData): void;
@@ -60,10 +61,17 @@ export declare const socketEmitter: {
     /**
      * 向特定任务房间推送进度
      *
-     * @param taskId - 任务ID
+     * @param taskId - 任务 ID
      * @param data - 进度数据
      */
     emitToTask(taskId: string, data: TaskProgressData): void;
+    /**
+     * 推送新消息通知到用户
+     *
+     * @param userId - 用户 ID
+     * @param message - 消息对象
+     */
+    emitMessagePush(userId: string, message: Message): void;
     /**
      * 获取 Socket.io 实例
      */

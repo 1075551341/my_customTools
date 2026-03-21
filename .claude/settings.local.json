@@ -93,7 +93,8 @@
       "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyXzE3NzM5OTI3MzE3NjJfZG1sYmlibSIsImlhdCI6MTc3NDAxODQwMCwiZXhwIjoxNzc0MTA0ODAwfQ.test\")",
       "Bash(findstr :3000)",
       "Bash(pnpm exec:*)",
-      "Bash(Select-Object -Last 30)"
+      "Bash(Select-Object -Last 30)",
+      "Bash(Select-Object -First 20 FullName)"
     ],
     "initialPermissionMode": "acceptEdits",
     "cleanupPeriodDays": 30,

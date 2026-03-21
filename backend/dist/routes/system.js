@@ -130,21 +130,21 @@ router.get('/status', async (req, res) => {
         const disk = await si.fsSize();
         const statusData = {
             cpu: {
-                usage: cpu.currentLoad.toFixed(2) + '%',
+                usage: cpu.currentLoad,
                 cores: cpu.cpus.length
             },
             memory: {
-                total: (memory.total / 1024 / 1024 / 1024).toFixed(2) + ' GB',
-                used: (memory.used / 1024 / 1024 / 1024).toFixed(2) + ' GB',
-                free: (memory.free / 1024 / 1024 / 1024).toFixed(2) + ' GB',
-                usage: ((memory.used / memory.total) * 100).toFixed(2) + '%'
+                total: memory.total,
+                used: memory.used,
+                free: memory.free,
+                usage: (memory.used / memory.total) * 100
             },
             disk: disk.length > 0 ? {
                 fs: disk[0].fs,
-                total: (disk[0].size / 1024 / 1024 / 1024).toFixed(2) + ' GB',
-                used: (disk[0].used / 1024 / 1024 / 1024).toFixed(2) + ' GB',
-                usage: disk[0].use + '%'
-            } : 'N/A',
+                total: disk[0].size,
+                used: disk[0].used,
+                usage: disk[0].use
+            } : { fs: 'N/A', total: 0, used: 0, usage: 0 },
             ...baseStatus
         };
         return (0, response_1.success)(res, statusData);

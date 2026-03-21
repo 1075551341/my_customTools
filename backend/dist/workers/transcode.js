@@ -96,6 +96,12 @@ function startVideoWorker() {
         const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
         logger_1.default.info('开始视频转码任务', { taskId, jobId: job.id });
         try {
+            // 检查任务状态，避免重试时状态冲突
+            const task = tasksService.getTask(taskId);
+            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
+                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+                return { skipped: true, reason: `任务状态为 ${task.status}` };
+            }
             // 更新任务状态为处理中
             tasksService.updateTaskStatus(taskId, 'processing');
             // 获取编码器
@@ -156,10 +162,19 @@ function startImageWorker() {
         const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
         logger_1.default.info('开始图片转码任务', { taskId, jobId: job.id });
         try {
+            // 检查任务状态，避免重试时状态冲突
+            const task = tasksService.getTask(taskId);
+            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
+                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+                return { skipped: true, reason: `任务状态为 ${task.status}` };
+            }
             // 更新任务状态为处理中
             tasksService.updateTaskStatus(taskId, 'processing');
-            // 获取转码配置
-            const encoderConfig = transcodeConfig;
+            // 获取转码配置，确保 outputFormat 存在
+            const encoderConfig = {
+                outputFormat: (task.outputFormat || 'jpg'),
+                ...transcodeConfig
+            };
             // 执行转码
             const result = await image_1.default.transcode(inputPath, outputPath, encoderConfig, (progress) => {
                 // 更新进度
@@ -210,6 +225,12 @@ function startAnimWorker() {
         const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
         logger_1.default.info('开始动图转码任务', { taskId, jobId: job.id });
         try {
+            // 检查任务状态，避免重试时状态冲突
+            const task = tasksService.getTask(taskId);
+            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
+                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+                return { skipped: true, reason: `任务状态为 ${task.status}` };
+            }
             // 更新任务状态为处理中
             tasksService.updateTaskStatus(taskId, 'processing');
             // 获取转码配置
@@ -285,6 +306,12 @@ function startDocumentWorker() {
         const { taskId, type, inputPath, outputPath, config: transcodeConfig } = job.data;
         logger_1.default.info('开始文档转换任务', { taskId, jobId: job.id });
         try {
+            // 检查任务状态，避免重试时状态冲突
+            const task = tasksService.getTask(taskId);
+            if (['completed', 'failed', 'cancelled'].includes(task.status)) {
+                logger_1.default.warn('任务已是终态，跳过处理', { taskId, status: task.status });
+                return { skipped: true, reason: `任务状态为 ${task.status}` };
+            }
             // 更新任务状态为处理中
             tasksService.updateTaskStatus(taskId, 'processing');
             // 获取转码配置

@@ -7,6 +7,7 @@
  */
 
 import { Router, Request, Response, NextFunction } from "express";
+import type { Router as RouterType } from "express";
 import * as messagesDb from "../db/messages";
 import { success, error, errors } from "../utils/response";
 import { authMiddleware } from "../middlewares/auth";
@@ -16,7 +17,7 @@ import type { Message, MessageType } from "../types";
 /**
  * 创建路由实例
  */
-const router = Router();
+const router: RouterType = Router();
 
 /**
  * 获取消息列表（分页）
