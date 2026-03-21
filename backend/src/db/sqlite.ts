@@ -105,7 +105,7 @@ db.exec(`
 console.log(`[SQLite] 数据库已连接：${DB_PATH}`);
 
 // 初始化系统预设
-import { initSystemPresets } from './presets';
+import { initSystemPresets } from "./presets";
 initSystemPresets();
 
 export default db;
