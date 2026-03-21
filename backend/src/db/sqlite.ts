@@ -79,6 +79,19 @@ db.exec(`
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  -- 转码预设表
+  CREATE TABLE IF NOT EXISTS presets (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('video', 'image', 'document')),
+    config TEXT NOT NULL,
+    isSystem INTEGER DEFAULT 0,
+    userId TEXT,
+    createdAt TEXT NOT NULL,
+    updatedAt TEXT NOT NULL,
+    UNIQUE(name, type, userId)
+  );
+
   -- 创建索引
   CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
   CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON tasks(user_id);
@@ -89,6 +102,10 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_presets_user ON presets(userId);
 `);
 
-console.log(`[SQLite] 数据库已连接: ${DB_PATH}`);
+console.log(`[SQLite] 数据库已连接：${DB_PATH}`);
+
+// 初始化系统预设
+import { initSystemPresets } from './presets';
+initSystemPresets();
 
 export default db;
