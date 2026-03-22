@@ -62,6 +62,13 @@ function createApp(): Application {
   );
 
   /**
+   * Cookie 解析中间件
+   *
+   * 解析请求中的 Cookie，用于 HttpOnly Cookie 认证
+   */
+  app.use(cookieParser());
+
+  /**
    * JSON 请求体解析
    *
    * 限制请求体大小为 50MB，支持大文件上传时的元数据
