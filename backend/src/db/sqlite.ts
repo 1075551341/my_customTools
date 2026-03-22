@@ -154,6 +154,14 @@ import {
 } from "./presets";
 initDb(db);
 
+// 初始化菜单模块
+import { initDb as initMenusDb } from "./menus";
+initMenusDb(db);
+
+// 初始化权限模块
+import { initDb as initPermissionsDb } from "./permissions";
+initPermissionsDb(db);
+
 // 清理乱码预设
 const cleanedCount = cleanupInvalidPresets();
 if (cleanedCount > 0) {
