@@ -58,10 +58,12 @@ exports.getPendingTasks = getPendingTasks;
 exports.cleanOldTasks = cleanOldTasks;
 exports.submitTask = submitTask;
 exports.createComposeGifTask = createComposeGifTask;
+exports.batchCreateTasks = batchCreateTasks;
 const path_1 = __importDefault(require("path"));
 const tasksDb = __importStar(require("../db/tasks"));
 const storage = __importStar(require("../utils/storage"));
 const queue_1 = require("../queue");
+const presetDb = __importStar(require("../db/presets"));
 /**
  * 创建任务
  *
@@ -82,7 +84,7 @@ function createTask(params) {
         outputPath,
         inputFormat: params.inputFormat,
         outputFormat: params.outputFormat,
-        config: params.config
+        config: params.config,
     });
     return task;
 }
@@ -98,11 +100,11 @@ function createTask(params) {
 function getTask(taskId, userId) {
     const task = tasksDb.findById(taskId);
     if (!task) {
-        throw new Error('任务不存在');
+        throw new Error("任务不存在");
     }
     // 权限验证
     if (userId && task.userId !== userId) {
-        throw new Error('无权限访问此任务');
+        throw new Error("无权限访问此任务");
     }
     return task;
 }
@@ -120,14 +122,14 @@ function queryTasks(params) {
         status: params.status,
         type: params.type,
         page,
-        pageSize
+        pageSize,
     });
     return {
         list,
         total,
         page,
         pageSize,
-        totalPages: Math.ceil(total / pageSize)
+        totalPages: Math.ceil(total / pageSize),
     };
 }
 /**
@@ -145,12 +147,12 @@ function updateTaskStatus(taskId, status, userId) {
     const task = getTask(taskId, userId);
     // 状态流转验证
     const validTransitions = {
-        waiting: ['uploading', 'processing', 'cancelled'],
-        uploading: ['processing', 'cancelled'],
-        processing: ['completed', 'failed', 'cancelled'],
+        waiting: ["uploading", "processing", "cancelled"],
+        uploading: ["processing", "cancelled"],
+        processing: ["completed", "failed", "cancelled"],
         completed: [],
         failed: [],
-        cancelled: []
+        cancelled: [],
     };
     if (!validTransitions[task.status].includes(status)) {
         throw new Error(`不能从 ${task.status} 状态转换到 ${status}`);
@@ -168,7 +170,7 @@ function updateTaskStatus(taskId, status, userId) {
  * @throws 任务无法取消
  */
 function cancelTask(taskId, userId) {
-    return updateTaskStatus(taskId, 'cancelled', userId);
+    return updateTaskStatus(taskId, "cancelled", userId);
 }
 /**
  * 重试失败的任务
@@ -182,15 +184,15 @@ function cancelTask(taskId, userId) {
  */
 function retryTask(taskId, userId) {
     const task = getTask(taskId, userId);
-    if (task.status !== 'failed') {
-        throw new Error('只能重试失败的任务');
+    if (task.status !== "failed") {
+        throw new Error("只能重试失败的任务");
     }
     return tasksDb.update(taskId, {
-        status: 'waiting',
+        status: "waiting",
         progress: 0,
         errorMsg: undefined,
         startedAt: undefined,
-        completedAt: undefined
+        completedAt: undefined,
     });
 }
 /**
@@ -206,8 +208,8 @@ function retryTask(taskId, userId) {
 function deleteTask(taskId, userId) {
     const task = getTask(taskId, userId);
     // 只能删除已完成、失败或取消的任务
-    if (!['completed', 'failed', 'cancelled'].includes(task.status)) {
-        throw new Error('只能删除已完成、失败或取消的任务');
+    if (!["completed", "failed", "cancelled"].includes(task.status)) {
+        throw new Error("只能删除已完成、失败或取消的任务");
     }
     // 删除相关文件
     if (task.inputPath) {
@@ -243,7 +245,7 @@ function updateTaskProgress(taskId, progress) {
  * @param errorMsg - 错误信息
  */
 function markTaskFailed(taskId, errorMsg) {
-    tasksDb.updateStatus(taskId, 'failed', errorMsg);
+    tasksDb.updateStatus(taskId, "failed", errorMsg);
 }
 /**
  * 标记任务完成
@@ -251,7 +253,7 @@ function markTaskFailed(taskId, errorMsg) {
  * @param taskId - 任务ID
  */
 function markTaskCompleted(taskId) {
-    tasksDb.updateStatus(taskId, 'completed');
+    tasksDb.updateStatus(taskId, "completed");
     tasksDb.updateProgress(taskId, 100);
 }
 /**
@@ -260,7 +262,7 @@ function markTaskCompleted(taskId) {
  * @returns 待处理任务列表
  */
 function getPendingTasks() {
-    return tasksDb.findByStatus('waiting');
+    return tasksDb.findByStatus("waiting");
 }
 /**
  * 清理旧任务
@@ -281,20 +283,20 @@ function cleanOldTasks(maxAgeDays = 7) {
 async function submitTask(taskId) {
     const task = tasksDb.findById(taskId);
     if (!task) {
-        throw new Error('任务不存在');
+        throw new Error("任务不存在");
     }
     // 只有 waiting 状态的任务可以提交
-    if (task.status !== 'waiting') {
+    if (task.status !== "waiting") {
         throw new Error(`任务状态为 ${task.status}，无法提交`);
     }
     // 验证输入文件存在
     if (!task.inputPath || !storage.fileExists(task.inputPath)) {
-        throw new Error('输入文件不存在');
+        throw new Error("输入文件不存在");
     }
     // 加入转码队列
     await (0, queue_1.addTranscodeJob)(task);
     // 更新状态为上传中（等待处理）
-    tasksDb.updateStatus(taskId, 'uploading');
+    tasksDb.updateStatus(taskId, "uploading");
 }
 /**
  * 创建图片序列合成 GIF 任务
@@ -316,30 +318,96 @@ async function createComposeGifTask(params) {
     const outputPath = path_1.default.join(userOutputDir, outputFileName);
     // 创建任务记录
     const task = tasksDb.create({
-        type: 'anim',
+        type: "anim",
         userId,
         fileName: `图片序列合成 (${imagePaths.length}张)`,
         fileSize: 0,
         inputPath: imagePaths[0], // 存储第一张图片作为参考
         outputPath,
-        inputFormat: 'images',
+        inputFormat: "images",
         outputFormat,
         config: {
             ...config,
             imagePaths,
-            outputFormat
-        }
+            outputFormat,
+        },
     });
     // 直接提交到队列（使用特殊处理逻辑）
     await (0, queue_1.addTranscodeJob)({
         ...task,
         config: {
             ...task.config,
-            imagePaths
-        }
+            imagePaths,
+        },
     });
     // 更新状态
-    tasksDb.updateStatus(task.id, 'processing');
+    tasksDb.updateStatus(task.id, "processing");
     return task;
+}
+/**
+ * 根据预设创建任务
+ *
+ * @param fileId - 文件 ID
+ * @param preset - 预设配置
+ * @param userId - 用户 ID
+ * @returns 创建的任务
+ */
+function createTaskFromPreset(fileId, preset, userId) {
+    // 获取文件信息
+    const fileInfo = tasksDb.findById(fileId);
+    if (!fileInfo) {
+        throw new Error(`文件不存在：${fileId}`);
+    }
+    // 根据预设类型创建任务
+    const task = tasksDb.create({
+        type: preset.type === "video" ? "video" : preset.type === "image" ? "img" : "document",
+        userId,
+        fileName: fileInfo.fileName,
+        fileSize: fileInfo.fileSize,
+        inputPath: fileInfo.inputPath,
+        outputPath: "", // 由 createTask 生成
+        inputFormat: fileInfo.inputFormat,
+        outputFormat: "", // 由预设配置决定
+        config: preset.config,
+    });
+    return task;
+}
+/**
+ * 批量创建转码任务
+ *
+ * 对于每个文件和每个预设的组合，创建一个任务
+ * 例如：3 个文件 × 2 个预设 = 6 个任务
+ *
+ * @param data - 批量创建请求参数
+ * @returns 批量创建响应
+ */
+function batchCreateTasks(data) {
+    const { fileIds, presetIds, userId } = data;
+    const tasks = [];
+    const failed = [];
+    // 获取所有预设
+    const presets = presetDb.getAllPresets();
+    const selectedPresets = presets.filter((p) => presetIds.includes(p.id));
+    for (const fileId of fileIds) {
+        for (const preset of selectedPresets) {
+            try {
+                // 为每个文件 - 预设组合创建任务
+                const task = createTaskFromPreset(fileId, preset, userId);
+                tasks.push(task);
+            }
+            catch (error) {
+                failed.push({
+                    fileId,
+                    presetId: preset.id,
+                    reason: error.message,
+                });
+            }
+        }
+    }
+    return {
+        total: tasks.length,
+        tasks,
+        failed,
+    };
 }
 //# sourceMappingURL=tasks.js.map

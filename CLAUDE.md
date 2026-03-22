@@ -182,6 +182,40 @@ import {
 | POST   | `/api/tasks/:id/cancel` | 取消任务             |
 | POST   | `/api/tasks/:id/retry`  | 重试任务             |
 | DELETE | `/api/tasks/:id`        | 删除任务             |
+| POST   | `/api/tasks/batch`      | 批量创建转码任务     |
+
+### 批量任务 API
+
+**POST `/api/tasks/batch`** - 批量创建转码任务
+
+请求参数：
+
+```json
+{
+  "fileIds": ["file_1", "file_2"],
+  "presetIds": ["preset_1", "preset_2"]
+}
+```
+
+响应：
+
+```json
+{
+  "code": 0,
+  "msg": "批量创建 4 个任务成功",
+  "data": {
+    "total": 4,
+    "tasks": [...],
+    "failed": []
+  }
+}
+```
+
+**使用说明：**
+
+- 每个文件会与每个预设组合生成一个任务（文件数 × 预设数 = 任务总数）
+- 支持部分失败，失败的文件会在 `failed` 数组中返回
+- 前端提供批量创建向导组件 `BatchCreateModal.vue`
 
 ### 上传 API
 
@@ -292,4 +326,4 @@ interface Message {
 
 ---
 
-最后更新：2026-03-21
+最后更新：2026-03-22

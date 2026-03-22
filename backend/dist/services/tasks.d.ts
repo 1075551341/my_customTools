@@ -5,7 +5,8 @@
  *
  * @module services/tasks
  */
-import type { BaseTask, TaskStatus, TaskType, VideoTranscodeConfig, ImgTranscodeConfig, AnimTranscodeConfig, DocumentTranscodeConfig } from '../types';
+import type { BaseTask, TaskStatus, TaskType, VideoTranscodeConfig, ImgTranscodeConfig, AnimTranscodeConfig, DocumentTranscodeConfig } from "../types";
+import type { BatchCreateTaskRequest, BatchCreateTaskResponse } from "../types/batch";
 /**
  * 创建任务参数
  */
@@ -156,7 +157,7 @@ export declare function submitTask(taskId: string): Promise<void>;
  */
 export interface CreateComposeGifParams {
     imagePaths: string[];
-    outputFormat: 'gif' | 'webp' | 'apng';
+    outputFormat: "gif" | "webp" | "apng";
     config: AnimTranscodeConfig;
     userId: string;
 }
@@ -167,4 +168,14 @@ export interface CreateComposeGifParams {
  * @returns 创建的任务
  */
 export declare function createComposeGifTask(params: CreateComposeGifParams): Promise<BaseTask>;
+/**
+ * 批量创建转码任务
+ *
+ * 对于每个文件和每个预设的组合，创建一个任务
+ * 例如：3 个文件 × 2 个预设 = 6 个任务
+ *
+ * @param data - 批量创建请求参数
+ * @returns 批量创建响应
+ */
+export declare function batchCreateTasks(data: BatchCreateTaskRequest): BatchCreateTaskResponse;
 //# sourceMappingURL=tasks.d.ts.map
