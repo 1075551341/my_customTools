@@ -85,6 +85,7 @@ db.exec(`
     name TEXT NOT NULL,
     type TEXT NOT NULL CHECK(type IN ('video', 'image', 'document')),
     config TEXT NOT NULL,
+    configRange TEXT,
     isSystem INTEGER DEFAULT 0,
     userId TEXT,
     createdAt TEXT NOT NULL,
@@ -104,8 +105,28 @@ db.exec(`
 
 console.log(`[SQLite] 数据库已连接：${DB_PATH}`);
 
+// 初始化 presets 模块的数据库连接
+import {
+  initDb,
+  initSystemPresets,
+  cleanupInvalidPresets,
+  migratePresetRanges,
+} from "./presets";
+initDb(db);
+
+// 清理乱码预设
+const cleanedCount = cleanupInvalidPresets();
+if (cleanedCount > 0) {
+  console.log(`[预设] 清理了 ${cleanedCount} 个乱码预设`);
+}
+
+// 迁移预设范围值
+const migratedCount = migratePresetRanges();
+if (migratedCount > 0) {
+  console.log(`[预设] 为 ${migratedCount} 个预设添加了范围值配置`);
+}
+
 // 初始化系统预设
-import { initSystemPresets } from "./presets";
 initSystemPresets();
 
 export default db;

@@ -10,6 +10,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import * as presetsService from "../services/presets";
 import { success, error } from "../utils/response";
 import { authMiddleware } from "../middlewares/auth";
+import { getConfigRangeByType } from "../db/presets";
 
 /**
  * 创建路由实例
@@ -148,6 +149,34 @@ router.delete(
       return success(res, null, "预设删除成功");
     } catch (err) {
       return next(err) as void;
+    }
+  },
+);
+
+/**
+ * 获取预设范围值配置
+ *
+ * GET /api/presets/ranges/:type
+ */
+router.get(
+  "/ranges/:type",
+  (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const type: string = req.params.type as string;
+
+      if (!["video", "image", "document"].includes(type)) {
+        return error(res, "无效的预设类型", 400);
+      }
+
+      const ranges = getConfigRangeByType(type);
+      if (!ranges) {
+        return error(res, "该类型无范围值配置", 404);
+      }
+
+      return success(res, ranges);
+    } catch (err) {
+      const message = (err as Error).message;
+      return error(res, message, 400);
     }
   },
 );

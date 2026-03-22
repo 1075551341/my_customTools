@@ -277,3 +277,72 @@ SqliteError: no such table: main.presets
 [2026-03-21 23:23:17] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
 [ERROR] 23:23:17 Error: listen EADDRINUSE: address already in use :::3001
 [2026-03-21 23:23:17] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[INFO] 07:56:38 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\services\tasks.ts has been modified
+[SQLite] 数据库已连接：data\app.db
+[2026-03-22 07:56:44] [[32MINFO[39M] [32m系统预设初始化完成，新增 0/8 个预设[39m {"service":"my-customtools-backend"}
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:51] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[ERROR] 07:56:51 Error: listen EADDRINUSE: address already in use :::3001
+[2026-03-22 07:56:51] [[31MERROR[39M] [31m未捕获的异常[39m {"service":"my-customtools-backend","error":"listen EADDRINUSE: address already in use :::3001","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at main (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:195:10)\n    at Object.<anonymous> (D:\\apdms\\coding_AI\\my_customTools\\backend\\src\\server.ts:271:1)\n    at Module.<anonymous> (node:internal/modules/cjs/loader:1706:14)\n    at Module._compile (D:\\apdms\\coding_AI\\my_customTools\\backend\\node_modules\\.pnpm\\source-map-support@0.5.21\\node_modules\\source-map-support\\source-map-support.js:568:25)\n    at Module.m._compile (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:69:33)\n    at node:internal/modules/cjs/loader:1839:10\n    at require.extensions..jsx.require.extensions..js (C:\\Users\\DELL\\AppData\\Local\\Temp\\ts-node-dev-hook-1889575678519273.js:114:20)"}
+[INFO] 07:56:53 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\services\tasks.ts has been modified
+[SQLite] 数据库已连接：data\app.db
+[2026-03-22 07:56:54] [[32MINFO[39M] [32m系统预设初始化完成，新增 0/8 个预设[39m {"service":"my-customtools-backend"}
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:56:55] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[INFO] 07:57:12 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\tasks.ts has been modified
+[SQLite] 数据库已连接：data\app.db
+[2026-03-22 07:57:13] [[32MINFO[39M] [32m系统预设初始化完成，新增 0/8 个预设[39m {"service":"my-customtools-backend"}
+[INFO] 07:57:13 Restarting: D:\apdms\coding_AI\my_customTools\backend\src\routes\tasks.ts has been modified
+[SQLite] 数据库已连接：data\app.db
+[2026-03-22 07:57:14] [[32MINFO[39M] [32m系统预设初始化完成，新增 0/8 个预设[39m {"service":"my-customtools-backend"}
+[迁移] 开始数据迁移...
+[迁移] 无需迁移用户数据
+[迁移] 任务数据已存在，跳过迁移
+[迁移] 数据迁移完成
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m队列事件监听已初始化[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m视频转码工作进程已启动，并发数: 5[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m图片转码工作进程已启动，并发数: 6[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m动图转码工作进程已启动，并发数: 2[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m文档转码工作进程已启动，并发数: 3[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m转码工作进程已启动[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m定时清理任务已启动[39m {"service":"my-customtools-backend","cron":"0 3 * * *"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m  my-customTools 后端服务启动成功[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m=================================[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m端口: 3001[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m环境: development[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m地址: http://localhost:3001[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32mAPI 文档: http://localhost:3001/api/system/health[39m {"service":"my-customtools-backend"}
+[2026-03-22 07:57:16] [[32MINFO[39M] [32m---------------------------------[39m {"service":"my-customtools-backend"}
+[Redis] 连接成功
+[2026-03-22 08:16:14] [[33MWARN[39M] [33m业务错误 无效或已过期的认证令牌[39m {"service":"my-customtools-backend","method":"POST","url":"/api/tasks/batch","code":401}
+[2026-03-22 08:16:14] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"POST","url":"/api/tasks/batch","status":401,"duration":"9ms","ip":"::1"}
+[2026-03-22 08:16:18] [[33MWARN[39M] [33m业务错误 无效或已过期的认证令牌[39m {"service":"my-customtools-backend","method":"POST","url":"/api/tasks/batch","code":401}
+[2026-03-22 08:16:18] [[33MWARN[39M] [33m请求失败[39m {"service":"my-customtools-backend","method":"POST","url":"/api/tasks/batch","status":401,"duration":"2ms","ip":"::1"}

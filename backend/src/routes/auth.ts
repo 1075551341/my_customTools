@@ -2,6 +2,7 @@
  * 认证路由模块
  *
  * 提供用户注册、登录、刷新令牌等接口
+ * 使用 HttpOnly Cookie 存储 Token
  *
  * @module routes/auth
  */
@@ -10,6 +11,7 @@ import { Router, Request, Response } from 'express'
 import { success, error } from '../utils/response'
 import { authMiddleware } from '../middlewares/auth'
 import * as authService from '../services/auth'
+import * as jwtUtil from '../utils/jwt'
 import config from '../config'
 
 const router: Router = Router()

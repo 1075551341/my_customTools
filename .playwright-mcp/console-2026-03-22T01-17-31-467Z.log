@@ -1,0 +1,199 @@
+[       0ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[       1ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[       6ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[       7ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[      12ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[      13ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[      19ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[      21ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[      24ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[      25ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[      40ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[      41ms] [WARNING] Access token or refresh token is invalid or expired.  @ http://localhost:5667/@vite/client:509
+[      43ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5667/api/auth/logout:0
+[   20619ms] [WARNING] [Vue warn]: Failed to resolve component: a-button
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <DashboardPage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dashboard" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=false onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< null > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5667/@vite/client:509
+[   20808ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[   39615ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39641ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39657ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39672ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39684ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39697ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39713ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39728ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39742ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39760ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39776ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39799ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39818ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39860ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39879ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39892ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39906ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39917ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39925ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[   39937ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143384ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143386ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143389ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143391ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143392ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143394ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143396ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143398ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143401ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143403ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143406ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143411ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143413ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143415ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143416ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143418ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143419ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143421ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143423ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143425ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143485ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143488ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143491ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143495ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143497ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143501ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143505ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143509ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143513ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143516ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143518ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143520ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143521ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143523ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143527ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143530ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143532ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143535ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143538ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  143540ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152002ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152005ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152008ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152010ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152013ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152015ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152017ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152018ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152020ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152022ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152023ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152025ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152027ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152029ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152030ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152033ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152035ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152039ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152042ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152045ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152080ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152082ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152085ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152089ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152092ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152094ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152096ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152097ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152100ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152103ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152106ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152112ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152117ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152120ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152122ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152124ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152127ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152129ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152132ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  152135ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  217627ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  217636ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  217642ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  217647ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  217654ms] [ERROR] Warning: `columns.customRender` return cell props is deprecated with perf issue, please use `customCell` instead. @ http://localhost:5667/@vite/client:509
+[  241955ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:5667/api/presets:0
+[ 5253923ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[ 5259784ms] [WARNING] [Vue warn]: Failed to resolve component: Collapse.Panel
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <ImagePage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< null > key="/image" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=false onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5667/@vite/client:509
+[ 5259786ms] [WARNING] [Vue warn]: Failed to resolve component: Collapse
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <ImagePage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< null > key="/image" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=false onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5667/@vite/client:509
+[ 5259937ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[ 5305008ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5667/@vite/client:509
+[ 5307027ms] [WARNING] [Vue warn]: Failed to resolve component: a-button
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <DashboardPage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< null > key="/dashboard" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=false onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< Proxy(Object) > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5667/@vite/client:509

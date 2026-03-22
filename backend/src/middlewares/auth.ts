@@ -2,19 +2,21 @@
  * 认证中间件模块
  *
  * 提供 JWT 认证和权限校验功能
+ * 支持 HttpOnly Cookie 和 Authorization Header 两种认证方式
  *
  * @module middlewares/auth
  */
 
-import { Request, Response, NextFunction, RequestHandler } from 'express'
-import * as jwtUtil from '../utils/jwt'
-import { AppError } from './errorHandler'
-import type { JwtPayload } from '../types'
+import { Request, Response, NextFunction, RequestHandler } from "express";
+import * as jwtUtil from "../utils/jwt";
+import { AppError } from "./errorHandler";
+import type { JwtPayload } from "../types";
 
 /**
  * 认证中间件
  *
- * 验证请求头中的 JWT Token，将用户信息挂载到 req.user
+ * 验证请求中的 JWT Token（优先 Cookie，其次 Authorization Header）
+ * 将用户信息挂载到 req.user
  *
  * @param req - Express 请求对象
  * @param res - Express 响应对象
@@ -23,30 +25,33 @@ import type { JwtPayload } from '../types'
 export const authMiddleware: RequestHandler = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void => {
-  // 从请求头提取 Token
-  const token = jwtUtil.extractToken(req.headers.authorization)
+  // 优先从 Cookie 提取 Token
+  const { accessToken } = jwtUtil.extractTokensFromCookies(req.cookies);
+
+  // 其次从请求头提取 Token
+  const token = accessToken || jwtUtil.extractToken(req.headers.authorization);
 
   if (!token) {
-    return next(new AppError('未提供认证令牌', 401, 401))
+    return next(new AppError("未提供认证令牌", 401, 401));
   }
 
   // 验证 Token
-  const payload = jwtUtil.verifyAccessToken(token)
+  const payload = jwtUtil.verifyAccessToken(token);
   if (!payload) {
-    return next(new AppError('无效或已过期的认证令牌', 401, 401))
+    return next(new AppError("无效或已过期的认证令牌", 401, 401));
   }
 
   // 将用户信息挂载到请求对象
   req.user = {
     id: payload.id,
     username: payload.username,
-    role: payload.role
-  }
+    role: payload.role,
+  };
 
-  next()
-}
+  next();
+};
 
 /**
  * 可选认证中间件
@@ -61,23 +66,25 @@ export const authMiddleware: RequestHandler = (
 export const optionalAuthMiddleware: RequestHandler = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void => {
-  const token = jwtUtil.extractToken(req.headers.authorization)
+  // 优先从 Cookie 提取 Token
+  const { accessToken } = jwtUtil.extractTokensFromCookies(req.cookies);
+  const token = accessToken || jwtUtil.extractToken(req.headers.authorization);
 
   if (token) {
-    const payload = jwtUtil.verifyAccessToken(token)
+    const payload = jwtUtil.verifyAccessToken(token);
     if (payload) {
       req.user = {
         id: payload.id,
         username: payload.username,
-        role: payload.role
-      }
+        role: payload.role,
+      };
     }
   }
 
-  next()
-}
+  next();
+};
 
 /**
  * 角色权限中间件工厂
@@ -90,18 +97,20 @@ export const optionalAuthMiddleware: RequestHandler = (
  * @example
  * router.delete('/users/:id', authMiddleware, requireRole('admin'), deleteUser)
  */
-export function requireRole(...roles: Array<'super' | 'admin' | 'user'>): RequestHandler {
+export function requireRole(
+  ...roles: Array<"super" | "admin" | "user">
+): RequestHandler {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user) {
-      return next(new AppError('未认证', 401, 401))
+      return next(new AppError("未认证", 401, 401));
     }
 
     if (!roles.includes(req.user.role)) {
-      return next(new AppError('权限不足', 403, 403))
+      return next(new AppError("权限不足", 403, 403));
     }
 
-    next()
-  }
+    next();
+  };
 }
 
 /**
@@ -109,7 +118,7 @@ export function requireRole(...roles: Array<'super' | 'admin' | 'user'>): Reques
  *
  * 快捷方式，等同于 requireRole('admin')
  */
-export const adminOnly: RequestHandler = requireRole('admin')
+export const adminOnly: RequestHandler = requireRole("admin");
 
 /**
  * 提取用户ID
@@ -121,7 +130,7 @@ export const adminOnly: RequestHandler = requireRole('admin')
  * @returns 用户ID或null
  */
 export function getUserId(req: Request): string | null {
-  return req.user?.id ?? null
+  return req.user?.id ?? null;
 }
 
 /**
@@ -135,7 +144,7 @@ export function getUserId(req: Request): string | null {
  */
 export function requireUserId(req: Request): string {
   if (!req.user?.id) {
-    throw new AppError('未认证', 401, 401)
+    throw new AppError("未认证", 401, 401);
   }
-  return req.user.id
+  return req.user.id;
 }
