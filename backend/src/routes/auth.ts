@@ -7,14 +7,14 @@
  * @module routes/auth
  */
 
-import { Router, Request, Response } from 'express'
-import { success, error } from '../utils/response'
-import { authMiddleware } from '../middlewares/auth'
-import * as authService from '../services/auth'
-import * as jwtUtil from '../utils/jwt'
-import config from '../config'
+import { Router, Request, Response } from "express";
+import { success, error } from "../utils/response";
+import { authMiddleware } from "../middlewares/auth";
+import * as authService from "../services/auth";
+import * as jwtUtil from "../utils/jwt";
+import config from "../config";
 
-const router: Router = Router()
+const router: Router = Router();
 
 /**
  * @openapi
@@ -50,27 +50,32 @@ const router: Router = Router()
  *       403:
  *         description: 注册功能已关闭
  */
-router.post('/register', async (req: Request, res: Response) => {
+router.post("/register", async (req: Request, res: Response) => {
   // 检查是否允许注册
   if (!config.features.allowRegister) {
-    return error(res, '系统已关闭注册功能', 403)
+    return error(res, "系统已关闭注册功能", 403);
   }
 
-  const { username, password } = req.body
+  const { username, password } = req.body;
 
   // 参数验证
   if (!username || !password) {
-    return error(res, '用户名和密码不能为空', 400)
+    return error(res, "用户名和密码不能为空", 400);
   }
 
   try {
-    const result = await authService.register({ username, password })
-    return success(res, result, '注册成功')
+    const result = await authService.register({ username, password });
+
+    // 设置 HttpOnly Cookie
+    jwtUtil.setAuthCookies(res, result.accessToken, result.refreshToken);
+
+    // 返回用户信息（不返回 token，token 已在 Cookie 中）
+    return success(res, { user: result.user }, "注册成功");
   } catch (err) {
-    const message = err instanceof Error ? err.message : '注册失败'
-    return error(res, message, 400)
+    const message = err instanceof Error ? err.message : "注册失败";
+    return error(res, message, 400);
   }
-})
+});
 
 /**
  * @openapi
@@ -98,22 +103,27 @@ router.post('/register', async (req: Request, res: Response) => {
  *       401:
  *         description: 用户名或密码错误
  */
-router.post('/login', async (req: Request, res: Response) => {
-  const { username, password } = req.body
+router.post("/login", async (req: Request, res: Response) => {
+  const { username, password } = req.body;
 
   // 参数验证
   if (!username || !password) {
-    return error(res, '用户名和密码不能为空', 400)
+    return error(res, "用户名和密码不能为空", 400);
   }
 
   try {
-    const result = await authService.login({ username, password })
-    return success(res, result, '登录成功')
+    const result = await authService.login({ username, password });
+
+    // 设置 HttpOnly Cookie
+    jwtUtil.setAuthCookies(res, result.accessToken, result.refreshToken);
+
+    // 返回用户信息（不返回 token，token 已在 Cookie 中）
+    return success(res, { user: result.user }, "登录成功");
   } catch (err) {
-    const message = err instanceof Error ? err.message : '登录失败'
-    return error(res, message, 401)
+    const message = err instanceof Error ? err.message : "登录失败";
+    return error(res, message, 401);
   }
-})
+});
 
 /**
  * @openapi
@@ -138,21 +148,28 @@ router.post('/login', async (req: Request, res: Response) => {
  *       401:
  *         description: 刷新令牌无效或已过期
  */
-router.post('/refresh', (req: Request, res: Response) => {
-  const { refreshToken } = req.body
+router.post("/refresh", (req: Request, res: Response) => {
+  // 优先从 Cookie 获取 refreshToken，其次从请求体
+  const { refreshToken: cookieRefreshToken } = jwtUtil.extractTokensFromCookies(req.cookies);
+  const bodyRefreshToken = req.body?.refreshToken;
+  const refreshToken = cookieRefreshToken || bodyRefreshToken;
 
   if (!refreshToken) {
-    return error(res, '刷新令牌不能为空', 400)
+    return error(res, "刷新令牌不能为空", 400);
   }
 
   try {
-    const result = authService.refreshToken(refreshToken)
-    return success(res, result, '刷新成功')
+    const result = authService.refreshToken(refreshToken);
+
+    // 设置新的 HttpOnly Cookie
+    jwtUtil.setAuthCookies(res, result.accessToken, result.refreshToken);
+
+    return success(res, null, "刷新成功");
   } catch (err) {
-    const message = err instanceof Error ? err.message : '刷新失败'
-    return error(res, message, 401)
+    const message = err instanceof Error ? err.message : "刷新失败";
+    return error(res, message, 401);
   }
-})
+});
 
 /**
  * @openapi
@@ -179,16 +196,16 @@ router.post('/refresh', (req: Request, res: Response) => {
  *       401:
  *         description: 未授权
  */
-router.get('/me', authMiddleware, (req: Request, res: Response) => {
+router.get("/me", authMiddleware, (req: Request, res: Response) => {
   try {
-    const userId = req.user!.id
-    const userInfo = authService.getUserInfo(userId)
-    return success(res, userInfo)
+    const userId = req.user!.id;
+    const userInfo = authService.getUserInfo(userId);
+    return success(res, userInfo);
   } catch (err) {
-    const message = err instanceof Error ? err.message : '获取用户信息失败'
-    return error(res, message, 404)
+    const message = err instanceof Error ? err.message : "获取用户信息失败";
+    return error(res, message, 404);
   }
-})
+});
 
 /**
  * PUT /api/auth/password
@@ -198,36 +215,36 @@ router.get('/me', authMiddleware, (req: Request, res: Response) => {
  * @header Authorization: Bearer <token>
  * @body {oldPassword, newPassword}
  */
-router.put('/password', authMiddleware, async (req: Request, res: Response) => {
-  const { oldPassword, newPassword } = req.body
+router.put("/password", authMiddleware, async (req: Request, res: Response) => {
+  const { oldPassword, newPassword } = req.body;
 
   // 参数验证
   if (!oldPassword || !newPassword) {
-    return error(res, '旧密码和新密码不能为空', 400)
+    return error(res, "旧密码和新密码不能为空", 400);
   }
 
   try {
-    const userId = req.user!.id
-    await authService.changePassword(userId, oldPassword, newPassword)
-    return success(res, null, '密码修改成功')
+    const userId = req.user!.id;
+    await authService.changePassword(userId, oldPassword, newPassword);
+    return success(res, null, "密码修改成功");
   } catch (err) {
-    const message = err instanceof Error ? err.message : '密码修改失败'
-    return error(res, message, 400)
+    const message = err instanceof Error ? err.message : "密码修改失败";
+    return error(res, message, 400);
   }
-})
+});
 
 /**
  * POST /api/auth/logout
  *
- * 用户登出（客户端清除 Token 即可，服务端无状态）
+ * 用户登出，清除 HttpOnly Cookie
  *
- * @header Authorization: Bearer <token>
+ * @header Authorization: Bearer <token> 或通过 Cookie 认证
  */
-router.post('/logout', authMiddleware, (req: Request, res: Response) => {
-  // JWT 无状态，客户端清除 Token 即可
-  // 如需实现 Token 黑名单，可在此添加逻辑
-  return success(res, null, '登出成功')
-})
+router.post("/logout", authMiddleware, (req: Request, res: Response) => {
+  // 清除认证 Cookie
+  jwtUtil.clearAuthCookies(res);
+  return success(res, null, "登出成功");
+});
 
 /**
  * @openapi
@@ -240,11 +257,11 @@ router.post('/logout', authMiddleware, (req: Request, res: Response) => {
  *       200:
  *         description: 成功
  */
-router.get('/status', (req: Request, res: Response) => {
+router.get("/status", (req: Request, res: Response) => {
   return success(res, {
-    allowRegister: config.features.allowRegister
-  })
-})
+    allowRegister: config.features.allowRegister,
+  });
+});
 
 /**
  * GET /api/auth/codes
@@ -254,23 +271,40 @@ router.get('/status', (req: Request, res: Response) => {
  * @header Authorization: Bearer <token>
  * @returns 权限码数组
  */
-router.get('/codes', authMiddleware, (req: Request, res: Response) => {
+router.get("/codes", authMiddleware, (req: Request, res: Response) => {
   try {
-    const role = req.user!.role
+    const role = req.user!.role;
 
     // 根据角色返回权限码
     const roleCodes: Record<string, string[]> = {
-      super: ['user', 'admin', 'super', 'config', 'system', 'upload', 'download', 'tasks'],
-      admin: ['user', 'admin', 'config', 'system', 'upload', 'download', 'tasks'],
-      user: ['user', 'upload', 'download', 'tasks']
-    }
+      super: [
+        "user",
+        "admin",
+        "super",
+        "config",
+        "system",
+        "upload",
+        "download",
+        "tasks",
+      ],
+      admin: [
+        "user",
+        "admin",
+        "config",
+        "system",
+        "upload",
+        "download",
+        "tasks",
+      ],
+      user: ["user", "upload", "download", "tasks"],
+    };
 
-    const codes = roleCodes[role] || roleCodes.user
-    return success(res, codes)
+    const codes = roleCodes[role] || roleCodes.user;
+    return success(res, codes);
   } catch (err) {
-    const message = err instanceof Error ? err.message : '获取权限码失败'
-    return error(res, message, 500)
+    const message = err instanceof Error ? err.message : "获取权限码失败";
+    return error(res, message, 500);
   }
-})
+});
 
-export default router
+export default router;

@@ -13,6 +13,7 @@
 
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import config from "./config";
 import logger from "./utils/logger";
 import routes from "./routes";
