@@ -93,6 +93,44 @@ db.exec(`
     UNIQUE(name, type, userId)
   );
 
+  -- 菜单表
+  CREATE TABLE IF NOT EXISTS menus (
+    id          TEXT PRIMARY KEY,
+    parent_id   TEXT,
+    path        TEXT NOT NULL,
+    name        TEXT NOT NULL,
+    component   TEXT,
+    redirect    TEXT,
+    meta        TEXT NOT NULL DEFAULT '{}',
+    sort        INTEGER DEFAULT 0,
+    status      INTEGER DEFAULT 1,
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 角色菜单关联表
+  CREATE TABLE IF NOT EXISTS role_menus (
+    role       TEXT NOT NULL,
+    menu_id    TEXT NOT NULL,
+    PRIMARY KEY (role, menu_id)
+  );
+
+  -- 权限码表
+  CREATE TABLE IF NOT EXISTS permissions (
+    id          TEXT PRIMARY KEY,
+    code        TEXT NOT NULL UNIQUE,
+    name        TEXT NOT NULL,
+    description TEXT,
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  -- 角色权限关联表
+  CREATE TABLE IF NOT EXISTS role_permissions (
+    role          TEXT NOT NULL,
+    permission_id TEXT NOT NULL,
+    PRIMARY KEY (role, permission_id)
+  );
+
   -- 创建索引
   CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
   CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON tasks(user_id);
@@ -101,6 +139,8 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_upload_sessions_status ON upload_sessions(status);
   CREATE INDEX IF NOT EXISTS idx_presets_type ON presets(type);
   CREATE INDEX IF NOT EXISTS idx_presets_user ON presets(userId);
+  CREATE INDEX IF NOT EXISTS idx_menus_parent ON menus(parent_id);
+  CREATE INDEX IF NOT EXISTS idx_menus_sort ON menus(sort);
 `);
 
 console.log(`[SQLite] 数据库已连接：${DB_PATH}`);
