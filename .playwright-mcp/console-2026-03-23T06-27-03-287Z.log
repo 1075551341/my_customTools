@@ -1,0 +1,49 @@
+[    1657ms] [WARNING] [Vue warn]: Failed to resolve component: Collapse.Panel
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <ImagePage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/transcode/image" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=true onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5666/@vite/client:509
+[    1659ms] [WARNING] [Vue warn]: Failed to resolve component: Collapse
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <ImagePage onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/transcode/image" > 
+  at <KeepAlive key=0 exclude= [] include= [] > 
+  at <BaseTransition mode="out-in" appear=true persisted=false  ... > 
+  at <Transition key=1 name="fade-slide" appear=""  ... > 
+  at <RouterView> 
+  at <LayoutContent> 
+  at <LayoutContent id="__vben_main_content" content-compact="wide" content-compact-width=1200  ... > 
+  at <VbenLayout sidebar-extra-visible=true onUpdate:sidebarExtraVisible=fn content-compact="wide"  ... > 
+  at <BasicLayout onClearPreferencesAndLogout=fn<handleLogout> > 
+  at <Basic onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > > 
+  at <RouterView> 
+  at <AApp> 
+  at <Anonymous value= {hashed: true, components: Object, theme: Theme, token: Object} > 
+  at <ALocaleProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} ANT_MARK__="internalMark" > 
+  at <LocaleReceiver children=fn<children> > 
+  at <AConfigProvider locale= {locale: zh-cn, Pagination: Object, DatePicker: Object, TimePicker: Object, Calendar: Object} theme= {algorithm: Array(1), token: Proxy(Object)} > 
+  at <App> @ http://localhost:5666/@vite/client:509
+[    1901ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5666/@vite/client:509
+[    1902ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5666/@vite/client:509
+[    1904ms] [WARNING] [Socket] 已连接或正在连接中 @ http://localhost:5666/@vite/client:509
+[  160142ms] [ERROR] WebSocket connection to 'ws://localhost:3001/socket.io/?EIO=4&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5666/node_modules/.vite/deps/socket__io-client.js?v=df9935b6:978
+[  160143ms] [ERROR] [Socket] 连接错误: websocket error @ http://localhost:5666/@vite/client:509
+[  164830ms] [ERROR] WebSocket connection to 'ws://localhost:3001/socket.io/?EIO=4&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5666/node_modules/.vite/deps/socket__io-client.js?v=df9935b6:978
+[  164831ms] [ERROR] [Socket] 连接错误: websocket error @ http://localhost:5666/@vite/client:509
+[  171570ms] [ERROR] WebSocket connection to 'ws://localhost:3001/socket.io/?EIO=4&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5666/node_modules/.vite/deps/socket__io-client.js?v=df9935b6:978
+[  171570ms] [ERROR] [Socket] 连接错误: websocket error @ http://localhost:5666/@vite/client:509
+[  178345ms] [ERROR] WebSocket connection to 'ws://localhost:3001/socket.io/?EIO=4&transport=websocket' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:5666/node_modules/.vite/deps/socket__io-client.js?v=df9935b6:978
+[  178345ms] [ERROR] [Socket] 连接错误: websocket error @ http://localhost:5666/@vite/client:509
