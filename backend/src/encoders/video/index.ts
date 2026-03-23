@@ -11,11 +11,11 @@
  * @module encoders/video/index
  */
 
-import type { VideoEncoder, EncoderInfo } from './base'
-import H264Encoder from './h264'
-import H265Encoder from './h265'
-import VP9Encoder from './vp9'
-import AV1Encoder from './av1'
+import type { VideoEncoder, EncoderInfo } from "./base";
+import H264Encoder from "./h264";
+import H265Encoder from "./h265";
+import VP9Encoder from "./vp9";
+import AV1Encoder from "./av1";
 
 /**
  * 编码器映射表
@@ -23,7 +23,7 @@ import AV1Encoder from './av1'
  * key: 编码器名称
  * value: 编码器实例
  */
-const encoders: Map<string, VideoEncoder> = new Map()
+const encoders: Map<string, VideoEncoder> = new Map();
 
 /**
  * 注册编码器
@@ -31,7 +31,7 @@ const encoders: Map<string, VideoEncoder> = new Map()
  * @param encoder - 编码器实例
  */
 export function registerEncoder(encoder: VideoEncoder): void {
-  encoders.set(encoder.name, encoder)
+  encoders.set(encoder.name, encoder);
 }
 
 /**
@@ -41,7 +41,7 @@ export function registerEncoder(encoder: VideoEncoder): void {
  * @returns 编码器实例或 undefined
  */
 export function getEncoder(name: string): VideoEncoder | undefined {
-  return encoders.get(name)
+  return encoders.get(name);
 }
 
 /**
@@ -51,7 +51,7 @@ export function getEncoder(name: string): VideoEncoder | undefined {
  * @returns 是否存在
  */
 export function hasEncoder(name: string): boolean {
-  return encoders.has(name)
+  return encoders.has(name);
 }
 
 /**
@@ -60,11 +60,11 @@ export function hasEncoder(name: string): boolean {
  * @returns 编码器信息列表
  */
 export function getAllEncoders(): EncoderInfo[] {
-  const list: EncoderInfo[] = []
-  encoders.forEach(encoder => {
-    list.push(encoder.getInfo())
-  })
-  return list
+  const list: EncoderInfo[] = [];
+  encoders.forEach((encoder) => {
+    list.push(encoder.getInfo());
+  });
+  return list;
 }
 
 /**
@@ -73,7 +73,7 @@ export function getAllEncoders(): EncoderInfo[] {
  * @returns 编码器名称列表
  */
 export function getEncoderNames(): string[] {
-  return Array.from(encoders.keys())
+  return Array.from(encoders.keys());
 }
 
 /**
@@ -84,12 +84,12 @@ export function getEncoderNames(): string[] {
  */
 export function getRecommendedEncoder(format: string): string {
   const formatEncoderMap: Record<string, string> = {
-    mp4: 'h264',
-    webm: 'vp9',
-    mkv: 'h265'
-  }
+    mp4: "h264",
+    webm: "vp9",
+    mkv: "h265",
+  };
 
-  return formatEncoderMap[format.toLowerCase()] || 'h264'
+  return formatEncoderMap[format.toLowerCase()] || "h264";
 }
 
 /**
@@ -98,13 +98,14 @@ export function getRecommendedEncoder(format: string): string {
  * 注册内置的视频编码器
  */
 export function initDefaultEncoders(): void {
-  registerEncoder(H264Encoder)
-  registerEncoder(H265Encoder)
-  registerEncoder(VP9Encoder)
+  registerEncoder(H264Encoder);
+  registerEncoder(H265Encoder);
+  registerEncoder(VP9Encoder);
+  registerEncoder(AV1Encoder);
 }
 
 // 自动初始化默认编码器
-initDefaultEncoders()
+initDefaultEncoders();
 
 // 导出各编码器
-export { H264Encoder, H265Encoder, VP9Encoder }
+export { H264Encoder, H265Encoder, VP9Encoder, AV1Encoder };
