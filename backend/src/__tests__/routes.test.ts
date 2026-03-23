@@ -50,9 +50,10 @@ vi.mock('../db/config', () => ({
 vi.mock('../utils/jwt', () => ({
   generateAccessToken: vi.fn(() => 'mock-access-token'),
   generateRefreshToken: vi.fn(() => 'mock-refresh-token'),
-  verifyAccessToken: vi.fn(() => ({ id: 'user-123', username: 'testuser' })),
+  verifyAccessToken: vi.fn(() => ({ id: 'user-123', username: 'testuser', role: 'user' })),
   verifyRefreshToken: vi.fn(() => ({ id: 'user-123' })),
-  extractToken: vi.fn(() => null)
+  extractToken: vi.fn(() => null),
+  extractTokensFromCookies: vi.fn(() => ({ accessToken: null, refreshToken: null }))
 }))
 
 // Mock 队列
