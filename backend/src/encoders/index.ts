@@ -17,7 +17,8 @@ export {
   initDefaultEncoders as initDefaultVideoEncoders,
   H264Encoder,
   H265Encoder,
-  VP9Encoder
+  VP9Encoder,
+  AV1Encoder
 } from './video'
 
 // 图片编码器
