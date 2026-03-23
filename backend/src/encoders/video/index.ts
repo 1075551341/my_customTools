@@ -15,6 +15,7 @@ import type { VideoEncoder, EncoderInfo } from './base'
 import H264Encoder from './h264'
 import H265Encoder from './h265'
 import VP9Encoder from './vp9'
+import AV1Encoder from './av1'
 
 /**
  * 编码器映射表

@@ -22,16 +22,8 @@ export class AV1Encoder extends VideoEncoder {
   readonly name = "av1";
   readonly codec = "libaom-av1";
   readonly extension = "mp4";
-  readonly description =
-    "AV1 编码器 - 下一代编码格式，开源免版税，超高压缩率";
-  readonly supportedFormats = [
-    "mp4",
-    "mkv",
-    "webm",
-    "mov",
-    "avi",
-    "ts",
-  ];
+  readonly description = "AV1 编码器 - 下一代编码格式，开源免版税，超高压缩率";
+  readonly supportedFormats = ["mp4", "mkv", "webm", "mov", "avi", "ts"];
 
   /**
    * 构建 FFmpeg 命令
