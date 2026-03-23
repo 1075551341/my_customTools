@@ -12,6 +12,7 @@ import { success, error } from "../utils/response";
 import { authMiddleware } from "../middlewares/auth";
 import * as authService from "../services/auth";
 import * as jwtUtil from "../utils/jwt";
+import * as permissionsDb from "../db/permissions";
 import config from "../config";
 
 const router: Router = Router();
@@ -268,38 +269,13 @@ router.get("/status", (req: Request, res: Response) => {
  *
  * 获取用户权限码
  *
- * @header Authorization: Bearer <token>
+ * @header Authorization: Bearer <token> 或 Cookie
  * @returns 权限码数组
  */
 router.get("/codes", authMiddleware, (req: Request, res: Response) => {
   try {
     const role = req.user!.role;
-
-    // 根据角色返回权限码
-    const roleCodes: Record<string, string[]> = {
-      super: [
-        "user",
-        "admin",
-        "super",
-        "config",
-        "system",
-        "upload",
-        "download",
-        "tasks",
-      ],
-      admin: [
-        "user",
-        "admin",
-        "config",
-        "system",
-        "upload",
-        "download",
-        "tasks",
-      ],
-      user: ["user", "upload", "download", "tasks"],
-    };
-
-    const codes = roleCodes[role] || roleCodes.user;
+    const codes = permissionsDb.getPermissionCodesByRole(role);
     return success(res, codes);
   } catch (err) {
     const message = err instanceof Error ? err.message : "获取权限码失败";

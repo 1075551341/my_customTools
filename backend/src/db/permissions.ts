@@ -40,40 +40,40 @@ function initDefaultPermissions(): void {
   const now = new Date().toISOString();
   const permissions: Omit<Permission, "createdAt">[] = [
     // 用户基础权限
-    { id: "perm-user-view", code: "user:view", name: "查看用户信息" },
-    { id: "perm-user-edit", code: "user:edit", name: "编辑个人信息" },
+    { id: "perm-user-view", code: "user:view", name: "查看用户信息", description: null },
+    { id: "perm-user-edit", code: "user:edit", name: "编辑个人信息", description: null },
 
     // 上传权限
-    { id: "perm-upload", code: "upload", name: "文件上传" },
-    { id: "perm-download", code: "download", name: "文件下载" },
+    { id: "perm-upload", code: "upload", name: "文件上传", description: null },
+    { id: "perm-download", code: "download", name: "文件下载", description: null },
 
     // 任务权限
-    { id: "perm-task-view", code: "task:view", name: "查看任务" },
-    { id: "perm-task-create", code: "task:create", name: "创建任务" },
-    { id: "perm-task-cancel", code: "task:cancel", name: "取消任务" },
-    { id: "perm-task-delete", code: "task:delete", name: "删除任务" },
-    { id: "perm-task-retry", code: "task:retry", name: "重试任务" },
-    { id: "perm-task-batch", code: "task:batch", name: "批量任务" },
+    { id: "perm-task-view", code: "task:view", name: "查看任务", description: null },
+    { id: "perm-task-create", code: "task:create", name: "创建任务", description: null },
+    { id: "perm-task-cancel", code: "task:cancel", name: "取消任务", description: null },
+    { id: "perm-task-delete", code: "task:delete", name: "删除任务", description: null },
+    { id: "perm-task-retry", code: "task:retry", name: "重试任务", description: null },
+    { id: "perm-task-batch", code: "task:batch", name: "批量任务", description: null },
 
     // 预设权限
-    { id: "perm-preset-view", code: "preset:view", name: "查看预设" },
-    { id: "perm-preset-create", code: "preset:create", name: "创建预设" },
-    { id: "perm-preset-edit", code: "preset:edit", name: "编辑预设" },
-    { id: "perm-preset-delete", code: "preset:delete", name: "删除预设" },
+    { id: "perm-preset-view", code: "preset:view", name: "查看预设", description: null },
+    { id: "perm-preset-create", code: "preset:create", name: "创建预设", description: null },
+    { id: "perm-preset-edit", code: "preset:edit", name: "编辑预设", description: null },
+    { id: "perm-preset-delete", code: "preset:delete", name: "删除预设", description: null },
 
     // 系统配置权限
-    { id: "perm-config-view", code: "config:view", name: "查看配置" },
-    { id: "perm-config-edit", code: "config:edit", name: "修改配置" },
+    { id: "perm-config-view", code: "config:view", name: "查看配置", description: null },
+    { id: "perm-config-edit", code: "config:edit", name: "修改配置", description: null },
 
     // 用户管理权限
-    { id: "perm-user-manage", code: "user:manage", name: "用户管理" },
-    { id: "perm-user-create", code: "user:create", name: "创建用户" },
-    { id: "perm-user-delete", code: "user:delete", name: "删除用户" },
+    { id: "perm-user-manage", code: "user:manage", name: "用户管理", description: null },
+    { id: "perm-user-create", code: "user:create", name: "创建用户", description: null },
+    { id: "perm-user-delete", code: "user:delete", name: "删除用户", description: null },
 
     // 系统管理权限
-    { id: "perm-system", code: "system", name: "系统管理" },
-    { id: "perm-admin", code: "admin", name: "管理员权限" },
-    { id: "perm-super", code: "super", name: "超级管理员权限" },
+    { id: "perm-system", code: "system", name: "系统管理", description: null },
+    { id: "perm-admin", code: "admin", name: "管理员权限", description: null },
+    { id: "perm-super", code: "super", name: "超级管理员权限", description: null },
   ];
 
   const insertPerm = db.prepare(`

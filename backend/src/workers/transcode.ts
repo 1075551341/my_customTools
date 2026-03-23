@@ -416,7 +416,27 @@ function startDocumentWorker(): void {
         // 获取转码配置
         const encoderConfig =
           transcodeConfig as unknown as DocumentTranscodeConfig;
-        const subtype = encoderConfig.subtype;
+        let subtype = encoderConfig.subtype;
+
+        // 如果没有指定 subtype，尝试根据输入输出格式推断
+        if (!subtype) {
+          const inputExt = inputPath.split('.').pop()?.toLowerCase() || '';
+          const outputExt = outputPath.split('.').pop()?.toLowerCase() || '';
+
+          if ((inputExt === 'doc' || inputExt === 'docx') && outputExt === 'pdf') {
+            subtype = 'word-to-pdf';
+          } else if ((inputExt === 'xls' || inputExt === 'xlsx') && outputExt === 'csv') {
+            subtype = 'excel-to-csv';
+          } else if ((inputExt === 'xls' || inputExt === 'xlsx') && (outputExt === 'word' || outputExt === 'doc' || outputExt === 'docx')) {
+            subtype = 'excel-to-word';
+          } else if (inputExt === 'pdf' && outputExt === 'pdf') {
+            subtype = 'pdf-merge';
+          } else {
+            // 默认尝试 word-to-pdf
+            subtype = 'word-to-pdf';
+          }
+          logger.info("未指定 subtype，自动推断", { inputExt, outputExt, subtype });
+        }
 
         // 获取编码器
         const encoder = documentEncoders.getEncoder(subtype);

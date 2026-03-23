@@ -24,6 +24,7 @@ import type {
   BatchCreateTaskRequest,
   BatchCreateTaskResponse,
 } from "../types/batch";
+import logger from "../utils/logger";
 
 /**
  * 创建任务参数
@@ -420,17 +421,76 @@ function createTaskFromPreset(
     throw new Error(`文件不存在：${fileId}`);
   }
 
-  // 根据预设类型创建任务
+  // 根据预设类型确定任务类型和输出格式
+  let taskType: TaskType;
+  let outputFormat: string;
+  let config: Record<string, unknown>;
+
+  if (preset.type === "video") {
+    taskType = "video";
+    outputFormat = preset.config.codec || "h264";
+    config = {
+      ...preset.config,
+      codec: preset.config.codec,
+      resolution: preset.config.resolution,
+      bitrate: preset.config.bitrate,
+      fps: preset.config.fps,
+      crf: preset.config.crf,
+      audioCodec: preset.config.audioCodec,
+    };
+  } else if (preset.type === "image") {
+    taskType = "img";
+    outputFormat = preset.config.format || "webp";
+    config = {
+      format: preset.config.format,
+      quality: preset.config.quality,
+    };
+  } else {
+    // document
+    taskType = "document";
+    outputFormat = preset.config.targetFormat || "pdf";
+    // 根据输入格式和目标格式推断 subtype
+    const inputExt = fileInfo.inputFormat.toLowerCase();
+    const targetFmt = outputFormat.toLowerCase();
+    let subtype: string;
+
+    if ((inputExt === "doc" || inputExt === "docx") && targetFmt === "pdf") {
+      subtype = "word-to-pdf";
+    } else if ((inputExt === "xls" || inputExt === "xlsx") && targetFmt === "csv") {
+      subtype = "excel-to-csv";
+    } else if ((inputExt === "xls" || inputExt === "xlsx") && (targetFmt === "word" || targetFmt === "doc" || targetFmt === "docx")) {
+      subtype = "excel-to-word";
+    } else if (inputExt === "pdf" && targetFmt === "pdf") {
+      // PDF 合并（多文件）
+      subtype = "pdf-merge";
+    } else {
+      // 默认使用 word-to-pdf
+      subtype = "word-to-pdf";
+    }
+
+    config = {
+      targetFormat: outputFormat,
+      subtype,
+    };
+  }
+
+  // 生成输出路径
+  const userOutputDir = storage.getUserOutputDir(userId);
+  const outputFileName = storage.generateUniqueFileName(
+    `${path.parse(fileInfo.fileName).name}.${outputFormat}`,
+  );
+  const outputPath = path.join(userOutputDir, outputFileName);
+
   const task = tasksDb.create({
-    type: preset.type === "video" ? "video" : preset.type === "image" ? "img" : "document",
+    type: taskType,
     userId,
     fileName: fileInfo.fileName,
     fileSize: fileInfo.fileSize,
     inputPath: fileInfo.inputPath,
-    outputPath: "", // 由 createTask 生成
+    outputPath,
     inputFormat: fileInfo.inputFormat,
-    outputFormat: "", // 由预设配置决定
-    config: preset.config as Record<string, unknown>,
+    outputFormat,
+    config,
   });
 
   return task;
@@ -445,9 +505,9 @@ function createTaskFromPreset(
  * @param data - 批量创建请求参数
  * @returns 批量创建响应
  */
-export function batchCreateTasks(
+export async function batchCreateTasks(
   data: BatchCreateTaskRequest,
-): BatchCreateTaskResponse {
+): Promise<BatchCreateTaskResponse> {
   const { fileIds, presetIds, userId } = data;
   const tasks: BaseTask[] = [];
   const failed: Array<{ fileId: string; presetId: string; reason: string }> =
@@ -463,6 +523,18 @@ export function batchCreateTasks(
         // 为每个文件 - 预设组合创建任务
         const task = createTaskFromPreset(fileId, preset, userId);
         tasks.push(task);
+
+        // 自动提交任务到队列
+        try {
+          await addTranscodeJob(task);
+          // 更新状态为 uploading（等待处理）
+          tasksDb.updateStatus(task.id, "uploading");
+        } catch (submitError) {
+          logger.warn("任务提交到队列失败", {
+            taskId: task.id,
+            error: (submitError as Error).message,
+          });
+        }
       } catch (error) {
         failed.push({
           fileId,

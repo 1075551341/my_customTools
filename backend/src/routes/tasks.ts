@@ -31,7 +31,7 @@ router.use(authMiddleware);
  * @body {type, fileName, fileSize, inputPath, inputFormat, outputFormat, config}
  * @returns 任务信息
  */
-router.post("/", (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   const {
     type,
     fileName,
@@ -67,6 +67,13 @@ router.post("/", (req: Request, res: Response) => {
       config: config || {},
       userId,
     });
+
+    // 自动提交任务到队列
+    try {
+      await tasksService.submitTask(task.id);
+    } catch (submitError) {
+      console.warn("任务提交到队列失败:", submitError);
+    }
 
     return success(res, task, "任务创建成功");
   } catch (err) {
@@ -324,7 +331,7 @@ router.delete("/:taskId", (req: Request, res: Response) => {
  * @body {fileIds, presetIds}
  * @returns { total, tasks, failed }
  */
-router.post("/batch", (req: Request, res: Response) => {
+router.post("/batch", async (req: Request, res: Response) => {
   const { fileIds, presetIds } = req.body;
 
   // 参数验证
@@ -338,7 +345,7 @@ router.post("/batch", (req: Request, res: Response) => {
 
   try {
     const userId = requireUserId(req);
-    const result = tasksService.batchCreateTasks({
+    const result = await tasksService.batchCreateTasks({
       fileIds,
       presetIds,
       userId,

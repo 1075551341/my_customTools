@@ -2,7 +2,7 @@
 
 > 统一后端服务 - 视频转码 & 图片转码工具集
 
-本次开发说明：任务：curl -s -X POST http://localhost:3001/api/auth/login -H "Content-Type: application/json" -d "{\"username\":\"admin\",\"password\":\"admin123\"}"
+本次开发说明：任务：ls -la D:/apdms/coding_AI/my_customTools/frontend/apps/web-antd/src/router/routes/modules/
 
 需先确认任务范围、技术选型和预期产出。
 
@@ -12,7 +12,7 @@
 
 ## 🛠️ 技术栈
 
-archiver, bcryptjs, better-sqlite3, bull, cors, docx, dotenv, express
+archiver, bcryptjs, better-sqlite3, bull, cookie-parser, cors, docx, dotenv
 
 ## 🚀 快速开始
 
@@ -71,16 +71,16 @@ docs: 文档更新
 
 ## 📋 最近更新
 
-- ./.claude/plans/latest.md
+- ./.claude/commit_counter.json
 - ../.claude/worktrees/feature-transcode-presets
-- ../README.md
+- .claude/plan_cache.json
 - .claude/plans/latest.md
-- package.json
-- pnpm-lock.yaml
-- server.log
-- src/app.ts
-- src/db/presets.ts
-- src/db/sqlite.ts
+- README.md
+- src/db/menus.ts
+- src/db/permissions.ts
+- src/routes/auth.ts
+- src/routes/menu.ts
+- ../frontend
 
 ## 📄 许可证
 
@@ -88,4 +88,4 @@ MIT License
 
 ---
 
-> 此 README 由 Claude Code 自动生成于 2026-03-22 15:25
+> 此 README 由 Claude Code 自动生成于 2026-03-23 14:10
