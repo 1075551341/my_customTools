@@ -18,22 +18,22 @@ export {
   H264Encoder,
   H265Encoder,
   VP9Encoder,
-  AV1Encoder
-} from './video'
+  AV1Encoder,
+} from "./video";
 
 // 图片编码器
 export {
   getImageEncoder,
   getSupportedImageFormats,
-  supportsImageFormat
-} from './image'
+  supportsImageFormat,
+} from "./image";
 
 // 动图编码器
 export {
   default as animEncoder,
   transcodeFromImages,
-  getSupportedAnimFormats
-} from './anim'
+  getSupportedAnimFormats,
+} from "./anim";
 
 // 文档编码器（显式导出避免命名冲突）
 export {
@@ -50,14 +50,14 @@ export {
   PdfSplitEncoder,
   WordToPdfEncoder,
   ExcelToCsvEncoder,
-  ExcelToWordEncoder
-} from './document'
+  ExcelToWordEncoder,
+} from "./document";
 
 // 导入各模块
-import * as videoEncoders from './video'
-import * as imageEncoders from './image'
-import * as animEncoders from './anim'
-import * as documentEncoders from './document'
+import * as videoEncoders from "./video";
+import * as imageEncoders from "./image";
+import * as animEncoders from "./anim";
+import * as documentEncoders from "./document";
 
 /**
  * 获取所有编码器信息
@@ -65,15 +65,15 @@ import * as documentEncoders from './document'
  * @returns 所有编码器信息
  */
 export function getAllEncoderInfo(): {
-  video: ReturnType<typeof videoEncoders.getAllEncoders>
-  image: ReturnType<typeof imageEncoders.getSupportedImageFormats>
-  anim: ReturnType<typeof animEncoders.getSupportedAnimFormats>
-  document: ReturnType<typeof documentEncoders.getAllEncoders>
+  video: ReturnType<typeof videoEncoders.getAllEncoders>;
+  image: ReturnType<typeof imageEncoders.getSupportedImageFormats>;
+  anim: ReturnType<typeof animEncoders.getSupportedAnimFormats>;
+  document: ReturnType<typeof documentEncoders.getAllEncoders>;
 } {
   return {
     video: videoEncoders.getAllEncoders(),
     image: imageEncoders.getSupportedImageFormats(),
     anim: animEncoders.getSupportedAnimFormats(),
-    document: documentEncoders.getAllEncoders()
-  }
+    document: documentEncoders.getAllEncoders(),
+  };
 }
